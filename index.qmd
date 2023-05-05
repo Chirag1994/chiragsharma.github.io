@@ -1,7 +1,17 @@
 ---
-title: "chiragsharma.github.io"
+title: "Chirag Sharma"
+image: profile.jpg
+about: 
+  template: trestles
+  image-width: 23em
+  image-shape: rounded
+  links: 
+    - text: LinkedIn
+      href: https://www.linkedin.com/in/chiragsharma1994/
+    - text: Medium
+      href: https://medium.com/@chirag.sharma0378
+    - text: GitHub
+      href: https://github.com/Chirag1994
+    - text: Email
+      href: mailto:chirag.sharma0378@gmail.com
 ---
-
-This is a Quarto website.
-
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
