@@ -1,6 +1,7 @@
 ---
 title: "Chirag Sharma"
 image: profile.jpg
+comments: false
 about: 
   template: trestles
   image-width: 23em
