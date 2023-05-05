@@ -18,4 +18,8 @@ format:
     css: styles.css
     page-layout: full
 
+comments: 
+  giscus: 
+    repo:  Chirag1994/chiragsharma.github.io
+
 
