@@ -20,4 +20,6 @@ comments:
   giscus: 
     repo:  Chirag1994/chiragsharma.github.io
 
+resources: 
+  - CNAME
 
