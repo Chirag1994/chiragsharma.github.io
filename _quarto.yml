@@ -11,6 +11,8 @@ website:
       - href: posts.qmd 
       - href: resume/Chirag_Sharma_Resume.pdf
         text: Resume
+      - href: portfolio.qmd
+        text: Portfolio  
 
 format:
   html:

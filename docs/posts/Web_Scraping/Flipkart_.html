@@ -151,6 +151,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       </div>
                           <div class="quarto-categories">
                 <div class="quarto-category">Web Scrapping</div>
+                <div class="quarto-category">Python</div>
+                <div class="quarto-category">BeautifulSoup</div>
               </div>
                   </div>
   </div>
@@ -251,23 +253,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="importing-necessary-libraries" class="level3">
 <h3 class="anchored" data-anchor-id="importing-necessary-libraries">Importing necessary Libraries</h3>
 <div class="cell" data-jupyter="{&quot;outputs_hidden&quot;:true}" data-execution_count="1">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> csv</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> selenium <span class="im">import</span> webdriver</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 </section>
 <section id="starting-up-the-webdriver" class="level3">
 <h3 class="anchored" data-anchor-id="starting-up-the-webdriver">Starting up the WebDriver</h3>
 <div class="cell" data-jupyter="{&quot;outputs_hidden&quot;:true}" data-execution_count="2">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating an instance of webdriver for google chrome</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>driver <span class="op">=</span> webdriver.Chrome()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell" data-jupyter="{&quot;outputs_hidden&quot;:true}" data-execution_count="3">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using webdriver we'll now open the flipkart website in chrome</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">'https://flipkart.com'</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># We;ll use the get method of driver and pass in the URL</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>driver.get(url)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <ul>
 <li>Now there a few ways we can conduct a product search :
@@ -289,6 +300,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Let’s copy this Pattern and create a function that will insert the search term using string formatting.</li>
 </ul>
 <div class="cell" data-jupyter="{&quot;outputs_hidden&quot;:true}" data-execution_count="4">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_url(search_item):</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">'''</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">    This function fetches the URL of the item that you want to search</span></span>
@@ -297,14 +310,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># We'are replacing every space with '+' to adhere with the pattern </span></span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    search_item <span class="op">=</span> search_item.replace(<span class="st">" "</span>,<span class="st">"+"</span>)</span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> template.<span class="bu">format</span>(search_item)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <ul>
 <li>Now we have a function that will generate a URL based on the search term we provide.</li>
 </ul>
 <div class="cell" data-execution_count="5">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Checking whether the function is working properly or not</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> get_url(<span class="st">'mobile phones'</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(url)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>https://www.flipkart.com/search?q=mobile+phones&amp;as=on&amp;as-show=on&amp;otracker=AS_Query_HistoryAutoSuggest_1_4_na_na_na&amp;otracker1=AS_Query_HistoryAutoSuggest_1_4_na_na_na&amp;as-pos=1&amp;as-type=HISTORY&amp;suggestionId=mobile+phones&amp;requestId=e625b409-ca2a-456a-b53c-0fdb7618b658&amp;as-backfill=on</code></pre>
 </div>
@@ -320,9 +337,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>To do that we need to create a BeautifulSoup object which will parse the HTML content from the page source.</li>
 </ul>
 <div class="cell" data-jupyter="{&quot;outputs_hidden&quot;:true}" data-execution_count="17">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating a soup object using driver.page_source to retreive the HTML text and then we'll use the default html parser to parse</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># the HTML.</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>soup <span class="op">=</span> BeautifulSoup(driver.page_source, <span class="st">'html.parser'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p><img src="https://imgur.com/PR7ZWht.png" class="img-fluid"></p>
 <ul>
@@ -338,8 +358,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>We can fetch the <code>a tag &amp; specifically</code>class = _1fQZEK to get all the cards/boxes and then we can easily take out information of out these boxes for any mobile phone.</li>
 </ul>
 <div class="cell" data-execution_count="19">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> soup.find_all(<span class="st">'a'</span>,{<span class="st">'class'</span>:<span class="st">"_1fQZEK"</span>})</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display" data-execution_count="19">
 <pre><code>24</code></pre>
 </div>
@@ -347,108 +370,150 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="prototyping-for-a-single-record" class="level3">
 <h3 class="anchored" data-anchor-id="prototyping-for-a-single-record">Prototyping for a single record</h3>
 <div class="cell" data-jupyter="{&quot;outputs_hidden&quot;:true}">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># picking the 1st card from the complete list of cards</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>item <span class="op">=</span> results[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell" data-execution_count="21">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extracting the model of the phone from the 1st card</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> item.find(<span class="st">'div'</span>,{<span class="st">'class'</span>:<span class="st">"_4rR01T"</span>}).text</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display" data-execution_count="21">
 <pre><code>'REDMI 9i (Nature Green, 64 GB)'</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="22">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extracting Stars from 1st card</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>star <span class="op">=</span> item.find(<span class="st">'div'</span>,{<span class="st">'class'</span>:<span class="st">"_3LWZlK"</span>}).text</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>star</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display" data-execution_count="22">
 <pre><code>'4.3'</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="23">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extracting Number of Ratings from 1st card</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>num_ratings <span class="op">=</span> item.find(<span class="st">'span'</span>,{<span class="st">'class'</span>:<span class="st">"_2_R_DZ"</span>}).text.replace(<span class="st">'</span><span class="ch">\xa0</span><span class="st">&amp;</span><span class="ch">\xa0</span><span class="st">'</span>,<span class="st">" ; "</span>)[<span class="dv">0</span>:item.find(<span class="st">'span'</span>,{<span class="st">'class'</span>:<span class="st">"_2_R_DZ"</span>}).text.replace(<span class="st">'</span><span class="ch">\xa0</span><span class="st">&amp;</span><span class="ch">\xa0</span><span class="st">'</span>,<span class="st">" ; "</span>).find(<span class="st">';'</span>)].strip()</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>num_ratings</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display" data-execution_count="23">
 <pre><code>'4,06,452 Ratings'</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="24">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extracting Number of Reviews from 1st card</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>reviews <span class="op">=</span> item.find(<span class="st">'span'</span>,{<span class="st">'class'</span>:<span class="st">"_2_R_DZ"</span>}).text.replace(<span class="st">'</span><span class="ch">\xa0</span><span class="st">&amp;</span><span class="ch">\xa0</span><span class="st">'</span>,<span class="st">" ; "</span>)[item.find(<span class="st">'span'</span>,{<span class="st">'class'</span>:<span class="st">"_2_R_DZ"</span>}).text.replace(<span class="st">'</span><span class="ch">\xa0</span><span class="st">&amp;</span><span class="ch">\xa0</span><span class="st">'</span>,<span class="st">" ; "</span>).find(<span class="st">';'</span>)<span class="op">+</span><span class="dv">1</span>:].strip()</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>reviews</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display" data-execution_count="24">
 <pre><code>'23,336 Reviews'</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="25">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extracting RAM from the 1st card</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>ram <span class="op">=</span> item.find(<span class="st">'li'</span>,{<span class="st">'class'</span>:<span class="st">"rgWa7D"</span>}).text[<span class="dv">0</span>:item.find(<span class="st">'li'</span>,{<span class="st">'class'</span>:<span class="st">"rgWa7D"</span>}).text.find(<span class="st">'|'</span>)]</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>ram</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display" data-execution_count="25">
 <pre><code>'4 GB RAM '</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="26">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extracting Storage/ROM from 1st card</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>storage <span class="op">=</span> item.find(<span class="st">'li'</span>,{<span class="st">'class'</span>:<span class="st">"rgWa7D"</span>}).text[item.find(<span class="st">'li'</span>,{<span class="st">'class'</span>:<span class="st">"rgWa7D"</span>}).text.find(<span class="st">'|'</span>)<span class="op">+</span><span class="dv">1</span>:][<span class="dv">0</span>:<span class="dv">10</span>].strip()</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>storage</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display" data-execution_count="26">
 <pre><code>'64 GB ROM'</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="27">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extracting whether there is an option of expanding the storage or not</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>expandable <span class="op">=</span> item.find(<span class="st">'li'</span>,{<span class="st">'class'</span>:<span class="st">"rgWa7D"</span>}).text[item.find(<span class="st">'li'</span>,{<span class="st">'class'</span>:<span class="st">"rgWa7D"</span>}).text.find(<span class="st">'|'</span>)<span class="op">+</span><span class="dv">1</span>:][<span class="dv">13</span>:]</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>expandable</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display" data-execution_count="27">
 <pre><code>'Expandable Upto 512 GB'</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="28">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extracting the display option from the 1st card</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>display <span class="op">=</span> item.find_all(<span class="st">'li'</span>)[<span class="dv">1</span>].text.strip()</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>display</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display" data-execution_count="28">
 <pre><code>'16.59 cm (6.53 inch) HD+ Display'</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="29">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extracting camera options from the 1st card</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>camera <span class="op">=</span> item.find_all(<span class="st">'li'</span>)[<span class="dv">2</span>].text.strip()</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>camera</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display" data-execution_count="29">
 <pre><code>'13MP Rear Camera | 5MP Front Camera'</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="30">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extracting the battery option from the 1st card</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>battery <span class="op">=</span> item.find_all(<span class="st">'li'</span>)[<span class="dv">3</span>].text</span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>battery</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display" data-execution_count="30">
 <pre><code>'5000 mAh Lithium Polymer Battery'</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="31">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extracting the processir option from the 1st card</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>processor <span class="op">=</span> item.find_all(<span class="st">'li'</span>)[<span class="dv">4</span>].text.strip()</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>processor</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display" data-execution_count="31">
 <pre><code>'MediaTek Helio G25 Processor'</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="32">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extracting Warranty from the 1st card</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>warranty <span class="op">=</span> item.find_all(<span class="st">'li'</span>)[<span class="op">-</span><span class="dv">1</span>].text.strip()</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>warranty</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display" data-execution_count="32">
 <pre><code>'Brand Warranty of 1 Year Available for Mobile and 6 Months for Accessories'</code></pre>
 </div>
 </div>
 <div class="cell" data-jupyter="{&quot;outputs_hidden&quot;:true}" data-execution_count="33">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extracting price of the model from the 1st card</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>price <span class="op">=</span> item.find(<span class="st">'div'</span>,{<span class="st">'class'</span>:<span class="st">'_30jeq3 _1_WHN1'</span>}).text</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 </section>
 <section id="generalizing-the-pattern" class="level3">
@@ -457,6 +522,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Now let create a function that will extract all the information at once from a single page.</li>
 </ul>
 <div class="cell" data-jupyter="{&quot;outputs_hidden&quot;:true}" data-execution_count="34">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> extract_phone_model_info(item):</span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="co">    This function extracts model, price, ram, storage, stars , number of ratings, number of reviews, </span></span>
@@ -490,20 +557,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb36-31"><a href="#cb36-31" aria-hidden="true" tabindex="-1"></a>    price <span class="op">=</span> item.find(<span class="st">'div'</span>,{<span class="st">'class'</span>:<span class="st">'_30jeq3 _1_WHN1'</span>}).text</span>
 <span id="cb36-32"><a href="#cb36-32" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> (model,star,num_ratings,reviews,ram,storage,expandable,display,camera,battery,processor,warranty,price)</span>
 <span id="cb36-33"><a href="#cb36-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> result</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell" data-jupyter="{&quot;outputs_hidden&quot;:true}" data-execution_count="35">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now putting all the information from all the cards/phone models and putting them into a list</span></span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>records_list <span class="op">=</span> []</span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> soup.find_all(<span class="st">'a'</span>,{<span class="st">'class'</span>:<span class="st">"_1fQZEK"</span>})</span>
 <span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> item <span class="kw">in</span> results:</span>
 <span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>    records_list.append(extract_phone_model_info(item))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <ul>
 <li>Viewing how does our dataframe look like for the 1st page.</li>
 </ul>
 <div class="cell" data-execution_count="36">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(records_list,columns<span class="op">=</span>[<span class="st">'model'</span>,<span class="st">"star"</span>,<span class="st">"num_ratings"</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>   ,<span class="st">"reviews"</span>,<span class="st">'ram'</span>,<span class="st">"storage"</span>,<span class="st">"expandable"</span>,<span class="st">"display"</span>,<span class="st">"camera"</span>,<span class="st">"battery"</span>,<span class="st">"processor"</span>,<span class="st">"warranty"</span>,<span class="st">"price"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display" data-execution_count="36">
 <div>
 
@@ -925,6 +999,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Writing a custom function that will help us getting information from multiple pages</li>
 </ul>
 <div class="cell" data-jupyter="{&quot;outputs_hidden&quot;:true}" data-execution_count="37">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_url(search_item):</span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">'''</span></span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="co">    This function fetches the URL of the item that you want to search</span></span>
@@ -936,6 +1012,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add term query placeholder</span></span>
 <span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>    url <span class="op">+=</span> <span class="st">'&amp;page</span><span class="sc">{}</span><span class="st">'</span></span>
 <span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> url</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 </section>
 <section id="putting-it-all-together" class="level3">
@@ -944,6 +1021,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Now combining all thhe things that we have done so far.</li>
 </ul>
 <div class="cell" data-jupyter="{&quot;outputs_hidden&quot;:true}" data-execution_count="45">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Importing necessary Libraries</span></span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> csv</span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
@@ -1016,13 +1095,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb40-70"><a href="#cb40-70" aria-hidden="true" tabindex="-1"></a>        writer.writerow([<span class="st">'Model'</span>,<span class="st">'Stars'</span>,<span class="st">'Num_of_Ratings'</span>,<span class="st">'Reviews'</span>,<span class="st">'Ram'</span>,<span class="st">'Storage'</span>,<span class="st">'Expandable'</span>,</span>
 <span id="cb40-71"><a href="#cb40-71" aria-hidden="true" tabindex="-1"></a>                        <span class="st">'Display'</span>,<span class="st">'Camera'</span>,<span class="st">'Battery'</span>,<span class="st">'Processor'</span>,<span class="st">'Warranty'</span>,<span class="st">'Price'</span>])</span>
 <span id="cb40-72"><a href="#cb40-72" aria-hidden="true" tabindex="-1"></a>        writer.writerows(records)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 </section>
 <section id="extracting-informtion-of-all-the-mobile-phones-present-on-multiple-pages" class="level3">
 <h3 class="anchored" data-anchor-id="extracting-informtion-of-all-the-mobile-phones-present-on-multiple-pages">Extracting Informtion of all the Mobile phones present on multiple pages</h3>
 <div class="cell" data-execution_count="46">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>time</span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>main(<span class="st">'mobile phones'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Wall time: 40min 54s</code></pre>
 </div>
@@ -1031,8 +1114,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="viewing-the-data" class="level3">
 <h3 class="anchored" data-anchor-id="viewing-the-data">Viewing the data</h3>
 <div class="cell" data-execution_count="47">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>scraped_df <span class="op">=</span> pd.read_csv(<span class="st">'C:</span><span class="ch">\\</span><span class="st">Users</span><span class="ch">\\</span><span class="st">DELL</span><span class="ch">\\</span><span class="st">Desktop</span><span class="ch">\\</span><span class="st">Jupyter Notebook</span><span class="ch">\\</span><span class="st">Jovian Web Scraping</span><span class="ch">\\</span><span class="st">Amazon Products Web Scrapper</span><span class="ch">\\</span><span class="st">Flipkart_results.csv'</span>)</span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>scraped_df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display" data-execution_count="47">
 <div>
 
