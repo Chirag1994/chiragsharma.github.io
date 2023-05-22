@@ -712,5 +712,12 @@
     "title": "Multilingual Toxic Comment Classification using Tensorflow and TPUs",
     "section": "Our Final Application deployed on HuggingFace Spaces",
     "text": "Our Final Application deployed on HuggingFace Spaces\n\n\nCode\n# IPython is a library to help make Python interactive\nfrom IPython.display import IFrame\n\n# Embed FoodVision Mini Gradio demo\nIFrame(src=\"https://chirag1994-multilingual-toxic-comment-classifier.hf.space\", width=1000, height=800)"
+  },
+  {
+    "objectID": "portfolio.html",
+    "href": "portfolio.html",
+    "title": "Portfolio",
+    "section": "",
+    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\nMelanoma Skin Cancer Detection using Transfer Learning with PyTorch\n\n\n\n\n\n\n\nComputer Vision\n\n\nDeep Learning\n\n\nPyTorch\n\n\nGradio\n\n\nHuggingFace Spaces\n\n\n\n\nIn this post, we’ll demonstrate how to scape data from flipkart using BeautifulSoup & Selenium using Python.\n\n\n\n\n\n\nJan 9, 2023\n\n\n12 min\n\n\n\n\n\n\n\n\nMultilingual Toxic Comment Classification using Tensorflow and TPUs\n\n\n\n\n\n\n\nNatural Language Processing\n\n\nDeep Learning\n\n\nTensorflow\n\n\nTPUs\n\n\nGradio\n\n\nHuggingFace Spaces\n\n\n\n\nIn this post, we’ll demonstrate how to scape data from flipkart using BeautifulSoup & Selenium using Python.\n\n\n\n\n\n\nJan 9, 2023\n\n\n14 min\n\n\n\n\n\n\nNo matching items"
   }
 ]
