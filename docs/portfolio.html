@@ -72,7 +72,7 @@ ul.task-list li input[type="checkbox"] {
     const options = {
       valueNames: ['listing-date','listing-title','listing-reading-time','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
       
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
+      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description","listing-categories"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -122,12 +122,12 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./resume/Chirag_Sharma_Resume.pdf" rel="" target="">
- <span class="menu-text">Resume</span></a>
-  </li>  
-  <li class="nav-item">
     <a class="nav-link active" href="./portfolio.html" rel="" target="" aria-current="page">
  <span class="menu-text">Portfolio</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./resume/Chirag_Sharma_Resume.pdf" rel="" target="">
+ <span class="menu-text">Resume</span></a>
   </li>  
 </ul>
             <div class="quarto-navbar-tools">
@@ -169,7 +169,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
+<div class="quarto-listing quarto-listing-container-grid" id="listing-listing">
 <div class="listing-actions-group">
    <div class="input-group input-group-sm quarto-listing-sort">
      <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
@@ -192,17 +192,17 @@ ul.task-list li input[type="checkbox"] {
       <input type="text" class="search form-control" placeholder="Filter">
     </div>
 </div>
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="Computer Vision,Deep Learning,PyTorch,Gradio,HuggingFace Spaces" data-listing-date-sort="1673202600000" data-listing-file-modified-sort="1684740227681" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12">
-<div class="body">
-<a href="./portfolio/Melanoma/melanoma-final-model-kaggle.html">
-<h3 class="no-anchor listing-title">
+<div class="list grid quarto-listing-cols-3">
+<div class="g-col-1" data-index="0" data-categories="Computer Vision,Deep Learning,PyTorch,Gradio,HuggingFace Spaces" data-listing-date-sort="1673202600000" data-listing-file-modified-sort="1684740227681" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12">
+<a href="./portfolio/Melanoma/melanoma-final-model-kaggle.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
 Melanoma Skin Cancer Detection using Transfer Learning with PyTorch
-</h3>
-<div class="listing-subtitle">
-
+</h5>
+<div class="listing-reading-time card-text text-muted">
+12 min
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Computer Vision'); return false;">
 Computer Vision
@@ -220,33 +220,28 @@ Gradio
 HuggingFace Spaces
 </div>
 </div>
-<a href="./portfolio/Melanoma/melanoma-final-model-kaggle.html">
-<div class="listing-description">
-<p>In this post, we’ll demonstrate how to scape data from flipkart using BeautifulSoup &amp; Selenium using Python.</p>
+<div class="card-text listing-description">
+In this post, we’ll demonstrate how to scape data from flipkart using BeautifulSoup &amp; Selenium using Python.
 </div>
-</a>
-</div>
-<div class="metadata">
-<a href="./portfolio/Melanoma/melanoma-final-model-kaggle.html">
+<div class="card-attribution card-text-small end">
 <div class="listing-date">
 Jan 9, 2023
 </div>
-<div class="listing-reading-time">
-12 min
+</div>
+</div>
 </div>
 </a>
 </div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="Natural Language Processing,Deep Learning,Tensorflow,TPUs,Gradio,HuggingFace Spaces" data-listing-date-sort="1673202600000" data-listing-file-modified-sort="1684740213921" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14">
-<div class="body">
-<a href="./portfolio/Multlingual_Toxic_Comment_Classification/Multilingual_Toxic_Comment_Classification_Final.html">
-<h3 class="no-anchor listing-title">
+<div class="g-col-1" data-index="1" data-categories="Natural Language Processing,Deep Learning,Tensorflow,TPUs,Gradio,HuggingFace Spaces" data-listing-date-sort="1673202600000" data-listing-file-modified-sort="1684740213921" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14">
+<a href="./portfolio/Multlingual_Toxic_Comment_Classification/Multilingual_Toxic_Comment_Classification_Final.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
 Multilingual Toxic Comment Classification using Tensorflow and TPUs
-</h3>
-<div class="listing-subtitle">
-
+</h5>
+<div class="listing-reading-time card-text text-muted">
+14 min
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Natural Language Processing'); return false;">
 Natural Language Processing
@@ -267,22 +262,17 @@ Gradio
 HuggingFace Spaces
 </div>
 </div>
-<a href="./portfolio/Multlingual_Toxic_Comment_Classification/Multilingual_Toxic_Comment_Classification_Final.html">
-<div class="listing-description">
-<p>In this post, we’ll demonstrate how to scape data from flipkart using BeautifulSoup &amp; Selenium using Python.</p>
+<div class="card-text listing-description">
+In this post, we’ll demonstrate how to scape data from flipkart using BeautifulSoup &amp; Selenium using Python.
 </div>
-</a>
-</div>
-<div class="metadata">
-<a href="./portfolio/Multlingual_Toxic_Comment_Classification/Multilingual_Toxic_Comment_Classification_Final.html">
+<div class="card-attribution card-text-small end">
 <div class="listing-date">
 Jan 9, 2023
 </div>
-<div class="listing-reading-time">
-14 min
+</div>
+</div>
 </div>
 </a>
-</div>
 </div>
 </div>
 <div class="listing-no-matching d-none">
