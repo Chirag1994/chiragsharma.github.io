@@ -12,4 +12,4 @@ listing:
   feed: true
 page-layout: full
 title-block-banner: false
---- 
+---
