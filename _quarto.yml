@@ -8,11 +8,12 @@ website:
     right:
       - href: index.qmd
         text: Home
-      - href: posts.qmd 
-      - href: resume/Chirag_Sharma_Resume.pdf
-        text: Resume
+      - href: posts.qmd
+        text: Blog      
       - href: portfolio.qmd
-        text: Portfolio  
+        text: Portfolio
+      - href: resume/Chirag_Sharma_Resume.pdf
+        text: Resume   
 
 format:
   html:
@@ -23,7 +24,4 @@ format:
 comments: 
   giscus: 
     repo:  Chirag1994/chiragsharma.github.io
-
-resources: 
-  - CNAME
 
