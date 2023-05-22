@@ -8,9 +8,3 @@ title-block-banner: true
 
 # Author name of all blog posts
 author: 'Chirag Sharma'
-
-# Table of content settings
-toc: true
-toc-depth: 3
-
-page-layout: article
