@@ -8,7 +8,9 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - href: posts.qmd   
+      - href: posts.qmd 
+      - href: resume/Chirag_Sharma_Resume.pdf
+        text: Resume
 
 format:
   html:
