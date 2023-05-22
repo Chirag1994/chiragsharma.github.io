@@ -5,7 +5,7 @@ project:
 website:
   title: "Chirag Sharma"
   navbar:
-    left:
+    right:
       - href: index.qmd
         text: Home
       - href: posts.qmd 
