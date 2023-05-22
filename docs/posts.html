@@ -70,9 +70,9 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-date','listing-title','listing-reading-time','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
+      valueNames: ['listing-date','listing-title','listing-reading-time','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
       
-      searchColumns: ["listing-date","listing-title","listing-author"],
+      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -138,7 +138,7 @@ ul.task-list li input[type="checkbox"] {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(4)</span></div><div class="category" data-category="Web Scrapping">Web Scrapping <span class="quarto-category-count">(4)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(4)</span></div><div class="category" data-category="BeautifulSoup">BeautifulSoup <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Python">Python <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Web Scrapping">Web Scrapping <span class="quarto-category-count">(4)</span></div></div></div>
 <!-- main -->
 <main class="content column-page-left" id="quarto-document-content">
 
@@ -163,21 +163,21 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<div class="quarto-listing quarto-listing-container-table" id="listing-listing">
+<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
 <div class="listing-actions-group">
    <div class="input-group input-group-sm quarto-listing-sort">
      <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
      <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
        <option value="" disabled="" selected="" hidden="">Order By</option>
        <option value="index" data-direction="asc">Default</option>
+         <option value="listing-title" data-direction="asc">
+          Title
+        </option>
          <option value="listing-date-sort" data-direction="asc">
           Date - Oldest
         </option>
          <option value="listing-date-sort" data-direction="desc">
           Date - Newest
-        </option>
-         <option value="listing-title-sort" data-direction="asc">
-          Title
         </option>
      </select>
   </div>
@@ -186,99 +186,142 @@ ul.task-list li input[type="checkbox"] {
       <input type="text" class="search form-control" placeholder="Filter">
     </div>
 </div>
+<div class="list quarto-listing-default">
+<div class="quarto-post image-right" data-index="0" data-categories="Web Scrapping,Python,BeautifulSoup" data-listing-date-sort="1673202600000" data-listing-file-modified-sort="1684738589012" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6">
+<div class="body">
+<a href="./posts/Dropout_Explained/Dropout_Explained.html">
+<h3 class="no-anchor listing-title">
+Dropout in Neural Networks Explained
+</h3>
+<div class="listing-subtitle">
 
-<table class="quarto-listing-table table">
-<thead>
-<tr>
-<th>
-<a class="sort" data-sort="listing-date-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Date</a>
-</th>
-<th>
-<a class="sort" data-sort="listing-title-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Title</a>
-</th>
-<th>
-Reading Time
-</th>
-<th>
-Description
-</th>
-<th>
-Categories
-</th>
-</tr>
-</thead>
-<tbody class="list">
-<tr data-index="0" data-categories="Web Scrapping" data-listing-date-sort="1673202600000" data-listing-file-modified-sort="1673274133898" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-title-sort="Dropout in Neural Networks Explained" data-listing-filename-sort="Dropout_Explained.ipynb">
-<td>
-<span class="listing-date">Jan 9, 2023</span>
-</td>
-<td>
-<a href="./posts/Dropout_Explained/Dropout_Explained.html" class="title listing-title">Dropout in Neural Networks Explained</a>
-</td>
-<td>
-<span class="listing-reading-time">6 min</span>
-</td>
-<td>
-<span class="listing-description">In this post, We’ll understand What Dropout is? Why should we use it? Why does it work? Some tips for using it in practice.</span>
-</td>
-<td>
-<span class="listing-categories">Web Scrapping</span>
-</td>
-</tr>
-<tr data-index="1" data-categories="Web Scrapping" data-listing-date-sort="1673202600000" data-listing-file-modified-sort="1683293451078" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-title-sort="Melanoma Skin Cancer Detection using Transfer Learning with PyTorch" data-listing-filename-sort="melanoma-final-model-kaggle.ipynb">
-<td>
-<span class="listing-date">Jan 9, 2023</span>
-</td>
-<td>
-<a href="./posts/Melanoma/melanoma-final-model-kaggle.html" class="title listing-title">Melanoma Skin Cancer Detection using Transfer Learning with PyTorch</a>
-</td>
-<td>
-<span class="listing-reading-time">12 min</span>
-</td>
-<td>
-<span class="listing-description">In this post, we’ll demonstrate how to scape data from flipkart using BeautifulSoup &amp; Selenium using Python.</span>
-</td>
-<td>
-<span class="listing-categories">Web Scrapping</span>
-</td>
-</tr>
-<tr data-index="2" data-categories="Web Scrapping" data-listing-date-sort="1673202600000" data-listing-file-modified-sort="1683711781076" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14" data-listing-title-sort="Multilingual Toxic Comment Classification using Tensorflow and TPUs" data-listing-filename-sort="Multilingual_Toxic_Comment_Classification_Final.ipynb">
-<td>
-<span class="listing-date">Jan 9, 2023</span>
-</td>
-<td>
-<a href="./posts/Multlingual_Toxic_Comment_Classification/Multilingual_Toxic_Comment_Classification_Final.html" class="title listing-title">Multilingual Toxic Comment Classification using Tensorflow and TPUs</a>
-</td>
-<td>
-<span class="listing-reading-time">14 min</span>
-</td>
-<td>
-<span class="listing-description">In this post, we’ll demonstrate how to scape data from flipkart using BeautifulSoup &amp; Selenium using Python.</span>
-</td>
-<td>
-<span class="listing-categories">Web Scrapping</span>
-</td>
-</tr>
-<tr data-index="3" data-categories="Web Scrapping" data-listing-date-sort="1673202600000" data-listing-file-modified-sort="1673273179115" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-title-sort="Web Scraping using BeautifulSoup &amp; Selenium in Python." data-listing-filename-sort="Flipkart_.ipynb">
-<td>
-<span class="listing-date">Jan 9, 2023</span>
-</td>
-<td>
-<a href="./posts/Web_Scraping/Flipkart_.html" class="title listing-title">Web Scraping using BeautifulSoup &amp; Selenium in Python.</a>
-</td>
-<td>
-<span class="listing-reading-time">5 min</span>
-</td>
-<td>
-<span class="listing-description">In this post, we’ll demonstrate how to scape data from flipkart using BeautifulSoup &amp; Selenium using Python.</span>
-</td>
-<td>
-<span class="listing-categories">Web Scrapping</span>
-</td>
-</tr>
-</tbody>
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('Web Scrapping'); return false;">
+Web Scrapping
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Python'); return false;">
+Python
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('BeautifulSoup'); return false;">
+BeautifulSoup
+</div>
+</div>
+<a href="./posts/Dropout_Explained/Dropout_Explained.html">
+<div class="listing-description">
+<p>In this post, We’ll understand What Dropout is? Why should we use it? Why does it work? Some tips for using it in practice.</p>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/Dropout_Explained/Dropout_Explained.html">
+<div class="listing-date">
+Jan 9, 2023
+</div>
+<div class="listing-reading-time">
+6 min
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-categories="Web Scrapping" data-listing-date-sort="1673202600000" data-listing-file-modified-sort="1683293451078" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12">
+<div class="body">
+<a href="./posts/Melanoma/melanoma-final-model-kaggle.html">
+<h3 class="no-anchor listing-title">
+Melanoma Skin Cancer Detection using Transfer Learning with PyTorch
+</h3>
+<div class="listing-subtitle">
 
-</table>
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('Web Scrapping'); return false;">
+Web Scrapping
+</div>
+</div>
+<a href="./posts/Melanoma/melanoma-final-model-kaggle.html">
+<div class="listing-description">
+<p>In this post, we’ll demonstrate how to scape data from flipkart using BeautifulSoup &amp; Selenium using Python.</p>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/Melanoma/melanoma-final-model-kaggle.html">
+<div class="listing-date">
+Jan 9, 2023
+</div>
+<div class="listing-reading-time">
+12 min
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="2" data-categories="Web Scrapping" data-listing-date-sort="1673202600000" data-listing-file-modified-sort="1683711781076" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14">
+<div class="body">
+<a href="./posts/Multlingual_Toxic_Comment_Classification/Multilingual_Toxic_Comment_Classification_Final.html">
+<h3 class="no-anchor listing-title">
+Multilingual Toxic Comment Classification using Tensorflow and TPUs
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('Web Scrapping'); return false;">
+Web Scrapping
+</div>
+</div>
+<a href="./posts/Multlingual_Toxic_Comment_Classification/Multilingual_Toxic_Comment_Classification_Final.html">
+<div class="listing-description">
+<p>In this post, we’ll demonstrate how to scape data from flipkart using BeautifulSoup &amp; Selenium using Python.</p>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/Multlingual_Toxic_Comment_Classification/Multilingual_Toxic_Comment_Classification_Final.html">
+<div class="listing-date">
+Jan 9, 2023
+</div>
+<div class="listing-reading-time">
+14 min
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="3" data-categories="Web Scrapping" data-listing-date-sort="1673202600000" data-listing-file-modified-sort="1673273179115" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5">
+<div class="body">
+<a href="./posts/Web_Scraping/Flipkart_.html">
+<h3 class="no-anchor listing-title">
+Web Scraping using BeautifulSoup &amp; Selenium in Python.
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('Web Scrapping'); return false;">
+Web Scrapping
+</div>
+</div>
+<a href="./posts/Web_Scraping/Flipkart_.html">
+<div class="listing-description">
+<p>In this post, we’ll demonstrate how to scape data from flipkart using BeautifulSoup &amp; Selenium using Python.</p>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/Web_Scraping/Flipkart_.html">
+<div class="listing-date">
+Jan 9, 2023
+</div>
+<div class="listing-reading-time">
+5 min
+</div>
+</a>
+</div>
+</div>
+</div>
 <div class="listing-no-matching d-none">
 No matching items
 </div>
