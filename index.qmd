@@ -4,16 +4,20 @@ image: profile.jpg
 comments: false
 about: 
   template: trestles
-  image-width: 23em
+  image-width: 15em
   image-shape: rounded
   links: 
     - text: LinkedIn
+      icon: linkedin
       href: https://www.linkedin.com/in/chiragsharma1994/
     - text: Medium
+      icon: medium
       href: https://medium.com/@chirag.sharma0378
     - text: GitHub
+      icon: github
       href: https://github.com/Chirag1994
     - text: Email
+      icon: envelope
       href: mailto:chirag.sharma0378@gmail.com
 ---
 ### This content appears above the formatted about page content.

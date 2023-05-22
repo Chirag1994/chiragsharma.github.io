@@ -4,6 +4,7 @@ project:
 
 website:
   title: "Chirag Sharma"
+  favicon: favicon\icons8-darth-vader-512.png
   navbar:
     right:
       - href: index.qmd
@@ -13,17 +14,25 @@ website:
       - href: portfolio.qmd
         text: Portfolio
       - href: resume/Chirag_Sharma_Resume.pdf
-        text: Resume   
+        text: Resume
+      - icon: github # add icons that link to social media, etc.
+        href: https://github.com/Chirag1994
+      - icon: medium
+        href: https://medium.com/@chirag.sharma0378
+      - icon: linkedin
+        href: https://www.linkedin.com/in/chiragsharma1994/
+    page-footer: 
+      background: light
+      left: Copyright 2021, Chirag Sharma
+      right: This website is built by [Quarto](https://quarto.org/)          
 
 format:
   html:
-    theme:
-      light: flatly
-      dark: darkly
+    theme: 
+      - mystyle.scss
     css: styles.css
     page-layout: full
 
 comments: 
   giscus: 
     repo:  Chirag1994/chiragsharma.github.io
-
