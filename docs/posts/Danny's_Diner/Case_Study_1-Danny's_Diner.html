@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.340">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Chirag Sharma">
+<meta name="dcterms.date" content="2024-01-04">
+<meta name="description" content="In this post, we will solve an end-to-end an analytical case study using SQL.">
+
+<title>Chirag Sharma - Solving Case Study #1 - Danny’s diner using SQL</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon/icons8-darth-vader-512.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Chirag Sharma</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html" rel="" target="">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../posts.html" rel="" target="">
+ <span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../portfolio.html" rel="" target="">
+ <span class="menu-text">Portfolio</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../resume/Chirag_Sharma_Resume.pdf" rel="" target="">
+ <span class="menu-text">Resume</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/Chirag1994" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://medium.com/@chirag.sharma0378" rel="" target=""><i class="bi bi-medium" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/chiragsharma1994/" rel="" target=""><i class="bi bi-linkedin" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Solving Case Study #1 - Danny’s diner using SQL</h1>
+                  <div>
+        <div class="description">
+          In this post, we will solve an end-to-end an analytical case study using SQL.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">SQL</div>
+                <div class="quarto-category">MySQL</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Chirag Sharma </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">January 4, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#case-study-1---dannys-diner" id="toc-case-study-1---dannys-diner" class="nav-link active" data-scroll-target="#case-study-1---dannys-diner">Case Study #1 - Danny’s Diner</a>
+  <ul class="collapse">
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#problem-statement" id="toc-problem-statement" class="nav-link" data-scroll-target="#problem-statement">Problem Statement</a></li>
+  <li><a href="#entity-relationship-diagram" id="toc-entity-relationship-diagram" class="nav-link" data-scroll-target="#entity-relationship-diagram">Entity Relationship Diagram</a></li>
+  <li><a href="#example-datasets" id="toc-example-datasets" class="nav-link" data-scroll-target="#example-datasets">Example Datasets</a>
+  <ul class="collapse">
+  <li><a href="#table-1-sales" id="toc-table-1-sales" class="nav-link" data-scroll-target="#table-1-sales">Table 1: sales</a></li>
+  <li><a href="#table-2-menu" id="toc-table-2-menu" class="nav-link" data-scroll-target="#table-2-menu">Table 2: menu</a></li>
+  <li><a href="#table-3-members" id="toc-table-3-members" class="nav-link" data-scroll-target="#table-3-members">Table 3: members</a></li>
+  </ul></li>
+  <li><a href="#interactive-sql-session" id="toc-interactive-sql-session" class="nav-link" data-scroll-target="#interactive-sql-session">Interactive SQL Session</a></li>
+  <li><a href="#case-study-questions" id="toc-case-study-questions" class="nav-link" data-scroll-target="#case-study-questions">Case Study Questions</a></li>
+  <li><a href="#bonus-questions" id="toc-bonus-questions" class="nav-link" data-scroll-target="#bonus-questions">Bonus Questions</a>
+  <ul class="collapse">
+  <li><a href="#join-all-the-things" id="toc-join-all-the-things" class="nav-link" data-scroll-target="#join-all-the-things">Join All The Things</a></li>
+  <li><a href="#rank-all-the-things" id="toc-rank-all-the-things" class="nav-link" data-scroll-target="#rank-all-the-things">Rank All The Things</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="case-study-1---dannys-diner" class="level1">
+<h1>Case Study #1 - Danny’s Diner</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_1-Danny's_Diner_files/figure-html/039f5c6f-1-Case_study_1.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_1.png</figcaption>
+</figure>
+</div>
+<hr>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Danny seriously loves Japanese food so in the beginning of 2021, he decides to embark upon a risky venture and opens up a cute little restaurant that sells his 3 favourite foods: sushi, curry and ramen.</p>
+<p>Danny’s Diner is in need of your assistance to help the restaurant stay afloat - the restaurant has captured some very basic data from their few months of operation but have no idea how to use their data to help them run the business.</p>
+<hr>
+</section>
+<section id="problem-statement" class="level2">
+<h2 class="anchored" data-anchor-id="problem-statement">Problem Statement</h2>
+<p>Danny wants to use the data to answer a few simple questions about his customers, especially about their visiting patterns, how much money they’ve spent and also which menu items are their favourite. Having this deeper connection with his customers will help him deliver a better and more personalised experience for his loyal customers.</p>
+<p>He plans on using these insights to help him decide whether he should expand the existing customer loyalty program - additionally he needs help to generate some basic datasets so his team can easily inspect the data without needing to use SQL.</p>
+<p>Danny has provided you with a sample of his overall customer data due to privacy issues - but he hopes that these examples are enough for you to write fully functioning SQL queries to help him answer his questions!</p>
+<p>Danny has shared with you 3 key datasets for this case study:</p>
+<ul>
+<li><code>sales</code></li>
+<li><code>menu</code></li>
+<li><code>members</code></li>
+</ul>
+<p>You can inspect the entity relationship diagram and example data below.</p>
+<hr>
+</section>
+<section id="entity-relationship-diagram" class="level2">
+<h2 class="anchored" data-anchor-id="entity-relationship-diagram">Entity Relationship Diagram</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_1-Danny's_Diner_files/figure-html/15ceef36-1-Case_study_2-2.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2-2.png</figcaption>
+</figure>
+</div>
+<hr>
+</section>
+<section id="example-datasets" class="level2">
+<h2 class="anchored" data-anchor-id="example-datasets">Example Datasets</h2>
+<p>All datasets exist within the <code>dannys_diner</code> database schema - be sure to include this reference within your SQL scripts as you start exploring the data and answering the case study questions.</p>
+<section id="table-1-sales" class="level3">
+<h3 class="anchored" data-anchor-id="table-1-sales">Table 1: sales</h3>
+<p>The <code>sales</code> table captures all <code>customer_id</code> level purchases with an corresponding <code>order_date</code> and <code>product_id</code> information for when and what menu items were ordered.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>customer_id</th>
+<th>order_date</th>
+<th>product_id</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>2021-01-01</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>A</td>
+<td>2021-01-01</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>A</td>
+<td>2021-01-07</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>A</td>
+<td>2021-01-10</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td>A</td>
+<td>2021-01-11</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>A</td>
+<td>2021-01-11</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td>B</td>
+<td>2021-01-01</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>2021-01-02</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>B</td>
+<td>2021-01-04</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>2021-01-11</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>B</td>
+<td>2021-01-16</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>2021-02-01</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>2021-01-01</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>C</td>
+<td>2021-01-01</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>2021-01-07</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="table-2-menu" class="level3">
+<h3 class="anchored" data-anchor-id="table-2-menu">Table 2: menu</h3>
+<p>The <code>menu</code> table maps the <code>product_id</code> to the actual <code>product_name</code> and <code>price</code> of each menu item.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>product_id</th>
+<th>product_name</th>
+<th>price</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>sushi</td>
+<td>10</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>curry</td>
+<td>15</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>ramen</td>
+<td>12</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="table-3-members" class="level3">
+<h3 class="anchored" data-anchor-id="table-3-members">Table 3: members</h3>
+<p>The final <code>members</code> table captures the <code>join_date</code> when a <code>customer_id</code> joined the beta version of the Danny’s Diner loyalty program.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>customer_id</th>
+<th>join_date</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>2021-01-07</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>2021-01-09</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+</section>
+<section id="interactive-sql-session" class="level2">
+<h2 class="anchored" data-anchor-id="interactive-sql-session">Interactive SQL Session</h2>
+<p>The Dataset for this case study can be accessed from <a href="https://www.db-fiddle.com/f/2rM8RAnq7h5LLDTzZiRWcd/138">here</a>. I will be using MySQL to solve this case study. In order to solve yourself this case study, simply go to the above link and choose MySQL Dialect (version &gt; 8, if using MySQL version higher than 8 locally), copy &amp; paste the Database schema into MySQL.</p>
+<p>Here is the snapshot of it.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_1-Danny's_Diner_files/figure-html/bc7cb57d-1-Case_study_3.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_3.png</figcaption>
+</figure>
+</div>
+</section>
+<section id="case-study-questions" class="level2">
+<h2 class="anchored" data-anchor-id="case-study-questions">Case Study Questions</h2>
+<p>Each of the following case study questions can be answered using a single SQL statement:</p>
+<ul>
+<li><strong>1. What is the total amount each customer spent at the restaurant?</strong></li>
+</ul>
+<p><strong><code>Explanation</code></strong>: This SQL query selects each customer’s ID and the total amount they spent at the restaurant by combining sales and menu data, grouping the results by customer, and ordering them by the total amount spent in ascending order.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_1-Danny's_Diner_files/figure-html/7de6da78-1-Case_study_4.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_4.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>2. How many days has each customer visited the restaurant?</strong></li>
+</ul>
+<p><strong><code>Explanation</code></strong>: This SQL query counts the number of distinct days each customer has visited the restaurant by selecting customer IDs, counting unique order dates, grouping the results by customer, and ordering them by customer ID in ascending order.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_1-Danny's_Diner_files/figure-html/ad51dbfa-1-Case_study_5.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_5.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>3. What was the first item from the menu purchased by each customer?</strong></li>
+</ul>
+<p><strong><code>Explanation</code></strong>:</p>
+<p><strong><em>This SQL query identifies the first item purchased by each customer from the menu. Here’s a step-by-step breakdown:</em></strong></p>
+<p><strong>1) Creating a Temporary Table ‘item_purchased_by_customer’:</strong></p>
+<pre><code>WITH item_purchased_by_customer AS (
+SELECT 
+    SALES.customer_id as customer_id,
+    SALES.order_date as order_date,
+    MENU.product_name as product_name,
+    DENSE_RANK() OVER (PARTITION BY SALES.customer_id ORDER BY SALES.order_date) as `Dense_Rank`
+FROM SALES
+LEFT JOIN MENU ON SALES.product_id = MENU.product_id)</code></pre>
+<p>Creates a temporary table ‘item_purchased_by_customer’ with customer_id, order_date, product_name, and a Dense_Rank based on the order_date for each customer.</p>
+<p><strong>2) Selecting Customer ID and Product Name for the First Purchase:</strong></p>
+<pre><code>SELECT customer_id, product_name
+FROM item_purchased_by_customer
+WHERE `Dense_Rank` = 1
+GROUP BY customer_id, product_name;</code></pre>
+<p>Selects customer_id and product_name from the temporary table where the Dense_Rank is 1, indicating the first item purchased by each customer. The results are then grouped by customer_id and product_name for uniqueness.</p>
+<p><strong><code>Final Concise Explanation</code></strong>: This SQL query identifies the first item purchased by each customer by creating a temporary table with customer details, calculating a Dense_Rank based on the order date, and then selecting the records where Dense_Rank is 1. The final result is grouped by customer_id and product_name for uniqueness.</p>
+<p>The following is the SQL query for the question:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_1-Danny's_Diner_files/figure-html/896c42d4-1-Case_study_6.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_6.png</figcaption>
+</figure>
+</div>
+<p>The following is the output of the above SQL query:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_1-Danny's_Diner_files/figure-html/02d4fc97-1-Case_study_7.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_7.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>4. What is the most purchased item on the menu and how many times was it purchased by all customers?</strong></li>
+</ul>
+<p><strong><code>Explanation</code></strong>: This SQL query identifies the most purchased item on the menu by counting the occurrences of each product in the SALES table, grouping the results by product_name, and selecting the top result based on the highest purchase count.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_1-Danny's_Diner_files/figure-html/3a81488d-1-Case_study_8.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_8.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>5. Which item was the most popular for each customer?</strong></li>
+</ul>
+<p><strong><code>Explanation</code></strong>:</p>
+<p><strong><em>This SQL query aims to determine the most popular item for each customer. Here’s a step-by-step breakdown</em></strong>:</p>
+<p><strong>1) Creating a Temporary Table ‘most_popular’:</strong></p>
+<pre><code>WITH most_popular AS (
+SELECT SALES.customer_id,
+    MENU.product_name,
+    COUNT(MENU.product_name) AS order_cnt,
+    DENSE_RANK() OVER (PARTITION BY SALES.customer_id ORDER BY COUNT(SALES.customer_id) DESC) as `Dense_Rank`
+FROM SALES
+JOIN MENU ON MENU.product_id = SALES.product_id
+GROUP BY SALES.customer_id, MENU.product_name)</code></pre>
+<p>Creates a temporary table ‘most_popular’ with customer_id, product_name, the count of product_name occurrences (order_cnt), and a Dense_Rank based on the order count for each customer.</p>
+<p><strong>2) Selecting Customer ID, Product Name, and Order Count:</strong></p>
+<pre><code>SELECT customer_id, product_name, order_cnt
+FROM most_popular
+WHERE `Dense_Rank` = 1;</code></pre>
+<p>Selects customer_id, product_name, and order_cnt from the temporary table ‘most_popular’ where the Dense_Rank is 1, indicating the most popular item for each customer.</p>
+<p><strong><code>Final Concise Explanation</code></strong>: This SQL query identifies the most popular item for each customer by creating a temporary table with customer details, counting the occurrences of each product, calculating a Dense_Rank based on the order count, and then selecting the records where Dense_Rank is 1.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_1-Danny's_Diner_files/figure-html/783bfd6b-1-Case_study_9.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_9.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>6. Which item was purchased first by the customer after they became a member?</strong></li>
+</ul>
+<p><strong><code>Explanation</code></strong>:</p>
+<p><strong><em>This SQL query aims to find the first item purchased by each customer after they became a member. Here’s a step-by-step breakdown:</em></strong>:</p>
+<p><strong>1) Creating a Temporary Table ‘first_item_purchased’::</strong></p>
+<pre><code>WITH first_item_purchased AS (
+SELECT 
+    MEMBERS.customer_id AS customer_id,
+    SALES.product_id AS product_id,
+    DENSE_RANK() OVER (PARTITION BY MEMBERS.customer_id ORDER BY SALES.order_date ASC) AS DRank
+FROM MEMBERS
+JOIN SALES ON SALES.customer_id = MEMBERS.customer_id AND SALES.order_date &gt; MEMBERS.join_date)</code></pre>
+<p>Creates a temporary table ‘first_item_purchased’ with customer_id, product_id, and a Dense_Rank based on the order date for each customer, considering only sales that occurred after the customer joined as a member.</p>
+<p><strong>2) Selecting Customer ID and Product Name:</strong></p>
+<pre><code>SELECT first_item_purchased.customer_id AS customer_id, MENU.product_name 
+FROM first_item_purchased
+JOIN MENU ON first_item_purchased.product_id = MENU.product_id
+WHERE Drank = 1
+ORDER BY customer_id ASC;</code></pre>
+<p>Selects customer_id and product_name from the temporary table ‘first_item_purchased’ where the Dense_Rank is 1, indicating the first item purchased after becoming a member. The results are then joined with the MENU table to get the product names and ordered by customer_id.</p>
+<p><strong><code>Final Concise Explanation</code></strong>: This SQL query identifies the first item purchased by each customer after they became a member by creating a temporary table with customer details, calculating a Dense_Rank based on the order date, and selecting the records where Dense_Rank is 1. The results include customer_id and corresponding product_name, ordered by customer_id.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_1-Danny's_Diner_files/figure-html/5b0036ef-1-Case_study_10.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_10.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>7. Which item was purchased just before the customer became a member?</strong></li>
+</ul>
+<p><strong><code>Explanation</code></strong>:</p>
+<p><strong><em>This SQL query aims to identify the item purchased just before each customer became a member. Here’s a step-by-step breakdown:</em></strong>:</p>
+<p><strong>1) Creating a Temporary Table ‘first_item_purchased’:</strong></p>
+<pre><code>WITH first_item_purchased AS (
+SELECT 
+    MEMBERS.customer_id AS customer_id,
+    SALES.product_id AS product_id,
+    DENSE_RANK() OVER (PARTITION BY MEMBERS.customer_id ORDER BY SALES.order_date DESC) AS DRank
+FROM MEMBERS
+JOIN SALES ON SALES.customer_id = MEMBERS.customer_id AND SALES.order_date &lt; MEMBERS.join_date)</code></pre>
+<p>Creates a temporary table ‘first_item_purchased’ with customer_id, product_id, and a Dense_Rank based on the order date for each customer just before they became a member.</p>
+<p><strong>2) Selecting Customer ID and Product Name:</strong></p>
+<pre><code>SELECT first_item_purchased.customer_id AS customer_id, MENU.product_name 
+FROM first_item_purchased
+JOIN MENU ON first_item_purchased.product_id = MENU.product_id
+WHERE Drank = 1
+ORDER BY customer_id ASC;</code></pre>
+<p>Selects customer_id and product_name from the temporary table ‘first_item_purchased’ where the Dense_Rank is 1, indicating the item purchased just before becoming a member. It then joins with the MENU table to retrieve the product names.</p>
+<p><strong><code>Final Concise Explanation</code></strong>: This SQL query identifies the item purchased just before each customer became a member by creating a temporary table with customer details, calculating a Dense_Rank based on the order date (in descending order), and then selecting the records where Dense_Rank is 1. It then joins with the MENU table to retrieve the product names.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_1-Danny's_Diner_files/figure-html/7d19b9d2-1-Case_study_11.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_11.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>8. What is the total items and amount spent for each member before they became a member?</strong></li>
+</ul>
+<p><strong><code>Explanation</code></strong>: This SQL query selects the customer_id, counts total_items_purchased, and calculates the amount_spent by joining SALES, MEMBERS, and MENU tables, filtering based on the join_date, grouping by customer_id, and ordering the results by customer_id.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_1-Danny's_Diner_files/figure-html/c44f352e-1-Case_study_12.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_12.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>9. If each $1 spent equates to 10 points and sushi has a 2x points multiplier - how many points would each customer have?</strong></li>
+</ul>
+<p><strong><code>Explanation</code></strong>:</p>
+<p><strong><em>This SQL query calculates the total points each customer would have based on their purchases, considering a $1 spent as 10 points and applying a 2x points multiplier for sushi. Here’s a step-by-step breakdown:</em></strong></p>
+<p><strong>1) Creating a Temporary Table ‘cte’ with Points Calculation:</strong></p>
+<pre><code>WITH cte AS (
+SELECT 
+    MENU.product_id,
+    (CASE 
+        WHEN MENU.product_name = 'sushi' THEN 20 * MENU.price
+        ELSE 10 * MENU.price 
+     END) AS Points
+FROM MENU)</code></pre>
+<p>Creates a temporary table ‘cte’ with product_id and calculated Points based on the price, applying a 2x points multiplier for sushi.</p>
+<p><strong>2) Selecting Customer ID and Calculating Total Points:</strong></p>
+<pre><code>SELECT first_item_purchased.customer_id AS customer_id, MENU.product_name 
+FROM first_item_purchased
+JOIN MENU ON first_item_purchased.product_id = MENU.product_id
+WHERE Drank = 1
+ORDER BY customer_id ASC;</code></pre>
+<p>Selects the customer_id and calculates the Total_Points by summing the points from the temporary table ‘cte’ for each customer. The results are then grouped by customer_id and ordered by customer_id.</p>
+<p><strong><code>Final Concise Explanation</code></strong>: This SQL query calculates the total points each customer would have based on their purchases, considering a $1 spent as 10 points and applying a 2x points multiplier for sushi. It uses a temporary table for point calculations and then joins with the SALES table to sum the points for each customer. The results are grouped by customer_id and ordered by customer_id.</p>
+<p>The following is the SQL query for the question:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_1-Danny's_Diner_files/figure-html/f4dfcec8-1-Case_study_13.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_13.png</figcaption>
+</figure>
+</div>
+<p>The following is the output of the above SQL query:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_1-Danny's_Diner_files/figure-html/bfa1e608-1-Case_study_14.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_14.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>10. In the first week after a customer joins the program (including their join date) they earn 2x points on all items, not just sushi - how many points do customer A and B have at the end of January?</strong></li>
+</ul>
+</section>
+<section id="bonus-questions" class="level2">
+<h2 class="anchored" data-anchor-id="bonus-questions">Bonus Questions</h2>
+<section id="join-all-the-things" class="level3">
+<h3 class="anchored" data-anchor-id="join-all-the-things">Join All The Things</h3>
+<p>The following questions are related creating basic data tables that Danny and his team can use to quickly derive insights without needing to join the underlying tables using SQL.</p>
+<p>Recreate the following table output using the available data:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>customer_id</th>
+<th>order_date</th>
+<th>product_name</th>
+<th>price</th>
+<th>member</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>2021-01-01</td>
+<td>curry</td>
+<td>15</td>
+<td>N</td>
+</tr>
+<tr class="even">
+<td>A</td>
+<td>2021-01-01</td>
+<td>sushi</td>
+<td>10</td>
+<td>N</td>
+</tr>
+<tr class="odd">
+<td>A</td>
+<td>2021-01-07</td>
+<td>curry</td>
+<td>15</td>
+<td>Y</td>
+</tr>
+<tr class="even">
+<td>A</td>
+<td>2021-01-10</td>
+<td>ramen</td>
+<td>12</td>
+<td>Y</td>
+</tr>
+<tr class="odd">
+<td>A</td>
+<td>2021-01-11</td>
+<td>ramen</td>
+<td>12</td>
+<td>Y</td>
+</tr>
+<tr class="even">
+<td>A</td>
+<td>2021-01-11</td>
+<td>ramen</td>
+<td>12</td>
+<td>Y</td>
+</tr>
+<tr class="odd">
+<td>B</td>
+<td>2021-01-01</td>
+<td>curry</td>
+<td>15</td>
+<td>N</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>2021-01-02</td>
+<td>curry</td>
+<td>15</td>
+<td>N</td>
+</tr>
+<tr class="odd">
+<td>B</td>
+<td>2021-01-04</td>
+<td>sushi</td>
+<td>10</td>
+<td>N</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>2021-01-11</td>
+<td>sushi</td>
+<td>10</td>
+<td>Y</td>
+</tr>
+<tr class="odd">
+<td>B</td>
+<td>2021-01-16</td>
+<td>ramen</td>
+<td>12</td>
+<td>Y</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>2021-02-01</td>
+<td>ramen</td>
+<td>12</td>
+<td>Y</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>2021-01-01</td>
+<td>ramen</td>
+<td>12</td>
+<td>N</td>
+</tr>
+<tr class="even">
+<td>C</td>
+<td>2021-01-01</td>
+<td>ramen</td>
+<td>12</td>
+<td>N</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>2021-01-07</td>
+<td>ramen</td>
+<td>12</td>
+<td>N</td>
+</tr>
+</tbody>
+</table>
+<p>The following is the SQL query for the question:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_1-Danny's_Diner_files/figure-html/b3ab5725-1-Case_study_15.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_15.png</figcaption>
+</figure>
+</div>
+<p>The following is the output of the above executed SQL query:</p>
+<p><strong><code>Explanation</code></strong>: This SQL query recreates a table with columns customer_id, order_date, product_name, price, and member (Y/N). It combines information from the SALES, MEMBERS, and MENU tables, calculating the membership status based on the order_date and join_date. The results are ordered by customer_id and order_date for clarity.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_1-Danny's_Diner_files/figure-html/617f111b-1-Case_study_16.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_16.png</figcaption>
+</figure>
+</div>
+</section>
+<section id="rank-all-the-things" class="level3">
+<h3 class="anchored" data-anchor-id="rank-all-the-things">Rank All The Things</h3>
+<p>Danny also requires further information about the <code>ranking</code> of customer products, but he purposely does not need the ranking for non-member purchases so he expects null <code>ranking</code> values for the records when customers are not yet part of the loyalty program.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>customer_id</th>
+<th>order_date</th>
+<th>product_name</th>
+<th>price</th>
+<th>member</th>
+<th>ranking</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>2021-01-01</td>
+<td>curry</td>
+<td>15</td>
+<td>N</td>
+<td>null</td>
+</tr>
+<tr class="even">
+<td>A</td>
+<td>2021-01-01</td>
+<td>sushi</td>
+<td>10</td>
+<td>N</td>
+<td>null</td>
+</tr>
+<tr class="odd">
+<td>A</td>
+<td>2021-01-07</td>
+<td>curry</td>
+<td>15</td>
+<td>Y</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>A</td>
+<td>2021-01-10</td>
+<td>ramen</td>
+<td>12</td>
+<td>Y</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>A</td>
+<td>2021-01-11</td>
+<td>ramen</td>
+<td>12</td>
+<td>Y</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>A</td>
+<td>2021-01-11</td>
+<td>ramen</td>
+<td>12</td>
+<td>Y</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td>B</td>
+<td>2021-01-01</td>
+<td>curry</td>
+<td>15</td>
+<td>N</td>
+<td>null</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>2021-01-02</td>
+<td>curry</td>
+<td>15</td>
+<td>N</td>
+<td>null</td>
+</tr>
+<tr class="odd">
+<td>B</td>
+<td>2021-01-04</td>
+<td>sushi</td>
+<td>10</td>
+<td>N</td>
+<td>null</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>2021-01-11</td>
+<td>sushi</td>
+<td>10</td>
+<td>Y</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>B</td>
+<td>2021-01-16</td>
+<td>ramen</td>
+<td>12</td>
+<td>Y</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>2021-02-01</td>
+<td>ramen</td>
+<td>12</td>
+<td>Y</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>2021-01-01</td>
+<td>ramen</td>
+<td>12</td>
+<td>N</td>
+<td>null</td>
+</tr>
+<tr class="even">
+<td>C</td>
+<td>2021-01-01</td>
+<td>ramen</td>
+<td>12</td>
+<td>N</td>
+<td>null</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>2021-01-07</td>
+<td>ramen</td>
+<td>12</td>
+<td>N</td>
+<td>null</td>
+</tr>
+</tbody>
+</table>
+<p>The following is the SQL query to generate the above output:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_1-Danny's_Diner_files/figure-html/901975f5-1-Case_study_17-2.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_17-2.png</figcaption>
+</figure>
+</div>
+<p>Confirming the output from the above query, if it matches with the expected output.</p>
+<p><strong><code>Explanation</code></strong>:</p>
+<p><strong><em>This SQL query ranks customer products, providing null ranking values for records when customers are not yet part of the loyalty program. Here’s a step-by-step breakdown:</em></strong></p>
+<p><strong>1) Creating a Temporary Table ‘all_data’ with Additional Information:</strong></p>
+<pre><code>WITH all_data AS (
+SELECT 
+    SALES.customer_id, SALES.order_date, MENU.product_name, MENU.price,
+    CASE WHEN SALES.order_date &gt;= MEMBERS.join_date THEN 'Y' ELSE 'N' END AS `Member`
+FROM SALES 
+LEFT JOIN MENU ON SALES.product_id = MENU.product_id
+JOIN MEMBERS ON SALES.customer_id = MEMBERS.customer_id)</code></pre>
+<p>Creates a temporary table ‘all_data’ with customer_id, order_date, product_name, price, and the membership status (‘Y’ for joined members, ‘N’ for non-members) using a CASE statement based on the order_date and join_date.</p>
+<p><strong>2) Ranking Products for Members:</strong></p>
+<pre><code>SELECT all_data.*,
+CASE WHEN all_data.Member = 'Y' 
+     THEN RANK() OVER (PARTITION BY all_data.customer_id, all_data.member ORDER BY all_data.order_date) 
+     ELSE NULL 
+END AS 'ranking' 
+FROM all_data;</code></pre>
+<p>Selects all columns from the temporary table ‘all_data’ and calculates the ranking using the RANK() function over the order_date for each customer. If the customer is not a member (‘Y’), it assigns null to the ranking.</p>
+<p><strong><code>Final Concise Explanation</code></strong>: This SQL query ranks customer products, providing null ranking values for records when customers are not yet part of the loyalty program. It uses a temporary table to combine information from the SALES, MENU, and MEMBERS tables and applies the RANK() function over the order_date for members, assigning null to the ranking for non-members.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_1-Danny's_Diner_files/figure-html/ada781ea-1-Case_study_18-2.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_18-2.png</figcaption>
+</figure>
+</div>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="Chirag1994/chiragsharma.github.io" data-repo-id="R_kgDOJfJZmg" data-category="General" data-category-id="DIC_kwDOJfJZms4CWR8c" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
