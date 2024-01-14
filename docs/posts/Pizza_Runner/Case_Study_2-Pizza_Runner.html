@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.340">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Chirag Sharma">
+<meta name="dcterms.date" content="2024-01-05">
+<meta name="description" content="In this post, I will solve an end-to-end an analytical case study using SQL.">
+
+<title>Chirag Sharma - Solving Case Study #2 - Pizza Runner using SQL</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon/icons8-darth-vader-512.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Chirag Sharma</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html" rel="" target="">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../posts.html" rel="" target="">
+ <span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../portfolio.html" rel="" target="">
+ <span class="menu-text">Portfolio</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../resume/Chirag_Sharma_Resume.pdf" rel="" target="">
+ <span class="menu-text">Resume</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/Chirag1994" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://medium.com/@chirag.sharma0378" rel="" target=""><i class="bi bi-medium" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/chiragsharma1994/" rel="" target=""><i class="bi bi-linkedin" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Solving Case Study #2 - Pizza Runner using SQL</h1>
+                  <div>
+        <div class="description">
+          In this post, I will solve an end-to-end an analytical case study using SQL.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">SQL</div>
+                <div class="quarto-category">MySQL</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Chirag Sharma </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">January 5, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#case-study-2---pizza-runner" id="toc-case-study-2---pizza-runner" class="nav-link active" data-scroll-target="#case-study-2---pizza-runner">Case Study #2 - Pizza Runner</a>
+  <ul class="collapse">
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#available-data" id="toc-available-data" class="nav-link" data-scroll-target="#available-data">Available Data</a></li>
+  <li><a href="#entity-relationship-diagram" id="toc-entity-relationship-diagram" class="nav-link" data-scroll-target="#entity-relationship-diagram">Entity Relationship Diagram</a>
+  <ul class="collapse">
+  <li><a href="#table-1-runners" id="toc-table-1-runners" class="nav-link" data-scroll-target="#table-1-runners">Table 1: runners</a></li>
+  <li><a href="#table-2-customer_orders" id="toc-table-2-customer_orders" class="nav-link" data-scroll-target="#table-2-customer_orders">Table 2: customer_orders</a></li>
+  <li><a href="#table-3-runner_orders" id="toc-table-3-runner_orders" class="nav-link" data-scroll-target="#table-3-runner_orders">Table 3: runner_orders</a></li>
+  <li><a href="#table-4-pizza_names" id="toc-table-4-pizza_names" class="nav-link" data-scroll-target="#table-4-pizza_names">Table 4: pizza_names</a></li>
+  <li><a href="#table-5-pizza_recipes" id="toc-table-5-pizza_recipes" class="nav-link" data-scroll-target="#table-5-pizza_recipes">Table 5: pizza_recipes</a></li>
+  <li><a href="#table-6-pizza_toppings" id="toc-table-6-pizza_toppings" class="nav-link" data-scroll-target="#table-6-pizza_toppings">Table 6: pizza_toppings</a></li>
+  </ul></li>
+  <li><a href="#interactive-sql-session" id="toc-interactive-sql-session" class="nav-link" data-scroll-target="#interactive-sql-session">Interactive SQL Session</a></li>
+  <li><a href="#case-study-questions" id="toc-case-study-questions" class="nav-link" data-scroll-target="#case-study-questions">Case Study Questions</a>
+  <ul class="collapse">
+  <li><a href="#a.-pizza-metrics" id="toc-a.-pizza-metrics" class="nav-link" data-scroll-target="#a.-pizza-metrics">A. Pizza Metrics</a></li>
+  <li><a href="#b.-runner-and-customer-experience" id="toc-b.-runner-and-customer-experience" class="nav-link" data-scroll-target="#b.-runner-and-customer-experience">B. Runner and Customer Experience</a></li>
+  <li><a href="#c.-ingredient-optimisation" id="toc-c.-ingredient-optimisation" class="nav-link" data-scroll-target="#c.-ingredient-optimisation">C. Ingredient Optimisation</a></li>
+  <li><a href="#d.-pricing-and-ratings" id="toc-d.-pricing-and-ratings" class="nav-link" data-scroll-target="#d.-pricing-and-ratings">D. Pricing and Ratings</a></li>
+  <li><a href="#e.-bonus-questions" id="toc-e.-bonus-questions" class="nav-link" data-scroll-target="#e.-bonus-questions">E. Bonus Questions</a></li>
+  </ul></li>
+  <li><a href="#lets-start-solving-them." id="toc-lets-start-solving-them." class="nav-link" data-scroll-target="#lets-start-solving-them.">Let’s start solving them.</a>
+  <ul class="collapse">
+  <li><a href="#performing-the-data-cleaning-transformations-first" id="toc-performing-the-data-cleaning-transformations-first" class="nav-link" data-scroll-target="#performing-the-data-cleaning-transformations-first">Performing the Data Cleaning/ Transformations first!</a></li>
+  <li><a href="#a.-pizza-metrics-1" id="toc-a.-pizza-metrics-1" class="nav-link" data-scroll-target="#a.-pizza-metrics-1">A. Pizza Metrics</a></li>
+  <li><a href="#b.-runner-and-customer-experience-1" id="toc-b.-runner-and-customer-experience-1" class="nav-link" data-scroll-target="#b.-runner-and-customer-experience-1">B. Runner and Customer Experience</a></li>
+  <li><a href="#c.-ingredient-optimisation-1" id="toc-c.-ingredient-optimisation-1" class="nav-link" data-scroll-target="#c.-ingredient-optimisation-1">C. Ingredient Optimisation</a></li>
+  <li><a href="#d.-pricing-and-ratings-1" id="toc-d.-pricing-and-ratings-1" class="nav-link" data-scroll-target="#d.-pricing-and-ratings-1">D. Pricing and Ratings</a></li>
+  <li><a href="#e.-bonus-questions-1" id="toc-e.-bonus-questions-1" class="nav-link" data-scroll-target="#e.-bonus-questions-1">E. Bonus Questions</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="case-study-2---pizza-runner" class="level1">
+<h1>Case Study #2 - Pizza Runner</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/13e24384-1-Case_study_2_3.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_3.png</figcaption>
+</figure>
+</div>
+<hr>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Did you know that over <strong>115 million kilograms</strong> of pizza is consumed daily worldwide??? (Well according to Wikipedia anyway…)</p>
+<p>Danny was scrolling through his Instagram feed when something really caught his eye - “80s Retro Styling and Pizza Is The Future!”</p>
+<p>Danny was sold on the idea, but he knew that pizza alone was not going to help him get seed funding to expand his new Pizza Empire - so he had one more genius idea to combine with it - he was going to <strong><em>Uberize</em></strong> it - and so Pizza Runner was launched!</p>
+<p>Danny started by recruiting “runners” to deliver fresh pizza from Pizza Runner Headquarters (otherwise known as Danny’s house) and also maxed out his credit card to pay freelance developers to build a mobile app to accept orders from customers.</p>
+<hr>
+</section>
+<section id="available-data" class="level2">
+<h2 class="anchored" data-anchor-id="available-data">Available Data</h2>
+<p>Because Danny had a few years of experience as a data scientist - he was very aware that data collection was going to be critical for his business’ growth.</p>
+<p>He has prepared for us an entity relationship diagram of his database design but requires further assistance to clean his data and apply some basic calculations so he can better direct his runners and optimise Pizza Runner’s operations.</p>
+<p>All datasets exist within the <code>pizza_runner</code> database schema - be sure to include this reference within your SQL scripts as you start exploring the data and answering the case study questions.</p>
+<hr>
+</section>
+<section id="entity-relationship-diagram" class="level2">
+<h2 class="anchored" data-anchor-id="entity-relationship-diagram">Entity Relationship Diagram</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/71ff8aff-1-Case_study_2_1.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_1.png</figcaption>
+</figure>
+</div>
+<section id="table-1-runners" class="level3">
+<h3 class="anchored" data-anchor-id="table-1-runners">Table 1: runners</h3>
+<p>The <code>runners</code> table shows the <code>registration_date</code> for each new runner</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>runner_id</th>
+<th>registration_date</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>2021-01-01</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>2021-01-03</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>2021-01-08</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>2021-01-15</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="table-2-customer_orders" class="level3">
+<h3 class="anchored" data-anchor-id="table-2-customer_orders">Table 2: customer_orders</h3>
+<p>Customer pizza orders are captured in the <code>customer_orders</code> table with 1 row for each individual pizza that is part of the order.</p>
+<p>The <code>pizza_id</code> relates to the type of pizza which was ordered whilst the <code>exclusions</code> are the <code>ingredient_id</code> values which should be removed from the pizza and the <code>extras</code> are the <code>ingredient_id</code> values which need to be added to the pizza.</p>
+<p>Note that customers can order multiple pizzas in a single order with varying <code>exclusions</code> and <code>extras</code> values even if the pizza is the same type!</p>
+<p>The <code>exclusions</code> and <code>extras</code> columns will need to be cleaned up before using them in your queries.</p>
+<table class="table">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 17%">
+<col style="width: 13%">
+<col style="width: 16%">
+<col style="width: 10%">
+<col style="width: 28%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>order_id</th>
+<th>customer_id</th>
+<th>pizza_id</th>
+<th>exclusions</th>
+<th>extras</th>
+<th>order_time</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>101</td>
+<td>1</td>
+<td></td>
+<td></td>
+<td>2021-01-01 18:05:02</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>101</td>
+<td>1</td>
+<td></td>
+<td></td>
+<td>2021-01-01 19:00:52</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>102</td>
+<td>1</td>
+<td></td>
+<td></td>
+<td>2021-01-02 23:51:23</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>102</td>
+<td>2</td>
+<td>NaN</td>
+<td></td>
+<td>2021-01-02 23:51:23</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>103</td>
+<td>1</td>
+<td>4</td>
+<td></td>
+<td>2021-01-04 13:23:46</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>103</td>
+<td>1</td>
+<td>4</td>
+<td></td>
+<td>2021-01-04 13:23:46</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>103</td>
+<td>2</td>
+<td>4</td>
+<td></td>
+<td>2021-01-04 13:23:46</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>104</td>
+<td>1</td>
+<td>null</td>
+<td>1</td>
+<td>2021-01-08 21:00:29</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td>101</td>
+<td>2</td>
+<td>null</td>
+<td>null</td>
+<td>2021-01-08 21:03:13</td>
+</tr>
+<tr class="even">
+<td>7</td>
+<td>105</td>
+<td>2</td>
+<td>null</td>
+<td>1</td>
+<td>2021-01-08 21:20:29</td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td>102</td>
+<td>1</td>
+<td>null</td>
+<td>null</td>
+<td>2021-01-09 23:54:33</td>
+</tr>
+<tr class="even">
+<td>9</td>
+<td>103</td>
+<td>1</td>
+<td>4</td>
+<td>1, 5</td>
+<td>2021-01-10 11:22:59</td>
+</tr>
+<tr class="odd">
+<td>10</td>
+<td>104</td>
+<td>1</td>
+<td>null</td>
+<td>null</td>
+<td>2021-01-11 18:34:49</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>104</td>
+<td>1</td>
+<td>2, 6</td>
+<td>1, 4</td>
+<td>2021-01-11 18:34:49</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="table-3-runner_orders" class="level3">
+<h3 class="anchored" data-anchor-id="table-3-runner_orders">Table 3: runner_orders</h3>
+<p>After each orders are received through the system - they are assigned to a runner - however not all orders are fully completed and can be cancelled by the restaurant or the customer.</p>
+<p>The <code>pickup_time</code> is the timestamp at which the runner arrives at the Pizza Runner headquarters to pick up the freshly cooked pizzas. The <code>distance</code> and <code>duration</code> fields are related to how far and long the runner had to travel to deliver the order to the respective customer.</p>
+<p>There are some known data issues with this table so be careful when using this in your queries - make sure to check the data types for each column in the schema SQL!</p>
+<table class="table">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 12%">
+<col style="width: 25%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 28%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>order_id</th>
+<th>runner_id</th>
+<th>pickup_time</th>
+<th>distance</th>
+<th>duration</th>
+<th>cancellation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>1</td>
+<td>2021-01-01 18:15:34</td>
+<td>20km</td>
+<td>32 minutes</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>1</td>
+<td>2021-01-01 19:10:54</td>
+<td>20km</td>
+<td>27 minutes</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>1</td>
+<td>2021-01-03 00:12:37</td>
+<td>13.4km</td>
+<td>20 mins</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>2</td>
+<td>2021-01-04 13:53:03</td>
+<td>23.4</td>
+<td>40</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>3</td>
+<td>2021-01-08 21:10:57</td>
+<td>10</td>
+<td>15</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>3</td>
+<td>null</td>
+<td>null</td>
+<td>null</td>
+<td>Restaurant Cancellation</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>2</td>
+<td>2020-01-08 21:30:45</td>
+<td>25km</td>
+<td>25mins</td>
+<td>null</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>2</td>
+<td>2020-01-10 00:15:02</td>
+<td>23.4 km</td>
+<td>15 minute</td>
+<td>null</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>2</td>
+<td>null</td>
+<td>null</td>
+<td>null</td>
+<td>Customer Cancellation</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>1</td>
+<td>2020-01-11 18:50:20</td>
+<td>10km</td>
+<td>10 minutes</td>
+<td>null</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="table-4-pizza_names" class="level3">
+<h3 class="anchored" data-anchor-id="table-4-pizza_names">Table 4: pizza_names</h3>
+<p>At the moment - Pizza Runner only has 2 pizzas available the Meat Lovers or Vegetarian!</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>pizza_id</th>
+<th>pizza_name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Meat Lovers</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Vegetarian</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="table-5-pizza_recipes" class="level3">
+<h3 class="anchored" data-anchor-id="table-5-pizza_recipes">Table 5: pizza_recipes</h3>
+<p>Each <code>pizza_id</code> has a standard set of <code>toppings</code> which are used as part of the pizza recipe.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>pizza_id</th>
+<th>toppings</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>1, 2, 3, 4, 5, 6, 8, 10</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>4, 6, 7, 9, 11, 12</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="table-6-pizza_toppings" class="level3">
+<h3 class="anchored" data-anchor-id="table-6-pizza_toppings">Table 6: pizza_toppings</h3>
+<p>This table contains all of the topping_name values with their corresponding topping_id value</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>topping_id</th>
+<th>topping_name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Bacon</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>BBQ Sauce</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Beef</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Cheese</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Chicken</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Mushrooms</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>Onions</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>Pepperoni</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>Peppers</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>Salami</td>
+</tr>
+<tr class="odd">
+<td>11</td>
+<td>Tomatoes</td>
+</tr>
+<tr class="even">
+<td>12</td>
+<td>Tomato Sauce</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="interactive-sql-session" class="level2">
+<h2 class="anchored" data-anchor-id="interactive-sql-session">Interactive SQL Session</h2>
+<p>The Dataset for this case study can be accessed from <a href="https://www.db-fiddle.com/f/7VcQKQwsS3CTkGRFG7vu98/65">here</a>. I will be using MySQL to solve this case study. In order to solve yourself this case study, simply go to the above link and choose MySQL Dialect (version &gt; 8, if using MySQL version higher than 8 locally), copy &amp; paste the Database schema into MySQL.</p>
+<p>Here is the snapshot of it.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/728b623f-1-Case_study_2_2.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_2.png</figcaption>
+</figure>
+</div>
+</section>
+<section id="case-study-questions" class="level2">
+<h2 class="anchored" data-anchor-id="case-study-questions">Case Study Questions</h2>
+<p>This case study has <strong>LOTS</strong> of questions - they are broken up by area of focus including:</p>
+<ul>
+<li><strong>Pizza Metrics</strong></li>
+<li><strong>Runner and Customer Experience</strong></li>
+<li><strong>Ingredient Optimisation</strong></li>
+<li><strong>Pricing and Ratings</strong></li>
+<li><strong>Bonus DML Challenges (DML = Data Manipulation Language)</strong></li>
+</ul>
+<p>Each of the following case study questions can be answered using a single SQL statement.</p>
+<p>Again, there are many questions in this case study - please feel free to pick and choose which ones you’d like to try!</p>
+<p>Before you start writing your SQL queries however - you might want to investigate the data, you may want to do something with some of those <code>null</code> values and data types in the <code>customer_orders</code> and <code>runner_orders</code> tables!</p>
+<section id="a.-pizza-metrics" class="level3">
+<h3 class="anchored" data-anchor-id="a.-pizza-metrics">A. Pizza Metrics</h3>
+<ol type="1">
+<li><p>How many pizzas were ordered?</p></li>
+<li><p>How many unique customer orders were made?</p></li>
+<li><p>How many successful orders were delivered by each runner?</p></li>
+<li><p>How many of each type of pizza was delivered?</p></li>
+<li><p>How many Vegetarian and Meatlovers were ordered by each customer?</p></li>
+<li><p>What was the maximum number of pizzas delivered in a single order?</p></li>
+<li><p>For each customer, how many delivered pizzas had at least 1 change and how many had no changes?</p></li>
+<li><p>How many pizzas were delivered that had both exclusions and extras?</p></li>
+<li><p>What was the total volume of pizzas ordered for each hour of the day?</p></li>
+<li><p>What was the volume of orders for each day of the week?</p></li>
+</ol>
+</section>
+<section id="b.-runner-and-customer-experience" class="level3">
+<h3 class="anchored" data-anchor-id="b.-runner-and-customer-experience">B. Runner and Customer Experience</h3>
+<ol type="1">
+<li><p>How many runners signed up for each 1 week period? (i.e.&nbsp;week starts <code>2021-01-01</code>).</p></li>
+<li><p>What was the average time in minutes it took for each runner to arrive at the Pizza Runner HQ to pickup the order?</p></li>
+<li><p>Is there any relationship between the number of pizzas and how long the order takes to prepare?</p></li>
+<li><p>What was the average distance travelled for each customer?</p></li>
+<li><p>What was the difference between the longest and shortest delivery times for all orders?</p></li>
+<li><p>What was the average speed for each runner for each delivery and do you notice any trend for these values?</p></li>
+<li><p>What is the successful delivery percentage for each runner?</p></li>
+</ol>
+</section>
+<section id="c.-ingredient-optimisation" class="level3">
+<h3 class="anchored" data-anchor-id="c.-ingredient-optimisation">C. Ingredient Optimisation</h3>
+<ol type="1">
+<li><p>What are the standard ingredients for each pizza?</p></li>
+<li><p>What was the most commonly added extra?</p></li>
+<li><p>What was the most common exclusion?</p></li>
+<li><p>Generate an order item for each record in the <code>customers_orders</code> table in the format of one of the following:</p>
+<ul>
+<li><code>Meat Lovers</code></li>
+<li><code>Meat Lovers - Exclude Beef</code></li>
+<li><code>Meat Lovers - Extra Bacon</code></li>
+<li><code>Meat Lovers - Exclude Cheese, Bacon - Extra Mushroom, Peppers</code></li>
+</ul></li>
+<li><p>Generate an alphabetically ordered comma separated ingredient list for each pizza order from the <code>customer_orders</code> table and add a 2x in front of any relevant ingredients</p>
+<ul>
+<li><code>For example: "Meat Lovers: 2xBacon, Beef, ... , Salami"</code>.</li>
+</ul></li>
+<li><p>What is the total quantity of each ingredient used in all delivered pizzas sorted by most frequent first?</p></li>
+</ol>
+</section>
+<section id="d.-pricing-and-ratings" class="level3">
+<h3 class="anchored" data-anchor-id="d.-pricing-and-ratings">D. Pricing and Ratings</h3>
+<ol type="1">
+<li><p>If a Meat Lovers pizza costs \$12 and Vegetarian costs \$10 and there were no charges for changes - how much money has Pizza Runner made so far if there are no delivery fees?</p></li>
+<li><p>What if there was an additional \$1 charge for any pizza extras?</p>
+<ul>
+<li>Add cheese is \$1 extra</li>
+</ul></li>
+<li><p>The Pizza Runner team now wants to add an additional ratings system that allows customers to rate their runner, how would you design an additional table for this new dataset - generate a schema for this new table and insert your own data for ratings for each successful customer order between 1 to 5.</p></li>
+<li><p>Using your newly generated table - can you join all of the information together to form a table which has the following information for successful deliveries?</p>
+<ul>
+<li><code>customer_id</code></li>
+<li><code>order_id</code></li>
+<li><code>runner_id</code></li>
+<li><code>rating</code></li>
+<li><code>order_time</code></li>
+<li><code>pickup_time</code></li>
+<li><code>Time between order and pickup</code></li>
+<li><code>Delivery duration</code></li>
+<li><code>Average speed</code></li>
+<li><code>Total number of pizzas</code></li>
+</ul></li>
+<li><p>If a Meat Lovers pizza was \$12 and Vegetarian \$10 fixed prices with no cost for extras and each runner is paid $0.30 per kilometre traveled - how much money does Pizza Runner have left over after these deliveries?</p></li>
+</ol>
+</section>
+<section id="e.-bonus-questions" class="level3">
+<h3 class="anchored" data-anchor-id="e.-bonus-questions">E. Bonus Questions</h3>
+<p>If Danny wants to expand his range of pizzas - how would this impact the existing data design? Write an <code>INSERT</code> statement to demonstrate what would happen if a new <code>Supreme</code> pizza with all the toppings was added to the Pizza Runner menu?</p>
+</section>
+</section>
+<section id="lets-start-solving-them." class="level2">
+<h2 class="anchored" data-anchor-id="lets-start-solving-them.">Let’s start solving them.</h2>
+<section id="performing-the-data-cleaning-transformations-first" class="level3">
+<h3 class="anchored" data-anchor-id="performing-the-data-cleaning-transformations-first">Performing the Data Cleaning/ Transformations first!</h3>
+<p><strong>Cleaning the Customer_Orders table</strong></p>
+<p><strong><code>Explanation</code></strong>:</p>
+<p><strong><em>The provided SQL script is focused on cleaning and transforming the <code>customer_orders</code> table in the <code>pizza_runner</code> database. The script involves creating a temporary table named <code>customer_orders_temp</code> with specific modifications to handle cases where certain columns may have null or ‘null’ values.</em></strong></p>
+<p><strong>1) Cleaning Customer_Orders Table:</strong></p>
+<pre><code>-- Cleaning Customer_Orders Table
+USE pizza_runner;
+
+-- Drop the temporary table if it exists
+DROP TABLE IF EXISTS customer_orders_temp;
+
+-- Create a temporary table with cleaned data
+CREATE TEMPORARY TABLE customer_orders_temp AS
+SELECT 
+    order_id,
+    customer_id,
+    pizza_id,
+    CASE WHEN exclusions IS NULL OR exclusions LIKE 'null' THEN ''
+        ELSE exclusions END AS exclusions,
+    CASE WHEN extras IS NULL OR extras LIKE 'null' THEN ''
+        ELSE extras END AS extras,
+    order_time
+FROM customer_orders;</code></pre>
+<p><strong><code>Step-by-Step Explanation:</code></strong></p>
+<p><strong>1) Database Selection:</strong></p>
+<pre><code>- `USE pizza_runner`: Specifies the `pizza_runner` database for subsequent operations.</code></pre>
+<p><strong>2) Drop Existing Temporary Table:</strong></p>
+<pre><code>- `DROP TABLE IF EXISTS customer_orders_temp`: Drops the temporary table `customer_orders_temp` if it already exists. This ensures a clean slate for creating the table.</code></pre>
+<p><strong>3) Temporary Table Creation:</strong></p>
+<pre><code>- `CREATE TEMPORARY TABLE customer_orders_temp AS`: Initiates the creation of a new temporary table named `customer_orders_temp`</code></pre>
+<p><strong>4) Data Transformation with CASE Statements:</strong></p>
+<pre><code>- `CASE WHEN exclusions IS NULL OR exclusions LIKE 'null' THEN '' ELSE exclusions END AS exclusions`: Replaces null or 'null' values in the `exclusions` column with an empty string.
+- `CASE WHEN extras IS NULL OR extras LIKE 'null' THEN '' ELSE extras END AS extras`: Replaces null or 'null' values in the `extras column with an empty string.</code></pre>
+<p><strong>5) Column Selection:</strong></p>
+<pre><code>- `SELECT order_id, customer_id, pizza_id, exclusions, extras, order_time FROM customer_orders_temp`: Selects specific columns from the customer_orders_temp table.</code></pre>
+<p><strong><code>Final Concise Explanation</code></strong>: This script is useful for cleaning up potential inconsistencies or issues in the <code>customer_orders</code> table related to the <code>exclusions</code> and <code>extras</code> columns, making the data more consistent and ready for further analysis. The use of a temporary table helps avoid permanent changes to the original data.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/dbcf86da-1-Case_study_2_4.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_4.png</figcaption>
+</figure>
+</div>
+<p>The output of the above query looks like:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/ee40306c-1-Case_study_2_22.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_22.png</figcaption>
+</figure>
+</div>
+<p><strong>Cleaning the Runner_Orders table</strong></p>
+<p><strong><code>Explanation</code></strong>:</p>
+<p><strong><em>The provided SQL script is focused on cleaning and transforming the <code>runner_orders</code> table in the <code>pizza_runner</code> database. The script involves creating a temporary table named <code>runner_orders_temp</code> with specific modifications to handle cases where certain columns may have ‘null’ or inconsistent values.</em></strong></p>
+<p><strong>1) Cleaning Runner_Orders Table:</strong></p>
+<pre><code>-- Cleaning Runner_Orders Table
+DROP TABLE IF EXISTS runner_orders_temp;
+
+CREATE TEMPORARY TABLE runner_orders_temp AS
+SELECT 
+    order_id,
+    runner_id,
+    CAST(CASE WHEN pickup_time LIKE "null" THEN NULL ELSE pickup_time END AS DATETIME) AS pickup_time,
+    CAST(CASE WHEN distance LIKE "null" THEN NULL WHEN distance LIKE '%km' THEN TRIM('km' FROM distance)
+        ELSE distance END AS FLOAT) AS distance,
+    CAST(CASE WHEN duration LIKE "null" THEN NULL
+        WHEN duration LIKE '%minutes' THEN TRIM('minutes' FROM duration)
+        WHEN duration LIKE '%minute' THEN TRIM('minute' FROM duration)
+        WHEN duration LIKE '%mins' THEN TRIM('mins' FROM duration)
+        ELSE duration END AS FLOAT) AS duration,
+    CASE WHEN cancellation IN ('', 'null', 'NaN') THEN NULL
+        ELSE cancellation END AS cancellation
+    FROM runner_orders;</code></pre>
+<p><strong><code>Step-by-Step Explanation:</code></strong></p>
+<p><strong>1) Drop Existing Temporary Table:</strong></p>
+<pre><code>- DROP TABLE IF EXISTS runner_orders_temp: Drops the temporary table `runner_orders_temp` if it already exists. This ensures a clean slate for creating the table.</code></pre>
+<p><strong>2) Temporary Table Creation:</strong></p>
+<pre><code>- CREATE TEMPORARY TABLE runner_orders_temp AS: Initiates the creation of a new temporary table named `runner_orders_temp`</code></pre>
+<p><strong>3) Data Transformation with CASE Statements:</strong></p>
+<pre><code>- CAST(CASE WHEN pickup_time LIKE "null" THEN NULL ELSE pickup_time END AS DATETIME) AS pickup_time: Converts the pickup_time column to a DATETIME type, handling cases where the value is 'null'.
+- CAST(CASE WHEN distance LIKE "null" THEN NULL WHEN distance LIKE '%km' THEN TRIM('km' FROM distance) ELSE distance END AS FLOAT) AS distance: Converts the distance column to FLOAT, handling cases where the value is 'null' or includes 'km'.
+- CAST(CASE WHEN duration LIKE "null" THEN NULL WHEN duration LIKE '%minutes' THEN TRIM('minutes' FROM duration) WHEN duration LIKE '%minute' THEN TRIM('minute' FROM duration) WHEN duration LIKE '%mins' THEN TRIM('mins' FROM duration) ELSE duration END AS FLOAT) AS duration: Converts the duration column to FLOAT, handling cases where the value is 'null' or includes various forms of minutes.</code></pre>
+<p><strong>4) Handling Cancellation Values:</strong></p>
+<pre><code>- CASE WHEN cancellation IN ('', 'null', 'NaN') THEN NULL ELSE cancellation END AS cancellation: Replaces empty, 'null', or 'NaN' values in the cancellation column with NULL.</code></pre>
+<p><strong>5) Column Selection:</strong></p>
+<pre><code>- SELECT order_id, runner_id, pickup_time, distance, duration, cancellation FROM runner_orders_temp: Selects specific columns from the runner_orders_temp table.</code></pre>
+<p><strong><code>Final Concise Explanation</code></strong>: This script aims to handle inconsistencies and ‘null’ values in the <code>runner_orders</code> table, making the data more consistent and suitable for further analysis. The use of a temporary table ensures that the original data remains unchanged.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/65ab8b8a-1-Case_study_2_22.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_22.png</figcaption>
+</figure>
+</div>
+<p>The output of the above query looks like:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/c0c7fba0-1-Case_study_2_29.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_29.png</figcaption>
+</figure>
+</div>
+<p><strong>Changing the Data Types of columns in runner_orders TABLE</strong></p>
+<p><strong><code>Explanation</code></strong>: This query modifies the data types in the runner_orders_temp table:</p>
+<ul>
+<li><code>pickup_time</code> is changed to a DATETIME type for date and time values.</li>
+<li><code>distance</code> and <code>duration</code> are changed to FLOAT types for decimal number representation.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/d6eaf5e4-1-Case_study_2_6.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_6.png</figcaption>
+</figure>
+</div>
+</section>
+<section id="a.-pizza-metrics-1" class="level3">
+<h3 class="anchored" data-anchor-id="a.-pizza-metrics-1">A. Pizza Metrics</h3>
+<ul>
+<li><strong>1. How many pizzas were ordered?</strong></li>
+</ul>
+<p><strong><code>Explanation</code></strong>: The provided SQL query is aimed at calculating the total number of pizzas that were ordered.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/2b3c6be3-1-Case_study_2_7.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_7.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>2. How many unique customer orders were made?</strong></li>
+</ul>
+<p><strong><code>Explnation</code></strong>: This query provides insight into the number of distinct customer orders, offering a measure of the variety and uniqueness of orders within the dataset. The use of <code>DISTINCT</code> ensures that each <code>order_id</code> is counted only once in the calculation.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/81dde3d2-1-Case_study_2_7.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_7.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>3. How many successful orders were delivered by each runner?</strong></li>
+</ul>
+<p><strong><code>Explanation</code></strong>: The provided SQL query is intended to determine the number of successful orders delivered by each runner. The query produces a list of <code>runner_id</code> values along with the count of successful deliveries for each runner, where successful deliveries are identified by a non-zero distance.</p>
+<p>This information provides insights into the performance of each runner in terms of successfully delivering orders.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/0ffc4b95-1-Case_study_2_9.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_9.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>4. How many of each type of pizza was delivered?</strong></li>
+</ul>
+<p><strong><code>Explnation</code></strong>: The provided SQL query is intended to determine the number of each type of pizza that was delivered.The query produces a list of pizza_name values along with the count of successful deliveries for each type of pizza, where successful deliveries are identified by a non-zero distance.</p>
+<p>This information provides insights into the popularity or demand for each type of pizza among delivered orders.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/4ac7d29c-1-Case_study_2_10.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_10.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>5. How many Vegetarian and Meatlovers were ordered by each customer?</strong></li>
+</ul>
+<p><strong><code>Explanation</code></strong>: The provided SQL query is intended to determine the count of Vegetarian and Meatlovers pizzas ordered by each customer.</p>
+<p>The query produces a list of <code>customer_id</code>, <code>pizza_name</code>, and the count of orders (<code>order_cnt</code>) for each combination of customer and pizza type. This information provides insights into the ordering preferences of each customer, specifically regarding the number of Vegetarian and Meatlovers pizzas ordered.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/65eee03f-1-Case_study_2_11.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_11.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>6. What was the maximum number of pizzas delivered in a single order?</strong></li>
+</ul>
+<p><strong><code>Explanation</code></strong>: The provided SQL query aims to determine the maximum number of pizzas delivered in a single order.</p>
+<p>The query produces a list of <code>order_id</code> and the count of pizzas (<code>pizza_cnt</code>) for each order. The results are ordered in descending order of pizza count, allowing you to identify the order with the maximum number of pizzas delivered.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/3d67fe8e-1-Case_study_2_12.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_12.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>7. For each customer, how many delivered pizzas had at least 1 change and how many had no changes?</strong></li>
+</ul>
+<p><strong><code>Explanation</code></strong>: The given query is analyzing customer orders, specifically focusing on delivered pizzas, to understand how many pizzas for each customer had at least one change (exclusions or extras) and how many had no changes.</p>
+<p>This query helps identify customer preferences for customized pizzas. Customers with higher counts in the ‘Change’ column may prefer pizzas with modifications, while those with higher counts in the ‘No_Change’ column prefer pizzas without any changes. It offers insights into the distribution of delivered pizzas based on customization preferences among customers.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/9f51ce41-1-Case_study_2_30.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_30.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>8. How many pizzas were delivered that had both exclusions and extras?</strong></li>
+</ul>
+<p><strong><code>Explanation</code></strong>: This query analyzes delivered pizzas to find out how many had both exclusions and extras.</p>
+<p>The query provides insights into the number of delivered pizzas for each customer that had both exclusions and extras. It helps understand how often customers choose to customize their pizzas with both exclusions and extras in a single order.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/0da42bdf-1-Case_study_2_31.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_31.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>9. What was the total volume of pizzas ordered for each hour of the day?</strong></li>
+</ul>
+<p><strong><code>Explanation</code></strong>: The query provides insights into the total volume of pizzas ordered for each hour of the day. It helps identify peak hours of pizza orders, allowing businesses to optimize staffing and resources accordingly.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/0e1e41ac-1-Case_study_2_15.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_15.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>10. What was the volume of orders for each day of the week?</strong></li>
+</ul>
+<p><strong><code>Explanation</code></strong>: The query provides insights into the volume of orders for each day of the week. It helps identify trends and patterns in customer ordering behavior throughout the week, aiding businesses in adjusting operations and promotions accordingly.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/27d5fdb2-1-Case_study_2_16.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_16.png</figcaption>
+</figure>
+</div>
+</section>
+<section id="b.-runner-and-customer-experience-1" class="level3">
+<h3 class="anchored" data-anchor-id="b.-runner-and-customer-experience-1">B. Runner and Customer Experience</h3>
+<ul>
+<li><strong>1. How many runners signed up for each 1 week period? (i.e.&nbsp;week starts <code>2021-01-01</code>).</strong></li>
+</ul>
+<p><strong><code>Explanation</code></strong>: The query provides insights into the number of runners who signed up for each one-week period. This information can be useful for understanding the trends in runner sign-ups over time and evaluating the effectiveness of marketing or recruitment efforts.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/41804d54-1-Case_study_2_32.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_32.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>2. What was the average time in minutes it took for each runner to arrive at the Pizza Runner HQ to pickup the order?</strong></li>
+</ul>
+<p><strong><code>Explanation</code></strong>: <strong><em>This query calculates the average time in minutes it took for each runner to arrive at Pizza Runner HQ to pick up the order. Here’s a step-by-step explanation:</em></strong></p>
+<p><strong>1) Creation of Temporary Table (Common Table Expression - CTE):</strong></p>
+<pre><code>- WITH runners_pick_cte AS (...): Defines a CTE named runners_pick_cte to calculate the average pickup time for each runner.
+- Subquery inside CTE:
+    - SELECT runner_id, ROUND(AVG(TIMESTAMPDIFF(MINUTE, order_time, pickup_time)),2) AS avg_time: Calculates the average time difference in minutes between the order_time and pickup_time for each runner.
+    - FROM runner_orders_temp JOIN customer_orders_temp ON ...: Joins the runner_orders_temp and customer_orders_temp tables based on the order ID to get relevant information.
+    - WHERE runner_orders_temp.distance != 0: Filters out cases where the distance is 0, ensuring only successful deliveries are considered.
+    - GROUP BY runner_id: Groups the results by runner_id.
+    </code></pre>
+<p><strong>2) Main Query:</strong></p>
+<pre><code>- SELECT ROUND(AVG(avg_time),0) AS avg_pick_time FROM runners_pick_cte: Calculates the overall average pickup time by rounding the average pickup times from the CTE to the nearest whole number.</code></pre>
+<p><strong><code>Final Concise Explanation</code></strong>: The query provides insights into the average time it took for each runner to arrive at Pizza Runner HQ for order pickups. The result is the overall average pickup time rounded to the nearest whole number. This information can be valuable for evaluating the efficiency of runners in fulfilling orders.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/b5723f01-1-Case_study_2_17.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_17.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>3. Is there any relationship between the number of pizzas and how long the order takes to prepare?</strong></li>
+</ul>
+<p><strong><code>Explanation</code></strong>: <strong><em>This query aims to investigate the relationship between the number of pizzas in an order and the time it takes to prepare that order.</em></strong></p>
+<p><strong>1) Creation of Temporary Table (Common Table Expression - CTE):</strong></p>
+<pre><code>- WITH order_count_cte AS (...): Defines a CTE named order_count_cte to calculate the count of pizzas in each order (pizza_order_count) and the average time to prepare each order (avg_time_to_prepare).
+- Subquery inside CTE:
+    - SELECT customer_orders_temp.order_id, COUNT(customer_orders_temp.order_id) AS pizza_order_count, ...: Counts the number of pizzas in each order and calculates the average time to prepare each order.
+    - FROM runner_orders_temp JOIN customer_orders_temp ON ...: Joins the runner_orders_temp and customer_orders_temp tables based on the order ID to get relevant information.
+    - WHERE pickup_time IS NOT NULL: Filters out cases where the pickup time is not available, ensuring only successfully delivered orders are considered.
+    - GROUP BY customer_orders_temp.order_id: Groups the results by order ID.
+    </code></pre>
+<p><strong>2) Main Query:</strong></p>
+<pre><code>- SELECT pizza_order_count, ROUND(AVG(avg_time_to_prepare),2) AS avg_time_to_prepare FROM order_count_cte GROUP BY pizza_order_count;: Calculates the average time to prepare orders for each count of pizzas (pizza_order_count).</code></pre>
+<p><strong><code>Final Concise Explanation</code></strong>: The query helps explore whether there is any correlation between the number of pizzas in an order and the time it takes to prepare that order. The result provides insights into the average preparation time based on the count of pizzas in the order. Analyzing this information can be valuable for understanding the efficiency of order preparation processes based on the order size.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/097fe738-1-Case_study_2_18.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_18.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>4. What was the average distance travelled for each customer?</strong></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/9f7ecf75-1-Case_study_2_20.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_20.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>5. What was the difference between the longest and shortest delivery times for all orders?</strong></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/4f080b13-1-Case_study_2_33.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_33.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><p><strong>6. What was the average speed for each runner for each delivery and do you notice any trend for these values?</strong></p></li>
+<li><p><strong>7. What is the successful delivery percentage for each runner?</strong></p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/fdd637e2-1-Case_study_2_34.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_34.png</figcaption>
+</figure>
+</div>
+</section>
+<section id="c.-ingredient-optimisation-1" class="level3">
+<h3 class="anchored" data-anchor-id="c.-ingredient-optimisation-1">C. Ingredient Optimisation</h3>
+<p><strong><code>Explanation</code></strong>:</p>
+<p><strong><em>This query is performing data cleaning on the <code>pizza_recipes</code> table and creating a temporary table <code>pizza_recipes_temp</code>. It’s extracting individual topping IDs for each pizza from the comma-separated <code>toppings</code> column using the <code>SUBSTRING_INDEX</code> function. Let’s break down the steps:</em></strong></p>
+<p><strong>1) Subquery to Generate Numbers:</strong></p>
+<pre><code>- Subquery to Generate Numbers
+  SELECT 1 AS n
+  UNION SELECT 2
+  UNION SELECT 3
+  UNION SELECT 4
+  UNION SELECT 5
+  UNION SELECT 6
+  UNION SELECT 7
+  UNION SELECT 8
+  UNION SELECT 9
+  UNION SELECT 10;</code></pre>
+<p>This subquery generates numbers from 1 to 10. The UNION operator is used to combine the results into a single column.</p>
+<p><strong>2) JOIN with pizza_recipes:</strong></p>
+<pre><code>- Joining with pizza_recipes to Extract Toppings
+  SELECT
+      pizza_id,
+      SUBSTRING_INDEX(SUBSTRING_INDEX(toppings, ',', n), ',', -1) AS topping_id
+  FROM
+      pizza_recipes
+  JOIN (
+      -- Subquery with Numbers
+      SELECT 1 AS n
+      UNION SELECT 2
+      UNION SELECT 3
+      UNION SELECT 4
+      UNION SELECT 5
+      UNION SELECT 6
+      UNION SELECT 7
+      UNION SELECT 8
+      UNION SELECT 9
+      UNION SELECT 10
+   ) AS numbers ON CHAR_LENGTH(toppings) - CHAR_LENGTH(REPLACE(toppings, ',', '')) &gt;= n - 1
+    ORDER BY
+      pizza_id;</code></pre>
+<p>Here, we are joining the <code>pizza_recipes</code> table with the subquery (<code>numbers</code>). The <code>SUBSTRING_INDEX</code> function is used to extract individual toppings based on the generated numbers.</p>
+<p><strong>3) Create Temporary Table:</strong></p>
+<pre><code>- CREATE TEMPORARY TABLE pizza_recipes_temp AS </code></pre>
+<p>Finally, we use the results from the previous query to create a temporary table named <code>pizza_recipes_temp</code>.</p>
+<p><strong><code>Final Concise Explanation</code></strong>: The goal is to break down the toppings of each pizza in the original pizza_recipes table into individual rows, associating each row with the corresponding pizza ID.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/9e261565-1-Case_study_2_35.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_35.png</figcaption>
+</figure>
+</div>
+<p>The output of the above query is shown as below:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/db69d4ed-1-Case_study_2_25.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_25.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>1) What are the standard ingredients for each pizza?</strong></li>
+</ul>
+<p><strong><code>Explanation</code></strong>:</p>
+<p><strong><em>The query aims to retrieve the standard ingredients for each pizza by joining the <code>pizza_names</code>, <code>pizza_recipes_temp</code>, and <code>pizza_toppings</code> tables.</em></strong></p>
+<p><strong>1) SELECT Statement:</strong></p>
+<pre><code>- SELECT 
+    pizza_names.pizza_id,
+    pizza_names.pizza_name,
+    -- Uses the GROUP_CONCAT function to concatenate distinct topping names into a comma-separated list for each pizza.
+    GROUP_CONCAT(DISTINCT topping_name) AS topping_name_</code></pre>
+<p><strong>2) JOIN Conditions:</strong></p>
+<pre><code>- JOIN pizza_recipes_temp ON pizza_names.pizza_id = pizza_recipes_temp.pizza_id
+- JOIN pizza_toppings ON pizza_recipes_temp.topping_id = pizza_toppings.topping_id</code></pre>
+<p>Here, we’re joining the <code>pizza_names</code> table with the temporary table on the pizza ID and temporary table with the pizza_toppings table on the topping ID.</p>
+<p><strong><code>Final Concise Explanation</code></strong>: The final result is a list of pizzas with their respective standard ingredients (topping names) presented as a comma-separated list. The query aggregates the toppings for each pizza, providing an overview of the standard ingredients for all pizzas in the dataset.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/de18317e-1-Case_study_2_36.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_36.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>2. What was the most commonly added extra?</strong></li>
+</ul>
+<p><strong><code>Explanation</code></strong>:</p>
+<p><strong><em>This query aims to identify the most commonly added extra topping to pizza orders. </em></strong></p>
+<p><strong>1) Common Table Expression (CTE):</strong></p>
+<pre><code>- WITH cte AS (
+SELECT
+    order_id,
+    CAST(TRIM(SUBSTRING_INDEX(SUBSTRING_INDEX(extras, ',', n), ',', -1)) AS UNSIGNED) AS topping_id
+FROM
+    customer_orders
+JOIN (
+    SELECT 1 AS n
+    UNION SELECT 2
+    -- Add more numbers if needed
+) AS numbers ON CHAR_LENGTH(extras) - CHAR_LENGTH(REPLACE(extras, ',', '')) &gt;= n - 1
+WHERE extras IS NOT NULL)</code></pre>
+<p>A CTE named <code>cte</code> is defined to extract individual topping IDs from the <code>extras</code> column in the <code>customer_orders</code> table. It uses the <code>SUBSTRING_INDEX</code> function to split the <code>extras</code> string, and <code>TRIM</code> is used to remove leading or trailing spaces.</p>
+<p><strong>2) Main Query:</strong></p>
+<pre><code>- SELECT topping_name, COUNT(order_id) AS most_common_extras
+  FROM cte
+  JOIN pizza_toppings ON pizza_toppings.topping_id = cte.topping_id
+  GROUP BY topping_name
+  LIMIT 1;</code></pre>
+<p>The main query selects the <code>topping_name</code> and counts the occurrences of each extra topping using the CTE <code>cte</code>. It joins the CTE with the <code>pizza_toppings</code> table to retrieve the names of the extra toppings. The results are grouped by <code>topping_name</code>, and <code>COUNT(order_id)</code> calculates the number of orders containing each extra topping. Finally, <code>LIMIT 1</code> is applied to get only the most common extra topping.</p>
+<p><strong><code>Final Concise Explanation</code></strong>: The overall purpose of the query is to find and report the most commonly added extra topping to pizza orders based on the available dataset.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/330684c2-1-Case_study_2_27.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_27.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>3. What was the most common exclusion?</strong></li>
+</ul>
+<p><strong><code>Explanation</code></strong>:</p>
+<p><strong><em>This query aims to identify the most common exclusion (topping omitted) from pizza orders.</em></strong></p>
+<p><strong>1) Common Table Expression (CTE):</strong></p>
+<pre><code>- WITH cte AS (
+SELECT
+    order_id,
+    CAST(TRIM(SUBSTRING_INDEX(SUBSTRING_INDEX(exclusions, ',', n), ',', -1)) AS UNSIGNED) AS topping_id
+FROM
+    customer_orders
+JOIN (
+    SELECT 1 AS n
+    UNION SELECT 2
+    -- Add more numbers if needed
+) AS numbers ON CHAR_LENGTH(exclusions) - CHAR_LENGTH(REPLACE(exclusions, ',', '')) &gt;= n - 1
+WHERE exclusions IS NOT NULL)</code></pre>
+<p>A CTE named <code>cte</code> is defined to extract individual topping IDs from the <code>exclusions</code> column in the <code>customer_orders</code> table. It uses the <code>SUBSTRING_INDEX</code> function to split the <code>exclusions</code> string, and <code>TRIM</code> is used to remove leading or trailing spaces.</p>
+<p><strong>2) Main Query:</strong></p>
+<pre><code>- SELECT topping_name, COUNT(order_id) AS most_common_exclusions
+  FROM cte
+  JOIN pizza_toppings ON pizza_toppings.topping_id = cte.topping_id
+  GROUP BY topping_name
+  LIMIT 1;</code></pre>
+<p>The main query selects the <code>topping_name</code> and counts the occurrences of each exclusion topping using the CTE <code>cte</code>. It joins the CTE with the <code>pizza_toppings</code> table to retrieve the names of the exclusion toppings. The results are grouped by <code>topping_name</code>, and <code>COUNT(order_id)</code> calculates the number of orders excluding each topping. Finally, <code>LIMIT 1</code> is applied to get only the most common exclusion topping.</p>
+<p><strong><code>Final Concise Explanation</code></strong>: The overall purpose of the query is to find and report the most commonly excluded topping from pizza orders based on the available dataset.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/e0eaa47d-1-Case_study_2_28.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_28.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><p><strong>4. Generate an order item for each record in the customers_orders table in the format of one of the following:</strong></p>
+<ul>
+<li><strong><code>Meat Lovers</code></strong></li>
+<li><strong><code>Meat Lovers - Exclude Beef</code></strong></li>
+<li><strong><code>Meat Lovers - Extra Bacon</code></strong></li>
+<li><strong><code>Meat Lovers - Exclude Cheese, Bacon - Extra Mushroom, Peppers</code></strong></li>
+</ul></li>
+<li><p><strong>5. Generate an alphabetically ordered comma separated ingredient list for each pizza order from the customer_orders table and add a 2x in front of any relevant ingredients For example: “Meat Lovers: 2xBacon, Beef, … , Salami”</strong></p></li>
+<li><p><strong>6. What is the total quantity of each ingredient used in all delivered pizzas sorted by most frequent first?</strong></p></li>
+</ul>
+</section>
+<section id="d.-pricing-and-ratings-1" class="level3">
+<h3 class="anchored" data-anchor-id="d.-pricing-and-ratings-1">D. Pricing and Ratings</h3>
+<ul>
+<li><p><strong>1. If a Meat Lovers pizza costs \$12 and Vegetarian costs \$10 and there were no charges for changes - how much money has Pizza Runner made so far if there are no delivery fees?</strong></p></li>
+<li><p><strong>2. What if there was an additional \$1 charge for any pizza extras?</strong></p>
+<ul>
+<li><strong>Add cheese is \$1 extra</strong></li>
+</ul></li>
+<li><p><strong>3. The Pizza Runner team now wants to add an additional ratings system that allows customers to rate their runner, how would you design an additional table for this new dataset - generate a schema for this new table and insert your own data for ratings for each successful customer order between 1 to 5.</strong></p></li>
+<li><p><strong>4. Using your newly generated table - can you join all of the information together to form a table which has the following information for successful deliveries?</strong></p>
+<ul>
+<li><code>customer_id</code></li>
+<li><code>order_id</code></li>
+<li><code>runner_id</code></li>
+<li><code>rating</code></li>
+<li><code>order_time</code></li>
+<li><code>pickup_time</code></li>
+<li><code>Time between order and pickup</code></li>
+<li><code>Delivery duration</code></li>
+<li><code>Average speed</code></li>
+<li><code>Total number of pizzas</code></li>
+</ul></li>
+<li><p><strong>5. If a Meat Lovers pizza was \$12 and Vegetarian \$10 fixed prices with no cost for extras and each runner is paid \$0.30 per kilometre traveled - how much money does Pizza Runner have left over after these deliveries?</strong></p></li>
+</ul>
+</section>
+<section id="e.-bonus-questions-1" class="level3">
+<h3 class="anchored" data-anchor-id="e.-bonus-questions-1">E. Bonus Questions</h3>
+<p>If Danny wants to expand his range of pizzas - how would this impact the existing data design? Write an <strong><code>INSERT</code></strong> statement to demonstrate what would happen if a new <strong><code>Supreme</code></strong> pizza with all the toppings was added to the Pizza Runner menu?</p>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="Chirag1994/chiragsharma.github.io" data-repo-id="R_kgDOJfJZmg" data-category="General" data-category-id="DIC_kwDOJfJZms4CWR8c" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
