@@ -1,0 +1,1492 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.340">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Chirag Sharma">
+
+<title>Chirag Sharma - Case Study #7 - Balanced Tree Clothing Co.</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon/icons8-darth-vader-512.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Chirag Sharma</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html" rel="" target="">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../posts.html" rel="" target="">
+ <span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../portfolio.html" rel="" target="">
+ <span class="menu-text">Portfolio</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../resume/Chirag_Sharma_Resume.pdf" rel="" target="">
+ <span class="menu-text">Resume</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/Chirag1994" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://medium.com/@chirag.sharma0378" rel="" target=""><i class="bi bi-medium" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/chiragsharma1994/" rel="" target=""><i class="bi bi-linkedin" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Case Study #7 - Balanced Tree Clothing Co.</h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Chirag Sharma </p>
+            </div>
+    </div>
+      
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#available-data" id="toc-available-data" class="nav-link" data-scroll-target="#available-data">Available Data</a>
+  <ul class="collapse">
+  <li><a href="#product-details" id="toc-product-details" class="nav-link" data-scroll-target="#product-details">Product Details</a></li>
+  <li><a href="#product-sales" id="toc-product-sales" class="nav-link" data-scroll-target="#product-sales">Product Sales</a></li>
+  <li><a href="#product-hierarcy-product-price" id="toc-product-hierarcy-product-price" class="nav-link" data-scroll-target="#product-hierarcy-product-price">Product Hierarcy &amp; Product Price</a></li>
+  </ul></li>
+  <li><a href="#interactive-sql-session" id="toc-interactive-sql-session" class="nav-link" data-scroll-target="#interactive-sql-session">Interactive SQL Session</a></li>
+  <li><a href="#case-study-questions" id="toc-case-study-questions" class="nav-link" data-scroll-target="#case-study-questions">Case Study Questions</a>
+  <ul class="collapse">
+  <li><a href="#high-level-sales-analysis" id="toc-high-level-sales-analysis" class="nav-link" data-scroll-target="#high-level-sales-analysis">High Level Sales Analysis</a></li>
+  <li><a href="#transaction-analysis" id="toc-transaction-analysis" class="nav-link" data-scroll-target="#transaction-analysis">Transaction Analysis</a></li>
+  <li><a href="#product-analysis" id="toc-product-analysis" class="nav-link" data-scroll-target="#product-analysis">Product Analysis</a></li>
+  <li><a href="#reporting-challenge" id="toc-reporting-challenge" class="nav-link" data-scroll-target="#reporting-challenge">Reporting Challenge</a></li>
+  <li><a href="#bonus-challenge" id="toc-bonus-challenge" class="nav-link" data-scroll-target="#bonus-challenge">Bonus Challenge</a></li>
+  </ul></li>
+  <li><a href="#lets-start-solving" id="toc-lets-start-solving" class="nav-link" data-scroll-target="#lets-start-solving">Let’s start solving</a>
+  <ul class="collapse">
+  <li><a href="#high-level-sales-analysis-1" id="toc-high-level-sales-analysis-1" class="nav-link" data-scroll-target="#high-level-sales-analysis-1">High Level Sales Analysis</a></li>
+  <li><a href="#transaction-analysis-1" id="toc-transaction-analysis-1" class="nav-link" data-scroll-target="#transaction-analysis-1">Transaction Analysis</a></li>
+  <li><a href="#product-analysis-1" id="toc-product-analysis-1" class="nav-link" data-scroll-target="#product-analysis-1">Product Analysis</a></li>
+  <li><a href="#reporting-challenge-1" id="toc-reporting-challenge-1" class="nav-link" data-scroll-target="#reporting-challenge-1">Reporting Challenge</a></li>
+  <li><a href="#bonus-challenge-1" id="toc-bonus-challenge-1" class="nav-link" data-scroll-target="#bonus-challenge-1">Bonus Challenge</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_7-Balanced_Tree_Clothing_Co._files/figure-html/47e59294-1-Case_study_7_1.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_7_1.png</figcaption>
+</figure>
+</div>
+<hr>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Balanced Tree Clothing Company prides themselves on providing an optimised range of clothing and lifestyle wear for the modern adventurer!</p>
+<p>Danny, the CEO of this trendy fashion company has asked you to assist the team’s merchandising teams analyse their sales performance and generate a basic financial report to share with the wider business.</p>
+<hr>
+</section>
+<section id="available-data" class="level2">
+<h2 class="anchored" data-anchor-id="available-data">Available Data</h2>
+<p>For this case study there is a total of 4 datasets for this case study - however you will only need to utilise 2 main tables to solve all of the regular questions, and the additional 2 tables are used only for the bonus challenge question!</p>
+<section id="product-details" class="level3">
+<h3 class="anchored" data-anchor-id="product-details">Product Details</h3>
+<p><code>balanced_tree.product_details</code> includes all information about the entire range that Balanced Clothing sells in their store.</p>
+<table class="table">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 5%">
+<col style="width: 25%">
+<col style="width: 9%">
+<col style="width: 8%">
+<col style="width: 7%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>product_id</th>
+<th>price</th>
+<th>product_name</th>
+<th>category_id</th>
+<th>segment_id</th>
+<th>style_id</th>
+<th>category_name</th>
+<th>segment_name</th>
+<th>style_name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>c4a632</td>
+<td>13</td>
+<td>Navy Oversized Jeans - Womens</td>
+<td>1</td>
+<td>3</td>
+<td>7</td>
+<td>Womens</td>
+<td>Jeans</td>
+<td>Navy Oversized</td>
+</tr>
+<tr class="even">
+<td>e83aa3</td>
+<td>32</td>
+<td>Black Straight Jeans - Womens</td>
+<td>1</td>
+<td>3</td>
+<td>8</td>
+<td>Womens</td>
+<td>Jeans</td>
+<td>Black Straight</td>
+</tr>
+<tr class="odd">
+<td>e31d39</td>
+<td>10</td>
+<td>Cream Relaxed Jeans - Womens</td>
+<td>1</td>
+<td>3</td>
+<td>9</td>
+<td>Womens</td>
+<td>Jeans</td>
+<td>Cream Relaxed</td>
+</tr>
+<tr class="even">
+<td>d5e9a6</td>
+<td>23</td>
+<td>Khaki Suit Jacket - Womens</td>
+<td>1</td>
+<td>4</td>
+<td>10</td>
+<td>Womens</td>
+<td>Jacket</td>
+<td>Khaki Suit</td>
+</tr>
+<tr class="odd">
+<td>72f5d4</td>
+<td>19</td>
+<td>Indigo Rain Jacket - Womens</td>
+<td>1</td>
+<td>4</td>
+<td>11</td>
+<td>Womens</td>
+<td>Jacket</td>
+<td>Indigo Rain</td>
+</tr>
+<tr class="even">
+<td>9ec847</td>
+<td>54</td>
+<td>Grey Fashion Jacket - Womens</td>
+<td>1</td>
+<td>4</td>
+<td>12</td>
+<td>Womens</td>
+<td>Jacket</td>
+<td>Grey Fashion</td>
+</tr>
+<tr class="odd">
+<td>5d267b</td>
+<td>40</td>
+<td>White Tee Shirt - Mens</td>
+<td>2</td>
+<td>5</td>
+<td>13</td>
+<td>Mens</td>
+<td>Shirt</td>
+<td>White Tee</td>
+</tr>
+<tr class="even">
+<td>c8d436</td>
+<td>10</td>
+<td>Teal Button Up Shirt - Mens</td>
+<td>2</td>
+<td>5</td>
+<td>14</td>
+<td>Mens</td>
+<td>Shirt</td>
+<td>Teal Button Up</td>
+</tr>
+<tr class="odd">
+<td>2a2353</td>
+<td>57</td>
+<td>Blue Polo Shirt - Mens</td>
+<td>2</td>
+<td>5</td>
+<td>15</td>
+<td>Mens</td>
+<td>Shirt</td>
+<td>Blue Polo</td>
+</tr>
+<tr class="even">
+<td>f084eb</td>
+<td>36</td>
+<td>Navy Solid Socks - Mens</td>
+<td>2</td>
+<td>6</td>
+<td>16</td>
+<td>Mens</td>
+<td>Socks</td>
+<td>Navy Solid</td>
+</tr>
+<tr class="odd">
+<td>b9a74d</td>
+<td>17</td>
+<td>White Striped Socks - Mens</td>
+<td>2</td>
+<td>6</td>
+<td>17</td>
+<td>Mens</td>
+<td>Socks</td>
+<td>White Striped</td>
+</tr>
+<tr class="even">
+<td>2feb6b</td>
+<td>29</td>
+<td>Pink Fluro Polkadot Socks - Mens</td>
+<td>2</td>
+<td>6</td>
+<td>18</td>
+<td>Mens</td>
+<td>Socks</td>
+<td>Pink Fluro Polkadot</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="product-sales" class="level3">
+<h3 class="anchored" data-anchor-id="product-sales">Product Sales</h3>
+<p><code>balanced_tree.sales</code> contains product level information for all the transactions made for Balanced Tree including quantity, price, percentage discount, member status, a transaction ID and also the transaction timestamp.</p>
+<table class="table">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 6%">
+<col style="width: 9%">
+<col style="width: 13%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 37%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>prod_id</th>
+<th>qty</th>
+<th>price</th>
+<th>discount</th>
+<th>member</th>
+<th>txn_id</th>
+<th>start_txn_time</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>c4a632</td>
+<td>4</td>
+<td>13</td>
+<td>17</td>
+<td>t</td>
+<td>54f307</td>
+<td>2021-02-13 01:59:43.296</td>
+</tr>
+<tr class="even">
+<td>5d267b</td>
+<td>4</td>
+<td>40</td>
+<td>17</td>
+<td>t</td>
+<td>54f307</td>
+<td>2021-02-13 01:59:43.296</td>
+</tr>
+<tr class="odd">
+<td>b9a74d</td>
+<td>4</td>
+<td>17</td>
+<td>17</td>
+<td>t</td>
+<td>54f307</td>
+<td>2021-02-13 01:59:43.296</td>
+</tr>
+<tr class="even">
+<td>2feb6b</td>
+<td>2</td>
+<td>29</td>
+<td>17</td>
+<td>t</td>
+<td>54f307</td>
+<td>2021-02-13 01:59:43.296</td>
+</tr>
+<tr class="odd">
+<td>c4a632</td>
+<td>5</td>
+<td>13</td>
+<td>21</td>
+<td>t</td>
+<td>26cc98</td>
+<td>2021-01-19 01:39:00.3456</td>
+</tr>
+<tr class="even">
+<td>e31d39</td>
+<td>2</td>
+<td>10</td>
+<td>21</td>
+<td>t</td>
+<td>26cc98</td>
+<td>2021-01-19 01:39:00.3456</td>
+</tr>
+<tr class="odd">
+<td>72f5d4</td>
+<td>3</td>
+<td>19</td>
+<td>21</td>
+<td>t</td>
+<td>26cc98</td>
+<td>2021-01-19 01:39:00.3456</td>
+</tr>
+<tr class="even">
+<td>2a2353</td>
+<td>3</td>
+<td>57</td>
+<td>21</td>
+<td>t</td>
+<td>26cc98</td>
+<td>2021-01-19 01:39:00.3456</td>
+</tr>
+<tr class="odd">
+<td>f084eb</td>
+<td>3</td>
+<td>36</td>
+<td>21</td>
+<td>t</td>
+<td>26cc98</td>
+<td>2021-01-19 01:39:00.3456</td>
+</tr>
+<tr class="even">
+<td>c4a632</td>
+<td>1</td>
+<td>13</td>
+<td>21</td>
+<td>f</td>
+<td>ef648d</td>
+<td>2021-01-27 02:18:17.1648</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="product-hierarcy-product-price" class="level3">
+<h3 class="anchored" data-anchor-id="product-hierarcy-product-price">Product Hierarcy &amp; Product Price</h3>
+<p>Thes tables are used only for the bonus question where we will use them to recreate the <code>balanced_tree.product_details</code> table.</p>
+<p><code>balanced_tree.product_hierarchy</code></p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>id</th>
+<th>parent_id</th>
+<th>level_text</th>
+<th>level_name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td></td>
+<td>Womens</td>
+<td>Category</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td></td>
+<td>Mens</td>
+<td>Category</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>1</td>
+<td>Jeans</td>
+<td>Segment</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>1</td>
+<td>Jacket</td>
+<td>Segment</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>2</td>
+<td>Shirt</td>
+<td>Segment</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>2</td>
+<td>Socks</td>
+<td>Segment</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>3</td>
+<td>Navy Oversized</td>
+<td>Style</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>3</td>
+<td>Black Straight</td>
+<td>Style</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>3</td>
+<td>Cream Relaxed</td>
+<td>Style</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>4</td>
+<td>Khaki Suit</td>
+<td>Style</td>
+</tr>
+<tr class="odd">
+<td>11</td>
+<td>4</td>
+<td>Indigo Rain</td>
+<td>Style</td>
+</tr>
+<tr class="even">
+<td>12</td>
+<td>4</td>
+<td>Grey Fashion</td>
+<td>Style</td>
+</tr>
+<tr class="odd">
+<td>13</td>
+<td>5</td>
+<td>White Tee</td>
+<td>Style</td>
+</tr>
+<tr class="even">
+<td>14</td>
+<td>5</td>
+<td>Teal Button Up</td>
+<td>Style</td>
+</tr>
+<tr class="odd">
+<td>15</td>
+<td>5</td>
+<td>Blue Polo</td>
+<td>Style</td>
+</tr>
+<tr class="even">
+<td>16</td>
+<td>6</td>
+<td>Navy Solid</td>
+<td>Style</td>
+</tr>
+<tr class="odd">
+<td>17</td>
+<td>6</td>
+<td>White Striped</td>
+<td>Style</td>
+</tr>
+<tr class="even">
+<td>18</td>
+<td>6</td>
+<td>Pink Fluro Polkadot</td>
+<td>Style</td>
+</tr>
+</tbody>
+</table>
+<p><code>balanced_tree.product_prices</code></p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>id</th>
+<th>product_id</th>
+<th>price</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>7</td>
+<td>c4a632</td>
+<td>13</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>e83aa3</td>
+<td>32</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>e31d39</td>
+<td>10</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>d5e9a6</td>
+<td>23</td>
+</tr>
+<tr class="odd">
+<td>11</td>
+<td>72f5d4</td>
+<td>19</td>
+</tr>
+<tr class="even">
+<td>12</td>
+<td>9ec847</td>
+<td>54</td>
+</tr>
+<tr class="odd">
+<td>13</td>
+<td>5d267b</td>
+<td>40</td>
+</tr>
+<tr class="even">
+<td>14</td>
+<td>c8d436</td>
+<td>10</td>
+</tr>
+<tr class="odd">
+<td>15</td>
+<td>2a2353</td>
+<td>57</td>
+</tr>
+<tr class="even">
+<td>16</td>
+<td>f084eb</td>
+<td>36</td>
+</tr>
+<tr class="odd">
+<td>17</td>
+<td>b9a74d</td>
+<td>17</td>
+</tr>
+<tr class="even">
+<td>18</td>
+<td>2feb6b</td>
+<td>29</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="interactive-sql-session" class="level2">
+<h2 class="anchored" data-anchor-id="interactive-sql-session">Interactive SQL Session</h2>
+<p>The Dataset for this case study can be accessed from <a href="https://www.db-fiddle.com/f/dkhULDEjGib3K58MvDjYJr/8">here</a>. I will be using MySQL to solve this case study. In order to solve yourself this case study, simply go to the above link and choose MySQL Dialect (version &gt; 8, if using MySQL version higher than 8 locally), copy &amp; paste the Database schema into MySQL.</p>
+<p>Here is the snapshot of it.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_7-Balanced_Tree_Clothing_Co._files/figure-html/72284de2-1-Case_study_7_2-2.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_7_2-2.png</figcaption>
+</figure>
+</div>
+<hr>
+</section>
+<section id="case-study-questions" class="level2">
+<h2 class="anchored" data-anchor-id="case-study-questions">Case Study Questions</h2>
+<p>The following questions can be considered key business questions and metrics that the Balanced Tree team requires for their monthly reports.</p>
+<p>Each question can be answered using a single query - but as you are writing the SQL to solve each individual problem, keep in mind how you would generate all of these metrics in a single SQL script which the Balanced Tree team can run each month.</p>
+<section id="high-level-sales-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="high-level-sales-analysis">High Level Sales Analysis</h3>
+<ol type="1">
+<li>What was the total quantity sold for all products?</li>
+<li>What is the total generated revenue for all products before discounts?</li>
+<li>What was the total discount amount for all products?</li>
+</ol>
+</section>
+<section id="transaction-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="transaction-analysis">Transaction Analysis</h3>
+<ol type="1">
+<li>How many unique transactions were there?</li>
+<li>What is the average unique products purchased in each transaction?</li>
+<li>What are the 25th, 50th and 75th percentile values for the revenue per transaction?</li>
+<li>What is the average discount value per transaction?</li>
+<li>What is the percentage split of all transactions for members vs non-members?</li>
+<li>What is the average revenue for member transactions and non-member transactions?</li>
+</ol>
+</section>
+<section id="product-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="product-analysis">Product Analysis</h3>
+<ol type="1">
+<li>What are the top 3 products by total revenue before discount?</li>
+<li>What is the total quantity, revenue and discount for each segment?</li>
+<li>What is the top selling product for each segment?</li>
+<li>What is the total quantity, revenue and discount for each category?</li>
+<li>What is the top selling product for each category?</li>
+<li>What is the percentage split of revenue by product for each segment?</li>
+<li>What is the percentage split of revenue by segment for each category?</li>
+<li>What is the percentage split of total revenue by category?</li>
+<li>What is the total transaction “penetration” for each product? (hint: penetration = number of transactions where at least 1 quantity of a product was purchased divided by total number of transactions)</li>
+<li>What is the most common combination of at least 1 quantity of any 3 products in a 1 single transaction?</li>
+</ol>
+</section>
+<section id="reporting-challenge" class="level3">
+<h3 class="anchored" data-anchor-id="reporting-challenge">Reporting Challenge</h3>
+<p>Write a single SQL script that combines all of the previous questions into a scheduled report that the Balanced Tree team can run at the beginning of each month to calculate the previous month’s values.</p>
+<p>Imagine that the Chief Financial Officer (which is also Danny) has asked for all of these questions at the end of every month.</p>
+<p>He first wants you to generate the data for January only - but then he also wants you to demonstrate that you can easily run the samne analysis for February without many changes (if at all).</p>
+<p>Feel free to split up your final outputs into as many tables as you need - but be sure to explicitly reference which table outputs relate to which question for full marks :)</p>
+</section>
+<section id="bonus-challenge" class="level3">
+<h3 class="anchored" data-anchor-id="bonus-challenge">Bonus Challenge</h3>
+<p>Use a single SQL query to transform the product_hierarchy and product_prices datasets to the product_details table.</p>
+<p>Hint: you may want to consider using a recursive CTE to solve this problem!</p>
+</section>
+</section>
+<section id="lets-start-solving" class="level2">
+<h2 class="anchored" data-anchor-id="lets-start-solving">Let’s start solving</h2>
+<section id="high-level-sales-analysis-1" class="level3">
+<h3 class="anchored" data-anchor-id="high-level-sales-analysis-1">High Level Sales Analysis</h3>
+<ul>
+<li><strong>1. What was the total quantity sold for all products?</strong></li>
+</ul>
+<p><strong><code>Explanation</code></strong>:</p>
+<p><strong><em>This set of SQL queries provides a high-level sales analysis by calculating the total quantity sold for all products. Here’s a breakdown:</em></strong></p>
+<p><strong>1) Total Quantity Sold for All Products:</strong></p>
+<pre><code>SELECT SUM(qty) AS total_quantity_sold FROM sales;</code></pre>
+<p>Calculates the overall total quantity sold for all products from the ‘sales’ table.</p>
+<p><strong><code>Final Concise Explanation</code></strong>: These SQL queries provide insights into the high-level sales analysis by calculating both the overall total quantity sold for all products and the total quantity sold for each individual product.</p>
+<p><strong>Part 1</strong></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_7-Balanced_Tree_Clothing_Co._files/figure-html/0ff2281f-1-Case_study_7_3-2.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_7_3-2.png</figcaption>
+</figure>
+</div>
+<p><strong>Part 2</strong></p>
+<p><strong><code>Explanation</code></strong>:</p>
+<p><strong>2) Total Quantity Sold for Each Product:</strong></p>
+<pre><code>SELECT PD.product_name, SUM(S.qty) AS total_quantity_sold
+FROM product_details AS PD 
+JOIN sales AS S ON PD.product_id = S.prod_id
+GROUP BY PD.product_name
+ORDER BY total_quantity_sold DESC;</code></pre>
+<p>Calculates the total quantity sold for each product by joining the ‘product_details’ and ‘sales’ tables on the product_id, grouping the results by product_name, and ordering them in descending order based on the total quantity sold.</p>
+<p><strong><code>Final Concise Explanation</code></strong>: The second query gives a breakdown of the quantity sold for each product, ordered from highest to lowest.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_7-Balanced_Tree_Clothing_Co._files/figure-html/ceaf73f8-1-Case_study_7_4.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_7_4.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>2. What is the total generated revenue for all products before discounts?</strong></li>
+</ul>
+<p><strong><code>Explanation</code></strong>:</p>
+<p><strong><em>This set of SQL queries focuses on analyzing the total generated revenue for all products before discounts. Here’s a breakdown:</em></strong></p>
+<p><strong>1) Total Revenue Before Discounts:</strong></p>
+<pre><code>SELECT SUM(qty * price) AS total_revenue FROM sales;</code></pre>
+<p>Calculates the overall total revenue before discounts by multiplying the quantity sold (qty) with the price for each product in the ‘sales’ table and then summing the results.</p>
+<p><strong><code>Final Concise Explanation</code></strong>: These SQL queries provide insights into the total generated revenue for all products before discounts. The first query gives the overall total revenue.</p>
+<p><strong>Part 1</strong></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_7-Balanced_Tree_Clothing_Co._files/figure-html/ffdf69b8-1-Case_study_7_5.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_7_5.png</figcaption>
+</figure>
+</div>
+<p><strong>Part 2</strong></p>
+<p><strong><code>Explanation</code></strong>:</p>
+<p><strong>2) Total Revenue Before Discounts for Each Product:</strong></p>
+<pre><code>SELECT PD.product_name, SUM(S.qty * S.price) AS total_revenue
+FROM product_details AS PD 
+JOIN sales AS S ON PD.product_id = S.prod_id
+GROUP BY PD.product_name
+ORDER BY total_revenue DESC;</code></pre>
+<p>Calculates the total revenue before discounts for each product by joining the ‘product_details’ and ‘sales’ tables on the product_id, multiplying the quantity sold (qty) with the price, grouping the results by product_name, and ordering them in descending order based on the total revenue.</p>
+<p><strong><code>Final Concise Explanation</code></strong>: The second query breaks down the total revenue for each individual product, ordered from highest to lowest.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_7-Balanced_Tree_Clothing_Co._files/figure-html/1ee19adf-1-Case_study_7_26.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_7_26.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>3. What was the total discount amount for all products?</strong></li>
+</ul>
+<p><strong><code>Explanation</code></strong>:</p>
+<p><strong><em>This set of SQL queries focuses on analyzing the total discount amount for all products. Here’s a breakdown:</em></strong></p>
+<p><strong>1) Total Discount Amount:</strong></p>
+<pre><code>SELECT ROUND(SUM((qty * price * discount) / 100), 2) AS total_discount FROM sales;</code></pre>
+<p>Calculates the overall total discount amount for all products by multiplying the quantity sold (qty) with the price, applying the discount percentage, summing the results, and rounding the total discount to two decimal places.</p>
+<p><strong><code>Final Concise Explanation</code></strong>: These SQL queries provide insights into the total discount amount for all products. The first query gives the overall total discount.</p>
+<p><strong>Part 1</strong></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_7-Balanced_Tree_Clothing_Co._files/figure-html/390fba3c-1-Case_study_7_6.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_7_6.png</figcaption>
+</figure>
+</div>
+<p><strong>Part 2</strong></p>
+<p><strong><code>Explanation</code></strong>:</p>
+<p><strong>2) Total Discount Amount for Each Product:</strong></p>
+<pre><code>SELECT PD.product_name, ROUND(SUM((S.qty * S.price * S.discount) / 100), 2) AS total_discount
+FROM product_details AS PD 
+JOIN sales AS S ON PD.product_id = S.prod_id
+GROUP BY PD.product_name
+ORDER BY total_discount DESC;</code></pre>
+<p>Calculates the total discount amount for each product by joining the ‘product_details’ and ‘sales’ tables on the product_id, applying the discount percentage, summing the results, rounding the total discount to two decimal places, grouping the results by product_name, and ordering them in descending order based on the total discount.</p>
+<p><strong><code>Final Concise Explanation</code></strong>: The second query breaks down the total discount for each individual product, ordered from highest to lowest.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_7-Balanced_Tree_Clothing_Co._files/figure-html/ab17adb5-1-Case_study_7_27.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_7_27.png</figcaption>
+</figure>
+</div>
+</section>
+<section id="transaction-analysis-1" class="level3">
+<h3 class="anchored" data-anchor-id="transaction-analysis-1">Transaction Analysis</h3>
+<ul>
+<li><strong>1. How many unique transactions were there?</strong></li>
+</ul>
+<p><strong><code>Explanation</code></strong>: This SQL query provides the count of unique transactions in the ‘sales’ table by counting the distinct values of the ‘txn_id’ column.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_7-Balanced_Tree_Clothing_Co._files/figure-html/7dfc485f-1-Case_study_7_8.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_7_8.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>2. What is the average unique products purchased in each transaction?</strong></li>
+</ul>
+<p><strong><code>Explanation</code></strong>:</p>
+<p><strong><em>This SQL query focuses on analyzing the average number of unique products purchased in each transaction.</em></strong></p>
+<p><strong>1) Counting Unique Products for Each Transaction:</strong></p>
+<pre><code>SELECT txn_id, COUNT(DISTINCT prod_id) AS unique_products_purchased
+FROM sales
+GROUP BY txn_id;</code></pre>
+<p>Counts the number of unique products purchased for each transaction by applying the COUNT aggregation function to the distinct values of the ‘prod_id’ column and grouping the results by ‘txn_id’.</p>
+<p><strong>2) Calculating the Average Unique Products Purchased:</strong></p>
+<pre><code>SELECT ROUND(AVG(unique_products_purchased), 0) AS avg_unique_products_purchased 
+FROM (
+    -- Subquery to count unique products for each transaction
+    SELECT txn_id, COUNT(DISTINCT prod_id) AS unique_products_purchased
+    FROM sales
+    GROUP BY txn_id
+) AS unique_products_count;</code></pre>
+<p>Calculates the average number of unique products purchased in each transaction by applying the AVG aggregation function to the results of the subquery (count of unique products for each transaction).</p>
+<p><strong><code>Final Concise Explanation</code></strong>: This SQL query provides the average number of unique products purchased in each transaction by counting the distinct values of ‘prod_id’ for each transaction and then calculating the average of these counts. The result is rounded to the nearest whole number.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_7-Balanced_Tree_Clothing_Co._files/figure-html/4e6933bf-1-Case_study_7_9.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_7_9.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>3. What are the 25th, 50th and 75th percentile values for the revenue per transaction?</strong></li>
+</ul>
+<p><strong><code>Explanation</code></strong>:</p>
+<p><strong><em>This SQL query analyzes the 25th, 50th, and 75th percentile values for the revenue per transaction. Here’s a concise breakdown:</em></strong></p>
+<p><strong>1) Calculating Revenue Per Transaction:</strong></p>
+<pre><code>WITH revenue_per_transaction AS (
+SELECT S.txn_id, SUM(S.qty * S.price) AS total_revenue
+FROM product_details AS PD JOIN sales AS S ON PD.product_id = S.prod_id
+GROUP BY S.txn_id
+ORDER BY S.txn_id)</code></pre>
+<p>Creates a temporary table ‘revenue_per_transaction’ that calculates the total revenue for each transaction by joining ‘product_details’ and ‘sales’ tables on the product_id, grouping by txn_id, and ordering by txn_id.</p>
+<p><strong>2) Calculating Percentile Values:</strong></p>
+<pre><code>SELECT
+MAX(CASE WHEN percentile_group = 1 THEN total_revenue END) AS percentile_25,
+MAX(CASE WHEN percentile_group = 2 THEN total_revenue END) AS percentile_50,
+MAX(CASE WHEN percentile_group = 3 THEN total_revenue END) AS percentile_75
+FROM 
+    (SELECT txn_id, total_revenue, NTILE(4) OVER (ORDER BY total_revenue) as percentile_group
+     FROM revenue_per_transaction) AS percentile_groups;</code></pre>
+<p>Calculates the 25th (percentile_25), 50th (percentile_50), and 75th (percentile_75) percentile values for the revenue per transaction using the NTILE window function. The results are obtained by grouping the revenue values into four equal parts (quartiles) and extracting the maximum value for each quartile.</p>
+<p><strong><code>Final Concise Explanation</code></strong>: This SQL query provides the 25th, 50th, and 75th percentile values for the revenue per transaction by calculating the total revenue for each transaction and then using the NTILE window function to group the transactions into quartiles. The results are extracted by selecting the maximum value for each quartile.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_7-Balanced_Tree_Clothing_Co._files/figure-html/6b182112-1-Case_study_7_10.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_7_10.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>4. What is the average discount value per transaction?</strong></li>
+</ul>
+<p><strong><code>Explanation</code></strong>:</p>
+<p><strong><em>This SQL query focuses on analyzing the average discount value per transaction. </em></strong></p>
+<p><strong>1) Calculating Discount Value for Each Transaction:</strong></p>
+<pre><code>SELECT txn_id, ROUND(SUM((price * qty * discount) / 100), 0) AS discount_value
+FROM sales
+GROUP BY txn_id;</code></pre>
+<p>Calculates the discount value for each transaction by multiplying the price, quantity (qty), and discount percentage, summing the results, and rounding the total discount to the nearest whole number. The results are grouped by ‘txn_id’.</p>
+<p><strong>2) Calculating Average Discount Value:</strong></p>
+<pre><code>SELECT ROUND(AVG(discount_value), 1) AS avg_discount_value
+FROM (
+    -- Subquery to calculate discount value for each transaction
+    SELECT txn_id, ROUND(SUM((price * qty * discount) / 100), 0) AS discount_value
+    FROM sales
+    GROUP BY txn_id
+) AS discount_table;</code></pre>
+<p>Calculates the average discount value per transaction by applying the AVG aggregation function to the results of the subquery (discount value for each transaction) and rounding the average to one decimal place.</p>
+<p><strong><code>Final Concise Explanation</code></strong>: This SQL query provides the average discount value per transaction by calculating the discount value for each transaction and then finding the average of these values. The result is rounded to one decimal place.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_7-Balanced_Tree_Clothing_Co._files/figure-html/6fae9781-1-Case_study_7_11.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_7_11.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>5. What is the percentage split of all transactions for members vs non-members?</strong></li>
+</ul>
+<p><strong><code>Explanation</code></strong>:</p>
+<p><strong><em>This SQL query analyzes the percentage split of all transactions for members vs.&nbsp;non-members.</em></strong></p>
+<p><strong>1) Calculating Member Transaction Percentage:</strong></p>
+<pre><code>ROUND(100.0 * (COUNT(DISTINCT CASE WHEN member = 't' THEN txn_id ELSE 0 END))
+/ (SELECT COUNT(DISTINCT txn_id) FROM sales), 2) AS member_transaction_pct</code></pre>
+<p>Calculates the percentage of transactions made by members by counting the distinct ‘txn_id’ values for member transactions (‘t’) and dividing it by the total count of distinct transactions. The result is rounded to two decimal places.</p>
+<p><strong>2) Calculating Non-Member Transaction Percentage:</strong></p>
+<pre><code>ROUND(100.0 * (COUNT(DISTINCT CASE WHEN member = 'f' THEN txn_id ELSE 0 END))
+/ (SELECT COUNT(DISTINCT txn_id) FROM sales), 2) AS non_member_transaction_pct</code></pre>
+<p>Calculates the percentage of transactions made by non-members by counting the distinct ‘txn_id’ values for non-member transactions (‘f’) and dividing it by the total count of distinct transactions. The result is rounded to two decimal places.</p>
+<p><strong><code>Final Concise Explanation</code></strong>: This SQL query provides the percentage split of all transactions for members vs.&nbsp;non-members. It calculates the percentage of transactions made by members and non-members and presents the results rounded to two decimal places.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_7-Balanced_Tree_Clothing_Co._files/figure-html/19eb7b8b-1-Case_study_7_12.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_7_12.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>6. What is the average revenue for member transactions and non-member transactions?</strong></li>
+</ul>
+<p><strong><code>Explanation</code></strong>:</p>
+<p><strong><em>This SQL query analyzes the average revenue for member transactions and non-member transactions.</em></strong></p>
+<p><strong>1) Calculating Average Revenue for Member Transactions:</strong></p>
+<pre><code>WITH member_transactions_cte AS (
+SELECT member, txn_id, SUM(qty * price) AS avg_revenue
+FROM sales 
+GROUP BY member, txn_id)</code></pre>
+<p>Creates a Common Table Expression (CTE) named ‘member_transactions_cte’ that calculates the revenue for each transaction and groups the results by member status (‘member’) and transaction ID (‘txn_id’).</p>
+<p><strong>2) Calculating Average Revenue for Members and Non-Members:</strong></p>
+<pre><code>SELECT member, ROUND(AVG(avg_revenue), 2) AS avg_member_transactions
+FROM member_transactions_cte
+GROUP BY member;</code></pre>
+<p>Calculates the average revenue for member transactions and non-member transactions by applying the AVG aggregation function to the revenue values within the ‘member_transactions_cte’ CTE. The results are rounded to two decimal places and grouped by member status.</p>
+<p><strong><code>Final Concise Explanation</code></strong>: This SQL query provides the average revenue for member transactions and non-member transactions by calculating the revenue for each transaction, grouping the results by member status, and then finding the average revenue for each group. The result is rounded to two decimal places.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_7-Balanced_Tree_Clothing_Co._files/figure-html/46968a94-1-Case_study_7_13.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_7_13.png</figcaption>
+</figure>
+</div>
+</section>
+<section id="product-analysis-1" class="level3">
+<h3 class="anchored" data-anchor-id="product-analysis-1">Product Analysis</h3>
+<ul>
+<li><strong>1. What are the top 3 products by total revenue before discount?</strong></li>
+</ul>
+<p><strong><code>Explanation</code></strong>:</p>
+<p>This SQL query analyzes the average revenue for member transactions and non-member transactions. It calculates the total revenue before discount for each product by joining the ‘product_details’ and ‘sales’ tables on the product_id, multiplying the price by the quantity (qty), summing the results, and grouping by product_name. Orders the results in descending order based on total revenue before discount and limits the output to the top 3 products.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_7-Balanced_Tree_Clothing_Co._files/figure-html/0b3ed873-1-Case_study_7_14.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_7_14.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>2. What is the total quantity, revenue and discount for each segment?</strong></li>
+</ul>
+<p><strong><code>Explanation</code></strong>:</p>
+<p><strong><em>This SQL query analyzes the total quantity, revenue before discount, and discount for each segment. Here’s a concise breakdown:</em></strong></p>
+<p><strong>1) Grouping Data by Segment:</strong></p>
+<pre><code>SELECT PD.segment_name,
+ROUND(SUM(S.qty), 2) AS total_quantity,
+ROUND(SUM(S.qty * S.price), 2) AS total_revenue_before_discount,
+ROUND(SUM((S.qty * S.price * S.discount) / 100), 2) AS discount
+FROM product_details AS PD 
+JOIN sales AS S ON PD.product_id = S.prod_id
+GROUP BY PD.segment_name;</code></pre>
+<p>Groups the data by ‘segment_name’ from the ‘product_details’ table and calculates the total quantity, total revenue before discount, and total discount for each segment by joining with the ‘sales’ table.</p>
+<p><strong><code>Final Concise Explanation</code></strong>: This SQL query provides the total quantity, revenue before discount, and discount for each segment by grouping the data based on the ‘segment_name’ from the ‘product_details’ table and performing the necessary calculations. The results are rounded to two decimal places for clarity.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_7-Balanced_Tree_Clothing_Co._files/figure-html/140f656e-1-Case_study_7_15.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_7_15.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>3. What is the top selling product for each segment?</strong></li>
+</ul>
+<p><strong><code>Explanation</code></strong>:</p>
+<p><strong><em>This SQL query identifies the top-selling product for each segment. Here’s a concise breakdown:</em></strong></p>
+<p><strong>1) Calculating Total Quantity Sold for Each Product and Segment:</strong></p>
+<pre><code>WITH segment_product_qty_sales_cte AS (
+SELECT PD.segment_name, PD.product_name, SUM(S.qty) AS total_qty_sold
+FROM product_details AS PD JOIN sales AS S ON PD.product_id = S.prod_id
+GROUP BY PD.segment_name, PD.product_name)</code></pre>
+<p>Creates a Common Table Expression (CTE) named ‘segment_product_qty_sales_cte’ that calculates the total quantity sold for each product within each segment.</p>
+<p><strong>2) Ranking Products within Each Segment::</strong></p>
+<pre><code>top_selling_products_cte AS (
+SELECT segment_product_qty_sales_cte.segment_name, 
+       segment_product_qty_sales_cte.product_name, 
+       segment_product_qty_sales_cte.total_qty_sold, 
+       ROW_NUMBER() OVER (PARTITION BY segment_product_qty_sales_cte.segment_name 
+                         ORDER BY segment_product_qty_sales_cte.total_qty_sold DESC) 
+                         AS row_num
+FROM segment_product_qty_sales_cte)</code></pre>
+<p>Creates another CTE named ‘top_selling_products_cte’ that assigns a row number to each product within each segment based on the total quantity sold in descending order.</p>
+<p><strong>3) Selecting the Top-Selling Product for Each Segment:</strong></p>
+<pre><code>SELECT top_selling_products_cte.segment_name, 
+   top_selling_products_cte.product_name,
+   top_selling_products_cte.total_qty_sold
+FROM top_selling_products_cte
+WHERE row_num = 1;</code></pre>
+<p>Selects the top-selling product for each segment by filtering only the rows where the row number is 1 within the ‘top_selling_products_cte’ CTE.</p>
+<p><strong><code>Final Concise Explanation</code></strong>:</p>
+<p>This SQL query determines the top-selling product for each segment by first calculating the total quantity sold for each product within each segment and then ranking the products based on the total quantity sold. The final result selects the top-selling product for each segment based on the row number.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_7-Balanced_Tree_Clothing_Co._files/figure-html/ba5d315f-1-Case_study_7_16.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_7_16.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>4. What is the total quantity, revenue and discount for each category?</strong></li>
+</ul>
+<p><strong><code>Explanation</code></strong>:</p>
+<p><strong><em>This SQL query analyzes the total quantity, revenue before discount, and discount for each category. Here’s a concise breakdown:</em></strong></p>
+<p><strong>1) Grouping Data by Category:</strong></p>
+<pre><code>SELECT PD.category_name,
+ROUND(SUM(S.qty), 2) AS total_quantity,
+ROUND(SUM(S.qty * S.price), 2) AS total_revenue_before_discount,
+ROUND(SUM((S.qty * S.price * S.discount) / 100), 2) AS discount
+FROM product_details AS PD 
+JOIN sales AS S ON PD.product_id = S.prod_id
+GROUP BY PD.category_name;</code></pre>
+<p>Groups the data by ‘category_name’ from the ‘product_details’ table and calculates the total quantity, total revenue before discount, and total discount for each category by joining with the ‘sales’ table.</p>
+<p><strong><code>Final Concise Explanation</code></strong>: This SQL query provides the total quantity, revenue before discount, and discount for each category by grouping the data based on the ‘category_name’ from the ‘product_details’ table and performing the necessary calculations. The results are rounded to two decimal places for clarity.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_7-Balanced_Tree_Clothing_Co._files/figure-html/533d545c-1-Case_study_7_17.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_7_17.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>5. What is the top selling product for each category?</strong></li>
+</ul>
+<p><strong><code>Explanation</code></strong>:</p>
+<p><strong><em>This SQL query identifies the top-selling product for each category.</em></strong></p>
+<p><strong>1) Calculating Total Quantity Sold for Each Product and Category:</strong></p>
+<pre><code>WITH category_product_qty_sales_cte AS (
+SELECT PD.category_name, PD.product_name, SUM(S.qty) AS total_qty_sold
+FROM product_details AS PD JOIN sales AS S ON PD.product_id = S.prod_id
+GROUP BY PD.category_name, PD.product_name)</code></pre>
+<p>Creates a Common Table Expression (CTE) named ‘category_product_qty_sales_cte’ that calculates the total quantity sold for each product within each category.</p>
+<p><strong>2) Ranking Products within Each Category:</strong></p>
+<pre><code>top_selling_products_cte AS (
+SELECT category_product_qty_sales_cte.category_name, 
+       category_product_qty_sales_cte.product_name, 
+       category_product_qty_sales_cte.total_qty_sold, 
+       ROW_NUMBER() OVER (PARTITION BY category_product_qty_sales_cte.category_name 
+                         ORDER BY category_product_qty_sales_cte.total_qty_sold DESC) 
+                         AS row_num
+FROM category_product_qty_sales_cte)</code></pre>
+<p>Creates another CTE named ‘top_selling_products_cte’ that assigns a row number to each product within each category based on the total quantity sold in descending order.</p>
+<p><strong>3) Selecting the Top-Selling Product for Each Category:</strong></p>
+<pre><code>SELECT top_selling_products_cte.category_name, 
+   top_selling_products_cte.product_name,
+   top_selling_products_cte.total_qty_sold
+FROM top_selling_products_cte
+WHERE row_num = 1;</code></pre>
+<p>Selects the top-selling product for each category by filtering only the rows where the row number is 1 within the ‘top_selling_products_cte’ CTE.</p>
+<p><strong><code>Final Concise Explanation</code></strong>:</p>
+<p>This SQL query determines the top-selling product for each category by first calculating the total quantity sold for each product within each category and then ranking the products based on the total quantity sold. The final result selects the top-selling product for each category based on the row number.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_7-Balanced_Tree_Clothing_Co._files/figure-html/697c3303-1-Case_study_7_18.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_7_18.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>6. What is the percentage split of revenue by product for each segment?</strong></li>
+</ul>
+<p><strong><code>Explanation</code></strong>:</p>
+<p><strong><em>This SQL query analyzes the percentage split of revenue by product for each segment. Here’s a concise breakdown:</em></strong></p>
+<p><strong>1) Calculating Segment-wise Product Revenue:</strong></p>
+<pre><code>WITH segment_product_revenue_cte AS (
+SELECT PD.segment_name, PD.product_name,
+       SUM(S.price * S.qty) AS segment_product_revenue
+FROM product_details AS PD JOIN sales AS S ON PD.product_id = S.prod_id
+GROUP BY PD.segment_name, PD.product_name)</code></pre>
+<p>Creates a Common Table Expression (CTE) named ‘segment_product_revenue_cte’ that calculates the revenue for each product within each segment.</p>
+<p><strong>2) Calculating the Percentage Split of Revenue:</strong></p>
+<pre><code>SELECT segment_name, product_name,
+   ROUND(100.0 * segment_product_revenue / (
+       SUM(segment_product_revenue) OVER (PARTITION BY segment_name)), 2)
+       AS revenue_pct
+FROM segment_product_revenue_cte
+ORDER BY segment_name, product_name;</code></pre>
+<p>Calculates the percentage split of revenue for each product within each segment by dividing the product’s revenue by the total revenue within the segment. The result is rounded to two decimal places.</p>
+<p><strong><code>Final Concise Explanation</code></strong>: This SQL query provides the percentage split of revenue by product for each segment by calculating the revenue for each product within each segment and then determining the percentage of each product’s revenue relative to the total revenue within the segment. The results are ordered by segment name and product name for clarity.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_7-Balanced_Tree_Clothing_Co._files/figure-html/1cc1a606-1-Case_study_7_19.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_7_19.png</figcaption>
+</figure>
+</div>
+<p>The output for the above query is:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_7-Balanced_Tree_Clothing_Co._files/figure-html/9ca1322b-1-Case_study_7_20.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_7_20.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>7. What is the percentage split of revenue by segment for each category?</strong></li>
+</ul>
+<p><strong><code>Explanation</code></strong>:</p>
+<p><strong><em>This SQL query analyzes the percentage split of revenue by segment for each category.</em></strong></p>
+<p><strong>1) Calculating Category-wise Segment Revenue:</strong></p>
+<pre><code>WITH category_segment_revenue_cte AS (
+SELECT PD.category_name, PD.segment_name,
+       SUM(S.price * S.qty) AS category_segment_revenue
+FROM product_details AS PD JOIN sales AS S ON PD.product_id = S.prod_id
+GROUP BY PD.category_name, PD.segment_name)</code></pre>
+<p>Creates a Common Table Expression (CTE) named ‘category_segment_revenue_cte’ that calculates the revenue for each segment within each category.</p>
+<p><strong>2) Calculating the Percentage Split of Revenue:</strong></p>
+<pre><code>SELECT category_name, segment_name,
+   ROUND(100.0 * category_segment_revenue / (
+       SUM(category_segment_revenue) OVER (PARTITION BY category_name)), 2)
+       AS revenue_pct
+FROM category_segment_revenue_cte
+ORDER BY category_name, segment_name;</code></pre>
+<p>Calculates the percentage split of revenue for each segment within each category by dividing the segment’s revenue by the total revenue within the category. The result is rounded to two decimal places.</p>
+<p><strong><code>Final Concise Explanation</code></strong>: This SQL query provides the percentage split of revenue by segment for each category by calculating the revenue for each segment within each category and then determining the percentage of each segment’s revenue relative to the total revenue within the category. The results are ordered by category name and segment name for clarity.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_7-Balanced_Tree_Clothing_Co._files/figure-html/b6f5f2d3-1-Case_study_7_21.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_7_21.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>8. What is the percentage split of total revenue by category?</strong></li>
+</ul>
+<p><strong><code>Explanation</code></strong>:</p>
+<p><strong><em>This SQL query analyzes the percentage split of total revenue by category.</em></strong></p>
+<p><strong>1) Calculating Category-wise Total Revenue:</strong></p>
+<pre><code>WITH category_revenue_cte AS (
+SELECT PD.category_name,
+       SUM(S.price * S.qty) AS category_revenue
+FROM product_details AS PD JOIN sales AS S ON PD.product_id = S.prod_id
+GROUP BY PD.category_name)</code></pre>
+<p>Creates a Common Table Expression (CTE) named ‘category_revenue_cte’ that calculates the total revenue for each category.</p>
+<p><strong>2) Calculating the Percentage Split of Total Revenue:</strong></p>
+<pre><code>SELECT category_name,
+   ROUND(100.0 * category_revenue / (
+       SUM(category_revenue) OVER()), 2)
+       AS revenue_pct
+FROM category_revenue_cte
+GROUP BY category_name
+ORDER BY category_name;</code></pre>
+<p>Calculates the percentage split of total revenue for each category by dividing the category’s revenue by the overall total revenue. The result is rounded to two decimal places.</p>
+<p><strong><code>Final Concise Explanation</code></strong>: This SQL query provides the percentage split of total revenue by category by calculating the total revenue for each category and then determining the percentage of each category’s revenue relative to the overall total revenue. The results are ordered by category name for clarity.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_7-Balanced_Tree_Clothing_Co._files/figure-html/ba92dd97-1-Case_study_7_22.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_7_22.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>9. What is the total transaction “penetration” for each product? (hint: penetration = number of transactions where at least 1 quantity of a product was purchased divided by total number of transactions)</strong></li>
+</ul>
+<p><strong><code>Explanation</code></strong>:</p>
+<p><strong><em>This SQL query calculates the total transaction “penetration” for each product.</em></strong></p>
+<p><strong>1) Calculating Product-wise Transaction Count:</strong></p>
+<pre><code>WITH product_transactions AS (
+SELECT PD.product_name,
+       COUNT(DISTINCT S.txn_id) AS product_transactions,
+       (SELECT COUNT(DISTINCT txn_id) FROM sales) AS total_number_of_transactions
+FROM product_details AS PD JOIN sales AS S ON PD.product_id = S.prod_id
+GROUP BY PD.product_name)</code></pre>
+<p>Creates a Common Table Expression (CTE) named ‘product_transactions’ that counts the number of distinct transactions for each product and also calculates the total number of distinct transactions in the entire dataset.</p>
+<p><strong>2) Calculating the Percentage Split of Total Revenue:</strong></p>
+<pre><code>SELECT product_name,
+   ROUND(100.0 * (product_transactions / total_number_of_transactions), 2) AS product_penetration
+FROM product_transactions
+ORDER BY product_penetration DESC;</code></pre>
+<p>Calculates the total transaction “penetration” for each product by dividing the product’s transaction count by the total number of transactions and multiplying by 100. The result is rounded to two decimal places and the output is ordered by product penetration in descending order.</p>
+<p><strong><code>Final Concise Explanation</code></strong>: This SQL query provides the total transaction “penetration” for each product by calculating the percentage of transactions where at least 1 quantity of a product was purchased relative to the total number of transactions. The results are ordered by product penetration in descending order for clarity.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_7-Balanced_Tree_Clothing_Co._files/figure-html/298b5b08-1-Case_study_7_23.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_7_23.png</figcaption>
+</figure>
+</div>
+<p>The output of the above query is:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_7-Balanced_Tree_Clothing_Co._files/figure-html/bce24f95-1-Case_study_7_24.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_7_24.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>10. What is the most common combination of at least 1 quantity of any 3 products in a 1 single transaction?</strong></li>
+</ul>
+</section>
+<section id="reporting-challenge-1" class="level3">
+<h3 class="anchored" data-anchor-id="reporting-challenge-1">Reporting Challenge</h3>
+<p>Write a single SQL script that combines all of the previous questions into a scheduled report that the Balanced Tree team can run at the beginning of each month to calculate the previous month’s values.</p>
+<p>Imagine that the Chief Financial Officer (which is also Danny) has asked for all of these questions at the end of every month.</p>
+<p>He first wants you to generate the data for January only - but then he also wants you to demonstrate that you can easily run the samne analysis for February without many changes (if at all).</p>
+<p>Feel free to split up your final outputs into as many tables as you need - but be sure to explicitly reference which table outputs relate to which question for full marks :)</p>
+</section>
+<section id="bonus-challenge-1" class="level3">
+<h3 class="anchored" data-anchor-id="bonus-challenge-1">Bonus Challenge</h3>
+<p>Use a single SQL query to transform the product_hierarchy and product_prices datasets to the product_details table.</p>
+<p>Hint: you may want to consider using a recursive CTE to solve this problem!</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="Chirag1994/chiragsharma.github.io" data-repo-id="R_kgDOJfJZmg" data-category="General" data-category-id="DIC_kwDOJfJZms4CWR8c" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

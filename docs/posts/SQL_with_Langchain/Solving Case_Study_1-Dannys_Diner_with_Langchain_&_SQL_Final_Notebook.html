@@ -222,6 +222,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#interactive-sql-session" id="toc-interactive-sql-session" class="nav-link" data-scroll-target="#interactive-sql-session">Interactive SQL Session</a></li>
   <li><a href="#creating-the-database-using-mysql-python-connector" id="toc-creating-the-database-using-mysql-python-connector" class="nav-link" data-scroll-target="#creating-the-database-using-mysql-python-connector">Creating the Database using MySQL Python Connector</a></li>
   <li><a href="#installing-necessary-libraries" id="toc-installing-necessary-libraries" class="nav-link" data-scroll-target="#installing-necessary-libraries">Installing Necessary Libraries</a></li>
+  <li><a href="#creating-an-environment-variable-file-to-load-openais-api-key" id="toc-creating-an-environment-variable-file-to-load-openais-api-key" class="nav-link" data-scroll-target="#creating-an-environment-variable-file-to-load-openais-api-key">Creating an environment variable file to load OpenAI’s API Key</a></li>
   <li><a href="#importing-libraries-for-creating-the-database" id="toc-importing-libraries-for-creating-the-database" class="nav-link" data-scroll-target="#importing-libraries-for-creating-the-database">Importing Libraries for creating the database</a>
   <ul class="collapse">
   <li><a href="#creating-a-connection-with-the-mysql" id="toc-creating-a-connection-with-the-mysql" class="nav-link" data-scroll-target="#creating-a-connection-with-the-mysql">Creating a connection with the MySQL</a></li>
@@ -230,9 +231,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#creating-tables-by-iteratively-over-the-items-of-the-tables-dictionary." id="toc-creating-tables-by-iteratively-over-the-items-of-the-tables-dictionary." class="nav-link" data-scroll-target="#creating-tables-by-iteratively-over-the-items-of-the-tables-dictionary.">Creating tables by iteratively over the items of the TABLES dictionary.</a></li>
   <li><a href="#data-that-will-be-inserted" id="toc-data-that-will-be-inserted" class="nav-link" data-scroll-target="#data-that-will-be-inserted">Data that will be inserted</a></li>
   <li><a href="#inserting-the-data-into-the-appropriate-tables" id="toc-inserting-the-data-into-the-appropriate-tables" class="nav-link" data-scroll-target="#inserting-the-data-into-the-appropriate-tables">Inserting the data into the appropriate tables</a></li>
-  </ul></li>
-  <li><a href="#creating-an-environment-variable-file-to-load-openais-api-key" id="toc-creating-an-environment-variable-file-to-load-openais-api-key" class="nav-link" data-scroll-target="#creating-an-environment-variable-file-to-load-openais-api-key">Creating an environment variable file to load OpenAI’s API Key</a>
-  <ul class="collapse">
   <li><a href="#case-1-text-to-sql-query" id="toc-case-1-text-to-sql-query" class="nav-link" data-scroll-target="#case-1-text-to-sql-query">Case 1: Text-to-SQL query</a></li>
   </ul></li>
   </ul></li>
@@ -485,8 +483,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="creating-the-database-using-mysql-python-connector" class="level2">
 <h2 class="anchored" data-anchor-id="creating-the-database-using-mysql-python-connector">Creating the Database using MySQL Python Connector</h2>
 <div class="cell" data-execution_count="2">
-<details>
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>DB_NAME <span class="op">=</span> <span class="st">"Dannys_Diner_Langchain"</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>TABLES <span class="op">=</span> {}</span>
@@ -512,46 +508,46 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">" `price` INTEGER"</span></span>
 <span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">" ) ENGINE=InnoDB"</span></span>
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
 </section>
 <section id="installing-necessary-libraries" class="level2">
 <h2 class="anchored" data-anchor-id="installing-necessary-libraries">Installing Necessary Libraries</h2>
 <div class="cell" data-execution_count="3">
-<details>
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># !pip3 install pymyql langchain==0.0.350 langchain-experimental==0.0.47 openai==0.28.1 tenacity -U --quiet</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+</div>
+</section>
+<section id="creating-an-environment-variable-file-to-load-openais-api-key" class="level2">
+<h2 class="anchored" data-anchor-id="creating-an-environment-variable-file-to-load-openais-api-key">Creating an environment variable file to load OpenAI’s API Key</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile .env</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>OPENAI_API_KEY <span class="op">=</span> <span class="st">"PASTE_YOUR_OPENAI_API_KEY"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="importing-libraries-for-creating-the-database" class="level2">
 <h2 class="anchored" data-anchor-id="importing-libraries-for-creating-the-database">Importing Libraries for creating the database</h2>
 <div class="cell" data-execution_count="4">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> openai</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain <span class="im">import</span> OpenAI</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain <span class="im">import</span> SQLDatabase</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> mysql.connector <span class="im">as</span> connection</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mysql.connector <span class="im">import</span> errorcode</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain <span class="im">import</span> PromptTemplate</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv, find_dotenv</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.chat_models <span class="im">import</span> ChatOpenAI</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.agents <span class="im">import</span> create_sql_agent</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.agents.agent_types <span class="im">import</span> AgentType</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.chains <span class="im">import</span> create_sql_query_chain</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_experimental.sql <span class="im">import</span> SQLDatabaseChain</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.agents.agent_toolkits <span class="im">import</span> SQLDatabaseToolkit</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_experimental.sql <span class="im">import</span> SQLDatabaseSequentialChain</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tenacity <span class="im">import</span> retry, stop_after_attempt, wait_random_exponential</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co">## Loading the Secrets from the .env file</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(load_dotenv())</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co"># openai_api_key = os.getenv("OPENAI_API_KEY")</span></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>openai.api_key <span class="op">=</span> os.getenv(<span class="st">"OPENAI_API_KEY"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> openai</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain <span class="im">import</span> OpenAI</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain <span class="im">import</span> SQLDatabase</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> mysql.connector <span class="im">as</span> connection</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mysql.connector <span class="im">import</span> errorcode</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain <span class="im">import</span> PromptTemplate</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv, find_dotenv</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.chat_models <span class="im">import</span> ChatOpenAI</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.agents <span class="im">import</span> create_sql_agent</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.agents.agent_types <span class="im">import</span> AgentType</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.chains <span class="im">import</span> create_sql_query_chain</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_experimental.sql <span class="im">import</span> SQLDatabaseChain</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.agents.agent_toolkits <span class="im">import</span> SQLDatabaseToolkit</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_experimental.sql <span class="im">import</span> SQLDatabaseSequentialChain</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tenacity <span class="im">import</span> retry, stop_after_attempt, wait_random_exponential</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">## Loading the Secrets from the .env file</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(load_dotenv())</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co"># openai_api_key = os.getenv("OPENAI_API_KEY")</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>openai.api_key <span class="op">=</span> os.getenv(<span class="st">"OPENAI_API_KEY"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>True</code></pre>
 </div>
@@ -559,18 +555,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="creating-a-connection-with-the-mysql" class="level3">
 <h3 class="anchored" data-anchor-id="creating-a-connection-with-the-mysql">Creating a connection with the MySQL</h3>
 <div class="cell" data-execution_count="5">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>mydb <span class="op">=</span> connection.<span class="ex">connect</span>(</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>        host<span class="op">=</span><span class="st">'localhost'</span>,</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        user<span class="op">=</span><span class="st">'root'</span>,</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>        passwd<span class="op">=</span><span class="st">"Environment1234567890"</span>,</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        use_pure<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Connection Check is </span><span class="sc">{</span>mydb<span class="sc">.</span>is_connected()<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">### Initializing the cursor</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>cursor <span class="op">=</span> mydb.cursor()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>mydb <span class="op">=</span> connection.<span class="ex">connect</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>        host<span class="op">=</span><span class="st">'localhost'</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>        user<span class="op">=</span><span class="st">'root'</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        passwd<span class="op">=</span><span class="st">"Environment1234567890"</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        use_pure<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Connection Check is </span><span class="sc">{</span>mydb<span class="sc">.</span>is_connected()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">### Initializing the cursor</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>cursor <span class="op">=</span> mydb.cursor()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Connection Check is True</code></pre>
 </div>
@@ -579,60 +572,51 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="writing-a-function-to-create-a-database" class="level3">
 <h3 class="anchored" data-anchor-id="writing-a-function-to-create-a-database">Writing a function to create a Database</h3>
 <div class="cell" data-execution_count="6">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_database(cursor):</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">    cursor: </span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        query <span class="op">=</span> <span class="ss">F"CREATE DATABASE </span><span class="sc">{</span>DB_NAME<span class="sc">}</span><span class="ss">"</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        cursor.execute(query)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> connection.Error <span class="im">as</span> err:</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Failed to create the Database </span><span class="sc">{</span>err<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        exit(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_database(cursor):</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">    cursor: </span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>        query <span class="op">=</span> <span class="ss">F"CREATE DATABASE </span><span class="sc">{</span>DB_NAME<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        cursor.execute(query)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> connection.Error <span class="im">as</span> err:</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Failed to create the Database </span><span class="sc">{</span>err<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>        exit(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="trying-to-create-a-database-if-it-does-not-exists" class="level3">
 <h3 class="anchored" data-anchor-id="trying-to-create-a-database-if-it-does-not-exists">Trying to Create a Database if it does not exists</h3>
 <div class="cell" data-execution_count="7">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    create_database(cursor)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    cursor.execute(<span class="ss">f"USE </span><span class="sc">{</span>DB_NAME<span class="sc">}</span><span class="ss">;"</span>)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> connection.Error <span class="im">as</span> err:</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Database </span><span class="sc">{</span>DB_NAME<span class="sc">}</span><span class="ss"> does not exists."</span>)</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> err.errno <span class="op">==</span> errorcode.ER_BAD_DB_ERROR:</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        create_database(cursor)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Database </span><span class="sc">{</span>DB_NAME<span class="sc">}</span><span class="ss"> created successfully!!!"</span>)</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>        connection.database <span class="op">=</span> DB_NAME</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(err)</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>        exit(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    create_database(cursor)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    cursor.execute(<span class="ss">f"USE </span><span class="sc">{</span>DB_NAME<span class="sc">}</span><span class="ss">;"</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> connection.Error <span class="im">as</span> err:</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Database </span><span class="sc">{</span>DB_NAME<span class="sc">}</span><span class="ss"> does not exists."</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> err.errno <span class="op">==</span> errorcode.ER_BAD_DB_ERROR:</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        create_database(cursor)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Database </span><span class="sc">{</span>DB_NAME<span class="sc">}</span><span class="ss"> created successfully!!!"</span>)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>        connection.database <span class="op">=</span> DB_NAME</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(err)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>        exit(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="creating-tables-by-iteratively-over-the-items-of-the-tables-dictionary." class="level3">
 <h3 class="anchored" data-anchor-id="creating-tables-by-iteratively-over-the-items-of-the-tables-dictionary.">Creating tables by iteratively over the items of the TABLES dictionary.</h3>
 <div class="cell" data-execution_count="8">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> table_name <span class="kw">in</span> TABLES:</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    table_description <span class="op">=</span> TABLES[table_name]</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Creating table </span><span class="sc">{</span>table_name<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>        cursor.execute(table_description)</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> connection.Error <span class="im">as</span> err:</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> err.errno <span class="op">==</span> errorcode.ER_TABLE_EXISTS_ERROR:</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">"Already Exists!!!"</span>)</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(err.msg)    </span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>cursor.close()</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>mydb.close()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> table_name <span class="kw">in</span> TABLES:</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    table_description <span class="op">=</span> TABLES[table_name]</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Creating table </span><span class="sc">{</span>table_name<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>        cursor.execute(table_description)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> connection.Error <span class="im">as</span> err:</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> err.errno <span class="op">==</span> errorcode.ER_TABLE_EXISTS_ERROR:</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">"Already Exists!!!"</span>)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(err.msg)    </span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>cursor.close()</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>mydb.close()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Creating table sales
 Creating table members
@@ -643,215 +627,186 @@ Creating table menu</code></pre>
 <section id="data-that-will-be-inserted" class="level3">
 <h3 class="anchored" data-anchor-id="data-that-will-be-inserted">Data that will be inserted</h3>
 <div class="cell" data-execution_count="9">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>menu_records <span class="op">=</span> (</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"INSERT INTO menu (`product_id`, `product_name`, `price`) VALUES ('1', 'sushi', '10');"</span>,</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"INSERT INTO menu (`product_id`, `product_name`, `price`) VALUES ('2', 'curry', '15');"</span>,</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"INSERT INTO menu (`product_id`, `product_name`, `price`) VALUES ('3', 'ramen', '12');"</span>,   </span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>members_records <span class="op">=</span> (</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"INSERT INTO members (`customer_id`, `join_date`) VALUES ('A', '2021-01-07');"</span>,</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"INSERT INTO members (`customer_id`, `join_date`) VALUES ('B', '2021-01-09');"</span>,       </span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>sales_records <span class="op">=</span> (</span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"INSERT INTO sales (`customer_id`, `order_date`, `product_id`) VALUES ('A', '2021-01-01', '1');"</span>,</span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"INSERT INTO sales (`customer_id`, `order_date`, `product_id`) VALUES ('A', '2021-01-01', '2');"</span>,</span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"INSERT INTO sales (`customer_id`, `order_date`, `product_id`) VALUES ('A', '2021-01-07', '2');"</span>,</span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"INSERT INTO sales (`customer_id`, `order_date`, `product_id`) VALUES ('A', '2021-01-10', '3');"</span>,</span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"INSERT INTO sales (`customer_id`, `order_date`, `product_id`) VALUES ('A', '2021-01-11', '3');"</span>,</span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"INSERT INTO sales (`customer_id`, `order_date`, `product_id`) VALUES ('A', '2021-01-11', '3');"</span>,</span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">"INSERT INTO sales (`customer_id`, `order_date`, `product_id`) VALUES ('B', '2021-01-01', '2');"</span>,</span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">"INSERT INTO sales (`customer_id`, `order_date`, `product_id`) VALUES ('B', '2021-01-02', '2');"</span>,</span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">"INSERT INTO sales (`customer_id`, `order_date`, `product_id`) VALUES ('B', '2021-01-04', '1');"</span>,</span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">"INSERT INTO sales (`customer_id`, `order_date`, `product_id`) VALUES ('B', '2021-01-11', '1');"</span>,</span>
-<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">"INSERT INTO sales (`customer_id`, `order_date`, `product_id`) VALUES ('B', '2021-01-16', '3');"</span>,</span>
-<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">"INSERT INTO sales (`customer_id`, `order_date`, `product_id`) VALUES ('B', '2021-02-01', '3');"</span>,</span>
-<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">"INSERT INTO sales (`customer_id`, `order_date`, `product_id`) VALUES ('C', '2021-01-01', '3');"</span>,</span>
-<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>    <span class="st">"INSERT INTO sales (`customer_id`, `order_date`, `product_id`) VALUES ('C', '2021-01-01', '3');"</span>,</span>
-<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">"INSERT INTO sales (`customer_id`, `order_date`, `product_id`) VALUES ('C', '2021-01-07', '3');"</span>,</span>
-<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>menu_records <span class="op">=</span> (</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"INSERT INTO menu (`product_id`, `product_name`, `price`) VALUES ('1', 'sushi', '10');"</span>,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"INSERT INTO menu (`product_id`, `product_name`, `price`) VALUES ('2', 'curry', '15');"</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"INSERT INTO menu (`product_id`, `product_name`, `price`) VALUES ('3', 'ramen', '12');"</span>,   </span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>members_records <span class="op">=</span> (</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"INSERT INTO members (`customer_id`, `join_date`) VALUES ('A', '2021-01-07');"</span>,</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"INSERT INTO members (`customer_id`, `join_date`) VALUES ('B', '2021-01-09');"</span>,       </span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>sales_records <span class="op">=</span> (</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"INSERT INTO sales (`customer_id`, `order_date`, `product_id`) VALUES ('A', '2021-01-01', '1');"</span>,</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"INSERT INTO sales (`customer_id`, `order_date`, `product_id`) VALUES ('A', '2021-01-01', '2');"</span>,</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"INSERT INTO sales (`customer_id`, `order_date`, `product_id`) VALUES ('A', '2021-01-07', '2');"</span>,</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"INSERT INTO sales (`customer_id`, `order_date`, `product_id`) VALUES ('A', '2021-01-10', '3');"</span>,</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"INSERT INTO sales (`customer_id`, `order_date`, `product_id`) VALUES ('A', '2021-01-11', '3');"</span>,</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"INSERT INTO sales (`customer_id`, `order_date`, `product_id`) VALUES ('A', '2021-01-11', '3');"</span>,</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">"INSERT INTO sales (`customer_id`, `order_date`, `product_id`) VALUES ('B', '2021-01-01', '2');"</span>,</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">"INSERT INTO sales (`customer_id`, `order_date`, `product_id`) VALUES ('B', '2021-01-02', '2');"</span>,</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">"INSERT INTO sales (`customer_id`, `order_date`, `product_id`) VALUES ('B', '2021-01-04', '1');"</span>,</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">"INSERT INTO sales (`customer_id`, `order_date`, `product_id`) VALUES ('B', '2021-01-11', '1');"</span>,</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">"INSERT INTO sales (`customer_id`, `order_date`, `product_id`) VALUES ('B', '2021-01-16', '3');"</span>,</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">"INSERT INTO sales (`customer_id`, `order_date`, `product_id`) VALUES ('B', '2021-02-01', '3');"</span>,</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">"INSERT INTO sales (`customer_id`, `order_date`, `product_id`) VALUES ('C', '2021-01-01', '3');"</span>,</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>    <span class="st">"INSERT INTO sales (`customer_id`, `order_date`, `product_id`) VALUES ('C', '2021-01-01', '3');"</span>,</span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">"INSERT INTO sales (`customer_id`, `order_date`, `product_id`) VALUES ('C', '2021-01-07', '3');"</span>,</span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="inserting-the-data-into-the-appropriate-tables" class="level3">
 <h3 class="anchored" data-anchor-id="inserting-the-data-into-the-appropriate-tables">Inserting the data into the appropriate tables</h3>
 <div class="cell" data-execution_count="10">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    mydb <span class="op">=</span> connection.<span class="ex">connect</span>(</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>        host<span class="op">=</span><span class="st">"localhost"</span>,</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>        user<span class="op">=</span><span class="st">"root"</span>,</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>        passwd<span class="op">=</span><span class="st">"Environment1234567890"</span>,</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>        use_pure<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>        database<span class="op">=</span>DB_NAME</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    cursor <span class="op">=</span> mydb.cursor()</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> query <span class="kw">in</span> (menu_records <span class="op">+</span> sales_records <span class="op">+</span> members_records):</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>        cursor.execute(query)</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Values are Inserted!!!!"</span>)</span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    mydb.commit()</span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    mydb.close()</span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="bu">str</span>(e))</span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>    mydb.close()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    mydb <span class="op">=</span> connection.<span class="ex">connect</span>(</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>        host<span class="op">=</span><span class="st">"localhost"</span>,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>        user<span class="op">=</span><span class="st">"root"</span>,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>        passwd<span class="op">=</span><span class="st">"Environment1234567890"</span>,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>        use_pure<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>        database<span class="op">=</span>DB_NAME</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    cursor <span class="op">=</span> mydb.cursor()</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> query <span class="kw">in</span> (menu_records <span class="op">+</span> sales_records <span class="op">+</span> members_records):</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>        cursor.execute(query)</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Values are Inserted!!!!"</span>)</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    mydb.commit()</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    mydb.close()</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="bu">str</span>(e))</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>    mydb.close()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Values are Inserted!!!!</code></pre>
 </div>
 </div>
-</section>
-</section>
-<section id="creating-an-environment-variable-file-to-load-openais-api-key" class="level2">
-<h2 class="anchored" data-anchor-id="creating-an-environment-variable-file-to-load-openais-api-key">Creating an environment variable file to load OpenAI’s API Key</h2>
-<div class="cell" data-execution_count="11">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile .env</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co"># chiggy1994 account API key</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>OPENAI_API_KEY <span class="op">=</span> <span class="st">"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"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>Overwriting .env</code></pre>
-</div>
-</div>
 <div class="cell" data-execution_count="52">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"""</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="st">As a Senior Data Scientist, having more than 30 years of experience in writing SQL </span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="st">queries in MySQL dialect &amp; you have won several SQL query writing competitions </span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="st">such that you've made almost like 2% mistakes in those participated competitions </span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="st">and you've won 20 of them.</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="st">You are now given a task is to answer the question using the information such as introduction </span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="st">&amp; the problem statement by your boss where he has asked you to write the SQL queries</span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="st">in MySQL dialect. He has told you to make no sytactical errors while writing MySLQ queries.</span></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="st">#### Introduction:</span></span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="st">Danny seriously loves Japanese food so in the beginning of 2021, he decides to embark upon a risky venture and opens </span></span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="st">up a cute little restaurant that sells his 3 favourite foods: sushi, curry and ramen.</span></span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="st">Danny’s Diner is in need of your assistance to help the restaurant stay afloat - the restaurant has captured some very </span></span>
-<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a><span class="st">basic data from their few months of operation but have no idea how to use their data to help them run the business.</span></span>
-<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a><span class="st">#### Problem Statement:</span></span>
-<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a><span class="st">Danny wants to use the data to answer a few simple questions about his customers, especially about their </span></span>
-<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a><span class="st">visiting patterns, how much money they’ve spent and also which menu items are their favourite. Having this </span></span>
-<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a><span class="st">deeper connection with his customers will help him deliver a better and more personalised experience for his </span></span>
-<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a><span class="st">loyal customers.</span></span>
-<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a><span class="st">He plans on using these insights to help him decide whether he should expand the existing customer </span></span>
-<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a><span class="st">loyalty program - additionally he needs help to generate some basic datasets so his team can easily inspect </span></span>
-<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a><span class="st">the data without needing to use SQL.</span></span>
-<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a><span class="st">Danny has provided you with a sample of his overall customer data due to privacy issues - but he hopes that these </span></span>
-<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a><span class="st">examples are enough for you to write fully functioning SQL queries to help him answer his questions!</span></span>
-<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a><span class="st">Danny has shared with you 3 key datasets for this case study:</span></span>
-<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a><span class="st">- `sales`: The `sales` table captures all `customer_id` level purchases with an corresponding `order_date` </span></span>
-<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a><span class="st">    and `product_id` information for when and what menu items were ordered.</span></span>
-<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a><span class="st">- `menu`: The `menu` table maps the `product_id` to the actual `product_name` and `price` of each menu item.</span></span>
-<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a><span class="st">- `members`: The final `members` table captures the `join_date` when a `customer_id` joined the beta </span></span>
-<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a><span class="st">version of the Danny’s Diner loyalty program.</span></span>
-<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-41"><a href="#cb16-41" aria-hidden="true" tabindex="-1"></a><span class="st">#### Database Schema: </span></span>
-<span id="cb16-42"><a href="#cb16-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-43"><a href="#cb16-43" aria-hidden="true" tabindex="-1"></a><span class="st">CREATE TABLE sales (</span></span>
-<span id="cb16-44"><a href="#cb16-44" aria-hidden="true" tabindex="-1"></a><span class="st">`customer_id` VARCHAR(1),</span></span>
-<span id="cb16-45"><a href="#cb16-45" aria-hidden="true" tabindex="-1"></a><span class="st">`order_date` DATE,</span></span>
-<span id="cb16-46"><a href="#cb16-46" aria-hidden="true" tabindex="-1"></a><span class="st">`product_id` INTEGER")</span></span>
-<span id="cb16-47"><a href="#cb16-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-48"><a href="#cb16-48" aria-hidden="true" tabindex="-1"></a><span class="st">CREATE TABLE members (</span></span>
-<span id="cb16-49"><a href="#cb16-49" aria-hidden="true" tabindex="-1"></a><span class="st">`customer_id` VARCHAR(1),</span></span>
-<span id="cb16-50"><a href="#cb16-50" aria-hidden="true" tabindex="-1"></a><span class="st">`join_date` DATE")</span></span>
-<span id="cb16-51"><a href="#cb16-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-52"><a href="#cb16-52" aria-hidden="true" tabindex="-1"></a><span class="st">CREATE TABLE menu (</span></span>
-<span id="cb16-53"><a href="#cb16-53" aria-hidden="true" tabindex="-1"></a><span class="st">`product_id` INTEGER,</span></span>
-<span id="cb16-54"><a href="#cb16-54" aria-hidden="true" tabindex="-1"></a><span class="st">`product_name` VARCHAR(5),</span></span>
-<span id="cb16-55"><a href="#cb16-55" aria-hidden="true" tabindex="-1"></a><span class="st">`price` INTEGER")</span></span>
-<span id="cb16-56"><a href="#cb16-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-57"><a href="#cb16-57" aria-hidden="true" tabindex="-1"></a><span class="st">The `customer_id` column of sales table is joined with `customer_id` column of members table and </span></span>
-<span id="cb16-58"><a href="#cb16-58" aria-hidden="true" tabindex="-1"></a><span class="st">the `product_id` column in sales table is joined with `product_id` column in menu table.</span></span>
-<span id="cb16-59"><a href="#cb16-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-60"><a href="#cb16-60" aria-hidden="true" tabindex="-1"></a><span class="st">#### </span></span>
-<span id="cb16-61"><a href="#cb16-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-62"><a href="#cb16-62" aria-hidden="true" tabindex="-1"></a><span class="st">The following question that needs to be answered is: </span><span class="sc">{question}</span><span class="st">.</span></span>
-<span id="cb16-63"><a href="#cb16-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-64"><a href="#cb16-64" aria-hidden="true" tabindex="-1"></a><span class="st">MAKE HEAVY USE OF CTE, ANALYTICAL FUNCTIONS LIKE RANK, DENSE_RANK, ROW_NUMBER,</span></span>
-<span id="cb16-65"><a href="#cb16-65" aria-hidden="true" tabindex="-1"></a><span class="st">NTILE, FIRST_VALUE, LAST_VALUE, OVER CLAUSE, PARTITION BY CLAUSE,</span></span>
-<span id="cb16-66"><a href="#cb16-66" aria-hidden="true" tabindex="-1"></a><span class="st">along with AGGREGATED FUNCTIONS LIKE SUM, AVG, COUNT etc.  to answer the above question.</span></span>
-<span id="cb16-67"><a href="#cb16-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-68"><a href="#cb16-68" aria-hidden="true" tabindex="-1"></a><span class="st">Also, make extensive use of SUB-QUERIES to answer the above question.</span></span>
-<span id="cb16-69"><a href="#cb16-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-70"><a href="#cb16-70" aria-hidden="true" tabindex="-1"></a><span class="st">DO NOT MAKE ANY MISTAKES WHILE GENERATING THE SQL QUERIES, ESPECIALLY WHEN SELECTING</span></span>
-<span id="cb16-71"><a href="#cb16-71" aria-hidden="true" tabindex="-1"></a><span class="st">THE COLUMNS IN THE SELECT CLAUSE AND USING GROUP BY CLAUSE.</span></span>
-<span id="cb16-72"><a href="#cb16-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-73"><a href="#cb16-73" aria-hidden="true" tabindex="-1"></a><span class="st">Double check for the query that you generate, make sure you make no syntactical errors</span></span>
-<span id="cb16-74"><a href="#cb16-74" aria-hidden="true" tabindex="-1"></a><span class="st">while writing MySQL dialect queries.</span></span>
-<span id="cb16-75"><a href="#cb16-75" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb16-76"><a href="#cb16-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-77"><a href="#cb16-77" aria-hidden="true" tabindex="-1"></a>fixed_response_prompt <span class="op">=</span> <span class="st">"""</span><span class="sc">{response}</span></span>
-<span id="cb16-78"><a href="#cb16-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-79"><a href="#cb16-79" aria-hidden="true" tabindex="-1"></a><span class="st">Double check the MySQL query above for common mistakes, including:</span></span>
-<span id="cb16-80"><a href="#cb16-80" aria-hidden="true" tabindex="-1"></a><span class="st"> - Remember to add all the columns in the GROUP BY clause that are selected in the SELECT statement.</span></span>
-<span id="cb16-81"><a href="#cb16-81" aria-hidden="true" tabindex="-1"></a><span class="st"> - Handling case sensitivity.</span></span>
-<span id="cb16-82"><a href="#cb16-82" aria-hidden="true" tabindex="-1"></a><span class="st"> - Use CTE extensively to solve this question.</span></span>
-<span id="cb16-83"><a href="#cb16-83" aria-hidden="true" tabindex="-1"></a><span class="st"> - Make sure to use Sub-Queries if required.</span></span>
-<span id="cb16-84"><a href="#cb16-84" aria-hidden="true" tabindex="-1"></a><span class="st"> - Ensuring the join columns are correct.</span></span>
-<span id="cb16-85"><a href="#cb16-85" aria-hidden="true" tabindex="-1"></a><span class="st"> - Casting values to the appropriate type.</span></span>
-<span id="cb16-86"><a href="#cb16-86" aria-hidden="true" tabindex="-1"></a><span class="st"> - If used any column names as the function names like rank then in order to use those function names</span></span>
-<span id="cb16-87"><a href="#cb16-87" aria-hidden="true" tabindex="-1"></a><span class="st"> as column names add ` as prefix and suffix to fix the column name error.</span></span>
-<span id="cb16-88"><a href="#cb16-88" aria-hidden="true" tabindex="-1"></a><span class="st"> - Use CASE statements to solve the above question if required.</span></span>
-<span id="cb16-89"><a href="#cb16-89" aria-hidden="true" tabindex="-1"></a><span class="st"> </span></span>
-<span id="cb16-90"><a href="#cb16-90" aria-hidden="true" tabindex="-1"></a><span class="st">Rewrite the query here if there are any mistakes. If it looks good as it is, just reproduce the original query."""</span></span>
-<span id="cb16-91"><a href="#cb16-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-92"><a href="#cb16-92" aria-hidden="true" tabindex="-1"></a>prompt_template_1 <span class="op">=</span> PromptTemplate(</span>
-<span id="cb16-93"><a href="#cb16-93" aria-hidden="true" tabindex="-1"></a>    input_variables<span class="op">=</span>[<span class="st">'question'</span>],</span>
-<span id="cb16-94"><a href="#cb16-94" aria-hidden="true" tabindex="-1"></a>    template<span class="op">=</span>template)</span>
-<span id="cb16-95"><a href="#cb16-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-96"><a href="#cb16-96" aria-hidden="true" tabindex="-1"></a>prompt_template_2 <span class="op">=</span> PromptTemplate(</span>
-<span id="cb16-97"><a href="#cb16-97" aria-hidden="true" tabindex="-1"></a>    input_variables<span class="op">=</span>[<span class="st">'response'</span>],</span>
-<span id="cb16-98"><a href="#cb16-98" aria-hidden="true" tabindex="-1"></a>    template<span class="op">=</span>fixed_response_prompt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="st">As a Senior Data Scientist, having more than 30 years of experience in writing SQL </span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="st">queries in MySQL dialect &amp; you have won several SQL query writing competitions </span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="st">such that you've made almost like 2% mistakes in those participated competitions </span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="st">and you've won 20 of them.</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="st">You are now given a task is to answer the question using the information such as introduction </span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="st">&amp; the problem statement by your boss where he has asked you to write the SQL queries</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="st">in MySQL dialect. He has told you to make no sytactical errors while writing MySLQ queries.</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="st">#### Introduction:</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="st">Danny seriously loves Japanese food so in the beginning of 2021, he decides to embark upon a risky venture and opens </span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="st">up a cute little restaurant that sells his 3 favourite foods: sushi, curry and ramen.</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="st">Danny’s Diner is in need of your assistance to help the restaurant stay afloat - the restaurant has captured some very </span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="st">basic data from their few months of operation but have no idea how to use their data to help them run the business.</span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a><span class="st">#### Problem Statement:</span></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a><span class="st">Danny wants to use the data to answer a few simple questions about his customers, especially about their </span></span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a><span class="st">visiting patterns, how much money they’ve spent and also which menu items are their favourite. Having this </span></span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a><span class="st">deeper connection with his customers will help him deliver a better and more personalised experience for his </span></span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a><span class="st">loyal customers.</span></span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a><span class="st">He plans on using these insights to help him decide whether he should expand the existing customer </span></span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a><span class="st">loyalty program - additionally he needs help to generate some basic datasets so his team can easily inspect </span></span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a><span class="st">the data without needing to use SQL.</span></span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a><span class="st">Danny has provided you with a sample of his overall customer data due to privacy issues - but he hopes that these </span></span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a><span class="st">examples are enough for you to write fully functioning SQL queries to help him answer his questions!</span></span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a><span class="st">Danny has shared with you 3 key datasets for this case study:</span></span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a><span class="st">- `sales`: The `sales` table captures all `customer_id` level purchases with an corresponding `order_date` </span></span>
+<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a><span class="st">    and `product_id` information for when and what menu items were ordered.</span></span>
+<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a><span class="st">- `menu`: The `menu` table maps the `product_id` to the actual `product_name` and `price` of each menu item.</span></span>
+<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a><span class="st">- `members`: The final `members` table captures the `join_date` when a `customer_id` joined the beta </span></span>
+<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a><span class="st">version of the Danny’s Diner loyalty program.</span></span>
+<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-41"><a href="#cb15-41" aria-hidden="true" tabindex="-1"></a><span class="st">#### Database Schema: </span></span>
+<span id="cb15-42"><a href="#cb15-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-43"><a href="#cb15-43" aria-hidden="true" tabindex="-1"></a><span class="st">CREATE TABLE sales (</span></span>
+<span id="cb15-44"><a href="#cb15-44" aria-hidden="true" tabindex="-1"></a><span class="st">`customer_id` VARCHAR(1),</span></span>
+<span id="cb15-45"><a href="#cb15-45" aria-hidden="true" tabindex="-1"></a><span class="st">`order_date` DATE,</span></span>
+<span id="cb15-46"><a href="#cb15-46" aria-hidden="true" tabindex="-1"></a><span class="st">`product_id` INTEGER")</span></span>
+<span id="cb15-47"><a href="#cb15-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-48"><a href="#cb15-48" aria-hidden="true" tabindex="-1"></a><span class="st">CREATE TABLE members (</span></span>
+<span id="cb15-49"><a href="#cb15-49" aria-hidden="true" tabindex="-1"></a><span class="st">`customer_id` VARCHAR(1),</span></span>
+<span id="cb15-50"><a href="#cb15-50" aria-hidden="true" tabindex="-1"></a><span class="st">`join_date` DATE")</span></span>
+<span id="cb15-51"><a href="#cb15-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-52"><a href="#cb15-52" aria-hidden="true" tabindex="-1"></a><span class="st">CREATE TABLE menu (</span></span>
+<span id="cb15-53"><a href="#cb15-53" aria-hidden="true" tabindex="-1"></a><span class="st">`product_id` INTEGER,</span></span>
+<span id="cb15-54"><a href="#cb15-54" aria-hidden="true" tabindex="-1"></a><span class="st">`product_name` VARCHAR(5),</span></span>
+<span id="cb15-55"><a href="#cb15-55" aria-hidden="true" tabindex="-1"></a><span class="st">`price` INTEGER")</span></span>
+<span id="cb15-56"><a href="#cb15-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-57"><a href="#cb15-57" aria-hidden="true" tabindex="-1"></a><span class="st">The `customer_id` column of sales table is joined with `customer_id` column of members table and </span></span>
+<span id="cb15-58"><a href="#cb15-58" aria-hidden="true" tabindex="-1"></a><span class="st">the `product_id` column in sales table is joined with `product_id` column in menu table.</span></span>
+<span id="cb15-59"><a href="#cb15-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-60"><a href="#cb15-60" aria-hidden="true" tabindex="-1"></a><span class="st">#### </span></span>
+<span id="cb15-61"><a href="#cb15-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-62"><a href="#cb15-62" aria-hidden="true" tabindex="-1"></a><span class="st">The following question that needs to be answered is: </span><span class="sc">{question}</span><span class="st">.</span></span>
+<span id="cb15-63"><a href="#cb15-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-64"><a href="#cb15-64" aria-hidden="true" tabindex="-1"></a><span class="st">MAKE HEAVY USE OF CTE, ANALYTICAL FUNCTIONS LIKE RANK, DENSE_RANK, ROW_NUMBER,</span></span>
+<span id="cb15-65"><a href="#cb15-65" aria-hidden="true" tabindex="-1"></a><span class="st">NTILE, FIRST_VALUE, LAST_VALUE, OVER CLAUSE, PARTITION BY CLAUSE,</span></span>
+<span id="cb15-66"><a href="#cb15-66" aria-hidden="true" tabindex="-1"></a><span class="st">along with AGGREGATED FUNCTIONS LIKE SUM, AVG, COUNT etc.  to answer the above question.</span></span>
+<span id="cb15-67"><a href="#cb15-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-68"><a href="#cb15-68" aria-hidden="true" tabindex="-1"></a><span class="st">Also, make extensive use of SUB-QUERIES to answer the above question.</span></span>
+<span id="cb15-69"><a href="#cb15-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-70"><a href="#cb15-70" aria-hidden="true" tabindex="-1"></a><span class="st">DO NOT MAKE ANY MISTAKES WHILE GENERATING THE SQL QUERIES, ESPECIALLY WHEN SELECTING</span></span>
+<span id="cb15-71"><a href="#cb15-71" aria-hidden="true" tabindex="-1"></a><span class="st">THE COLUMNS IN THE SELECT CLAUSE AND USING GROUP BY CLAUSE.</span></span>
+<span id="cb15-72"><a href="#cb15-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-73"><a href="#cb15-73" aria-hidden="true" tabindex="-1"></a><span class="st">Double check for the query that you generate, make sure you make no syntactical errors</span></span>
+<span id="cb15-74"><a href="#cb15-74" aria-hidden="true" tabindex="-1"></a><span class="st">while writing MySQL dialect queries.</span></span>
+<span id="cb15-75"><a href="#cb15-75" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb15-76"><a href="#cb15-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-77"><a href="#cb15-77" aria-hidden="true" tabindex="-1"></a>fixed_response_prompt <span class="op">=</span> <span class="st">"""</span><span class="sc">{response}</span></span>
+<span id="cb15-78"><a href="#cb15-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-79"><a href="#cb15-79" aria-hidden="true" tabindex="-1"></a><span class="st">Double check the MySQL query above for common mistakes, including:</span></span>
+<span id="cb15-80"><a href="#cb15-80" aria-hidden="true" tabindex="-1"></a><span class="st"> - Remember to add all the columns in the GROUP BY clause that are selected in the SELECT statement.</span></span>
+<span id="cb15-81"><a href="#cb15-81" aria-hidden="true" tabindex="-1"></a><span class="st"> - Handling case sensitivity.</span></span>
+<span id="cb15-82"><a href="#cb15-82" aria-hidden="true" tabindex="-1"></a><span class="st"> - Use CTE extensively to solve this question.</span></span>
+<span id="cb15-83"><a href="#cb15-83" aria-hidden="true" tabindex="-1"></a><span class="st"> - Make sure to use Sub-Queries if required.</span></span>
+<span id="cb15-84"><a href="#cb15-84" aria-hidden="true" tabindex="-1"></a><span class="st"> - Ensuring the join columns are correct.</span></span>
+<span id="cb15-85"><a href="#cb15-85" aria-hidden="true" tabindex="-1"></a><span class="st"> - Casting values to the appropriate type.</span></span>
+<span id="cb15-86"><a href="#cb15-86" aria-hidden="true" tabindex="-1"></a><span class="st"> - If used any column names as the function names like rank then in order to use those function names</span></span>
+<span id="cb15-87"><a href="#cb15-87" aria-hidden="true" tabindex="-1"></a><span class="st"> as column names add ` as prefix and suffix to fix the column name error.</span></span>
+<span id="cb15-88"><a href="#cb15-88" aria-hidden="true" tabindex="-1"></a><span class="st"> - Use CASE statements to solve the above question if required.</span></span>
+<span id="cb15-89"><a href="#cb15-89" aria-hidden="true" tabindex="-1"></a><span class="st"> </span></span>
+<span id="cb15-90"><a href="#cb15-90" aria-hidden="true" tabindex="-1"></a><span class="st">Rewrite the query here if there are any mistakes. If it looks good as it is, just reproduce the original query."""</span></span>
+<span id="cb15-91"><a href="#cb15-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-92"><a href="#cb15-92" aria-hidden="true" tabindex="-1"></a>prompt_template_1 <span class="op">=</span> PromptTemplate(</span>
+<span id="cb15-93"><a href="#cb15-93" aria-hidden="true" tabindex="-1"></a>    input_variables<span class="op">=</span>[<span class="st">'question'</span>],</span>
+<span id="cb15-94"><a href="#cb15-94" aria-hidden="true" tabindex="-1"></a>    template<span class="op">=</span>template)</span>
+<span id="cb15-95"><a href="#cb15-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-96"><a href="#cb15-96" aria-hidden="true" tabindex="-1"></a>prompt_template_2 <span class="op">=</span> PromptTemplate(</span>
+<span id="cb15-97"><a href="#cb15-97" aria-hidden="true" tabindex="-1"></a>    input_variables<span class="op">=</span>[<span class="st">'response'</span>],</span>
+<span id="cb15-98"><a href="#cb15-98" aria-hidden="true" tabindex="-1"></a>    template<span class="op">=</span>fixed_response_prompt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
 <section id="case-1-text-to-sql-query" class="level3">
 <h3 class="anchored" data-anchor-id="case-1-text-to-sql-query">Case 1: Text-to-SQL query</h3>
 <div class="cell" data-execution_count="36">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>db_user <span class="op">=</span> <span class="st">"root"</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>db_password <span class="op">=</span> <span class="st">"Environment1234567890"</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>db_host <span class="op">=</span> <span class="st">"localhost:3306"</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run_text_to_sql_query_and_print(question):</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    llm <span class="op">=</span> ChatOpenAI(temperature<span class="op">=</span><span class="dv">0</span>, model<span class="op">=</span><span class="st">'gpt-3.5-turbo'</span>)</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    chain <span class="op">=</span> create_sql_query_chain(llm, db)</span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    prompt_template_1_response <span class="op">=</span> chain.invoke({<span class="st">"question"</span>: prompt_template_1.format_prompt(question<span class="op">=</span>question).text})</span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    final_response <span class="op">=</span> chain.invoke({<span class="st">"question"</span>: </span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>                             prompt_template_2.format_prompt(response<span class="op">=</span>prompt_template_1_response).text})</span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(db.run(final_response))</span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>db <span class="op">=</span> SQLDatabase.from_uri(<span class="ss">f"mysql+pymysql://</span><span class="sc">{</span>db_user<span class="sc">}</span><span class="ss">:</span><span class="sc">{</span>db_password<span class="sc">}</span><span class="ss">@</span><span class="sc">{</span>db_host<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>DB_NAME<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>llm <span class="op">=</span> OpenAI(temperature<span class="op">=</span><span class="dv">0</span>, verbose<span class="op">=</span><span class="va">True</span>, max_tokens<span class="op">=</span><span class="dv">4097</span>)</span>
-<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>db_chain <span class="op">=</span> SQLDatabaseChain.from_llm(llm, db, verbose<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>db_user <span class="op">=</span> <span class="st">"root"</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>db_password <span class="op">=</span> <span class="st">"Environment1234567890"</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>db_host <span class="op">=</span> <span class="st">"localhost:3306"</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run_text_to_sql_query_and_print(question):</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    llm <span class="op">=</span> ChatOpenAI(temperature<span class="op">=</span><span class="dv">0</span>, model<span class="op">=</span><span class="st">'gpt-3.5-turbo'</span>)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    chain <span class="op">=</span> create_sql_query_chain(llm, db)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    prompt_template_1_response <span class="op">=</span> chain.invoke({<span class="st">"question"</span>: prompt_template_1.format_prompt(question<span class="op">=</span>question).text})</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    final_response <span class="op">=</span> chain.invoke({<span class="st">"question"</span>: </span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>                             prompt_template_2.format_prompt(response<span class="op">=</span>prompt_template_1_response).text})</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(db.run(final_response))</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>db <span class="op">=</span> SQLDatabase.from_uri(<span class="ss">f"mysql+pymysql://</span><span class="sc">{</span>db_user<span class="sc">}</span><span class="ss">:</span><span class="sc">{</span>db_password<span class="sc">}</span><span class="ss">@</span><span class="sc">{</span>db_host<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>DB_NAME<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>llm <span class="op">=</span> OpenAI(temperature<span class="op">=</span><span class="dv">0</span>, verbose<span class="op">=</span><span class="va">True</span>, max_tokens<span class="op">=</span><span class="dv">4097</span>)</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>db_chain <span class="op">=</span> SQLDatabaseChain.from_llm(llm, db, verbose<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="what-is-the-total-amount-each-customer-spent-at-the-restaurant" class="level4">
 <h4 class="anchored" data-anchor-id="what-is-the-total-amount-each-customer-spent-at-the-restaurant">1. What is the total amount each customer spent at the restaurant?</h4>
 <div class="cell" data-execution_count="37">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>question_1 <span class="op">=</span> <span class="st">"What is the total amount each customer spent at the restaurant?"</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>run_and_print(question_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>question_1 <span class="op">=</span> <span class="st">"What is the total amount each customer spent at the restaurant?"</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>run_and_print(question_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[('A', Decimal('76')), ('B', Decimal('74')), ('C', Decimal('36'))]</code></pre>
 </div>
@@ -860,11 +815,8 @@ Creating table menu</code></pre>
 <section id="how-many-days-has-each-customer-visited-the-restaurant" class="level4">
 <h4 class="anchored" data-anchor-id="how-many-days-has-each-customer-visited-the-restaurant">2. How many days has each customer visited the restaurant?</h4>
 <div class="cell" data-execution_count="38">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>question_2 <span class="op">=</span> <span class="st">"How many days has each customer visited the restaurant?"</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>run_and_print(question_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>question_2 <span class="op">=</span> <span class="st">"How many days has each customer visited the restaurant?"</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>run_and_print(question_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[('B', 6), ('A', 4), ('C', 2)]</code></pre>
 </div>
@@ -873,11 +825,8 @@ Creating table menu</code></pre>
 <section id="what-was-the-first-item-from-the-menu-purchased-by-each-customer" class="level4">
 <h4 class="anchored" data-anchor-id="what-was-the-first-item-from-the-menu-purchased-by-each-customer">3. What was the first item from the menu purchased by each customer?</h4>
 <div class="cell" data-execution_count="39">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>question_3 <span class="op">=</span> <span class="st">"What was the first item from the menu purchased by each customer?"</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>run_and_print(question_3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>question_3 <span class="op">=</span> <span class="st">"What was the first item from the menu purchased by each customer?"</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>run_and_print(question_3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[('A', 'sushi'), ('B', 'curry'), ('C', 'ramen')]</code></pre>
 </div>
@@ -886,11 +835,8 @@ Creating table menu</code></pre>
 <section id="what-is-the-most-purchased-item-on-the-menu-and-how-many-times-was-it-purchased-by-all-customers" class="level4">
 <h4 class="anchored" data-anchor-id="what-is-the-most-purchased-item-on-the-menu-and-how-many-times-was-it-purchased-by-all-customers">4. What is the most purchased item on the menu and how many times was it purchased by all customers?</h4>
 <div class="cell" data-execution_count="40">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>question_4 <span class="op">=</span> <span class="st">"What is the most purchased item on the menu and how many times was it purchased by all customers?"</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>run_and_print(question_4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>question_4 <span class="op">=</span> <span class="st">"What is the most purchased item on the menu and how many times was it purchased by all customers?"</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>run_and_print(question_4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[('ramen', 8)]</code></pre>
 </div>
@@ -899,11 +845,8 @@ Creating table menu</code></pre>
 <section id="which-item-was-the-most-popular-for-each-customer" class="level4">
 <h4 class="anchored" data-anchor-id="which-item-was-the-most-popular-for-each-customer">5. Which item was the most popular for each customer?</h4>
 <div class="cell" data-execution_count="41">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>question_5 <span class="op">=</span> <span class="st">"Which item was the most popular for each customer?"</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>run_and_print(question_5)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>question_5 <span class="op">=</span> <span class="st">"Which item was the most popular for each customer?"</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>run_and_print(question_5)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[('A', 'ramen', 3), ('B', 'curry', 2), ('B', 'sushi', 2), ('B', 'ramen', 2), ('C', 'ramen', 3)]</code></pre>
 </div>
@@ -912,11 +855,8 @@ Creating table menu</code></pre>
 <section id="which-item-was-purchased-first-by-the-customer-after-they-became-a-member" class="level4">
 <h4 class="anchored" data-anchor-id="which-item-was-purchased-first-by-the-customer-after-they-became-a-member">6. Which item was purchased first by the customer after they became a member?</h4>
 <div class="cell" data-execution_count="42">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>question_6 <span class="op">=</span> <span class="st">"Which item was purchased first by the customer after they became a member?"</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>run_and_print(question_6)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>question_6 <span class="op">=</span> <span class="st">"Which item was purchased first by the customer after they became a member?"</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>run_and_print(question_6)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[('A', datetime.date(2021, 1, 7), 'ramen', 12), ('B', datetime.date(2021, 1, 9), 'sushi', 10)]</code></pre>
 </div>
@@ -925,11 +865,8 @@ Creating table menu</code></pre>
 <section id="which-item-was-purchased-just-before-the-customer-became-a-member" class="level4">
 <h4 class="anchored" data-anchor-id="which-item-was-purchased-just-before-the-customer-became-a-member">7. Which item was purchased just before the customer became a member?</h4>
 <div class="cell" data-execution_count="43">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>question_7 <span class="op">=</span> <span class="st">"Which item was purchased just before the customer became a member?"</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>run_and_print(question_7)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>question_7 <span class="op">=</span> <span class="st">"Which item was purchased just before the customer became a member?"</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>run_and_print(question_7)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[('A', datetime.date(2021, 1, 1), 'sushi'), ('B', datetime.date(2021, 1, 4), 'sushi')]</code></pre>
 </div>
@@ -938,11 +875,8 @@ Creating table menu</code></pre>
 <section id="what-is-the-total-items-and-amount-spent-for-each-member-before-they-became-a-member" class="level4">
 <h4 class="anchored" data-anchor-id="what-is-the-total-items-and-amount-spent-for-each-member-before-they-became-a-member">8. What is the total items and amount spent for each member before they became a member?</h4>
 <div class="cell" data-execution_count="44">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>question_8 <span class="op">=</span> <span class="st">"What is the total items and amount spent for each member before they became a member?"</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>run_and_print(question_8)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>question_8 <span class="op">=</span> <span class="st">"What is the total items and amount spent for each member before they became a member?"</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>run_and_print(question_8)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[('B', 3, Decimal('40')), ('A', 2, Decimal('25')), ('C', 2, Decimal('24'))]</code></pre>
 </div>
@@ -951,12 +885,9 @@ Creating table menu</code></pre>
 <section id="if-each-1-spent-equates-to-10-points-and-sushi-has-a-2x-points-multiplier---how-many-points-would-each-customer-have" class="level4">
 <h4 class="anchored" data-anchor-id="if-each-1-spent-equates-to-10-points-and-sushi-has-a-2x-points-multiplier---how-many-points-would-each-customer-have">9. If each \$1 spent equates to 10 points and sushi has a 2x points multiplier - how many points would each customer have?</h4>
 <div class="cell" data-execution_count="45">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>question_9 <span class="op">=</span> <span class="st">"""If each $1 spent equates to 10 points and sushi has a 2x points </span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="st">    multiplier - how many points would each customer have?"""</span></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>run_and_print(question_9)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>question_9 <span class="op">=</span> <span class="st">"""If each $1 spent equates to 10 points and sushi has a 2x points </span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="st">    multiplier - how many points would each customer have?"""</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>run_and_print(question_9)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[('A', Decimal('960')), ('B', Decimal('1140'))]</code></pre>
 </div>
@@ -965,12 +896,9 @@ Creating table menu</code></pre>
 <section id="in-the-first-week-after-a-customer-joins-the-program-including-their-join-date-they-earn-2x-points-on-all-items-not-just-sushi---how-many-points-do-customer-a-and-b-have-at-the-end-of-january" class="level4">
 <h4 class="anchored" data-anchor-id="in-the-first-week-after-a-customer-joins-the-program-including-their-join-date-they-earn-2x-points-on-all-items-not-just-sushi---how-many-points-do-customer-a-and-b-have-at-the-end-of-january">10. In the first week after a customer joins the program (including their join date) they earn 2x points on all items, not just sushi - how many points do customer A and B have at the end of January?</h4>
 <div class="cell" data-execution_count="53">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>question_10 <span class="op">=</span> <span class="st">"""In the first week after a customer joins the program (including their join date) they earn 2x </span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="st">points on all items, not just sushi - how many points do customer A and B have at the end of January?"""</span></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>run_and_print(question_10)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>question_10 <span class="op">=</span> <span class="st">"""In the first week after a customer joins the program (including their join date) they earn 2x </span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="st">points on all items, not just sushi - how many points do customer A and B have at the end of January?"""</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>run_and_print(question_10)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[('B', Decimal('124')), ('A', Decimal('152'))]</code></pre>
 </div>
@@ -1100,40 +1028,37 @@ Creating table menu</code></pre>
 </tbody>
 </table>
 <div class="cell" data-scrolled="true" data-execution_count="51">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>bonus_question_1 <span class="op">=</span> <span class="st">"""</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="st">Join All The Things</span></span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="st">The following questions are related creating basic data tables that Danny and his team can use to quickly derive </span></span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="st">insights without needing to join the underlying tables using SQL.</span></span>
-<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a><span class="st">Recreate the following table output using the available data:</span></span>
-<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="st">| customer_id | order_date | product_name | price | member |</span></span>
-<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a><span class="st">|-------------|------------|--------------|-------|--------|</span></span>
-<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a><span class="st">| A           | 2021-01-01 | curry        | 15    | N      |</span></span>
-<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a><span class="st">| A           | 2021-01-01 | sushi        | 10    | N      |</span></span>
-<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a><span class="st">| A           | 2021-01-07 | curry        | 15    | Y      |</span></span>
-<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a><span class="st">| A           | 2021-01-10 | ramen        | 12    | Y      |</span></span>
-<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a><span class="st">| A           | 2021-01-11 | ramen        | 12    | Y      |</span></span>
-<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a><span class="st">| A           | 2021-01-11 | ramen        | 12    | Y      |</span></span>
-<span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a><span class="st">| B           | 2021-01-01 | curry        | 15    | N      |</span></span>
-<span id="cb38-18"><a href="#cb38-18" aria-hidden="true" tabindex="-1"></a><span class="st">| B           | 2021-01-02 | curry        | 15    | N      |</span></span>
-<span id="cb38-19"><a href="#cb38-19" aria-hidden="true" tabindex="-1"></a><span class="st">| B           | 2021-01-04 | sushi        | 10    | N      |</span></span>
-<span id="cb38-20"><a href="#cb38-20" aria-hidden="true" tabindex="-1"></a><span class="st">| B           | 2021-01-11 | sushi        | 10    | Y      |</span></span>
-<span id="cb38-21"><a href="#cb38-21" aria-hidden="true" tabindex="-1"></a><span class="st">| B           | 2021-01-16 | ramen        | 12    | Y      |</span></span>
-<span id="cb38-22"><a href="#cb38-22" aria-hidden="true" tabindex="-1"></a><span class="st">| B           | 2021-02-01 | ramen        | 12    | Y      |</span></span>
-<span id="cb38-23"><a href="#cb38-23" aria-hidden="true" tabindex="-1"></a><span class="st">| C           | 2021-01-01 | ramen        | 12    | N      |</span></span>
-<span id="cb38-24"><a href="#cb38-24" aria-hidden="true" tabindex="-1"></a><span class="st">| C           | 2021-01-01 | ramen        | 12    | N      |</span></span>
-<span id="cb38-25"><a href="#cb38-25" aria-hidden="true" tabindex="-1"></a><span class="st">| C           | 2021-01-07 | ramen        | 12    | N      |</span></span>
-<span id="cb38-26"><a href="#cb38-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-27"><a href="#cb38-27" aria-hidden="true" tabindex="-1"></a><span class="st">Select all the columns customer_id, order_date, product_name, price and member. Do not miss out on any of the</span></span>
-<span id="cb38-28"><a href="#cb38-28" aria-hidden="true" tabindex="-1"></a><span class="st">columns while generating the output from the generated SQL query.</span></span>
-<span id="cb38-29"><a href="#cb38-29" aria-hidden="true" tabindex="-1"></a><span class="st">Generate the member column and make sure you do not make a mistake in creating that.</span></span>
-<span id="cb38-30"><a href="#cb38-30" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb38-31"><a href="#cb38-31" aria-hidden="true" tabindex="-1"></a>run_and_print(bonus_question_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>bonus_question_1 <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="st">Join All The Things</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="st">The following questions are related creating basic data tables that Danny and his team can use to quickly derive </span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="st">insights without needing to join the underlying tables using SQL.</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="st">Recreate the following table output using the available data:</span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="st">| customer_id | order_date | product_name | price | member |</span></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a><span class="st">|-------------|------------|--------------|-------|--------|</span></span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a><span class="st">| A           | 2021-01-01 | curry        | 15    | N      |</span></span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a><span class="st">| A           | 2021-01-01 | sushi        | 10    | N      |</span></span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a><span class="st">| A           | 2021-01-07 | curry        | 15    | Y      |</span></span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a><span class="st">| A           | 2021-01-10 | ramen        | 12    | Y      |</span></span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a><span class="st">| A           | 2021-01-11 | ramen        | 12    | Y      |</span></span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a><span class="st">| A           | 2021-01-11 | ramen        | 12    | Y      |</span></span>
+<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a><span class="st">| B           | 2021-01-01 | curry        | 15    | N      |</span></span>
+<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a><span class="st">| B           | 2021-01-02 | curry        | 15    | N      |</span></span>
+<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a><span class="st">| B           | 2021-01-04 | sushi        | 10    | N      |</span></span>
+<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a><span class="st">| B           | 2021-01-11 | sushi        | 10    | Y      |</span></span>
+<span id="cb37-21"><a href="#cb37-21" aria-hidden="true" tabindex="-1"></a><span class="st">| B           | 2021-01-16 | ramen        | 12    | Y      |</span></span>
+<span id="cb37-22"><a href="#cb37-22" aria-hidden="true" tabindex="-1"></a><span class="st">| B           | 2021-02-01 | ramen        | 12    | Y      |</span></span>
+<span id="cb37-23"><a href="#cb37-23" aria-hidden="true" tabindex="-1"></a><span class="st">| C           | 2021-01-01 | ramen        | 12    | N      |</span></span>
+<span id="cb37-24"><a href="#cb37-24" aria-hidden="true" tabindex="-1"></a><span class="st">| C           | 2021-01-01 | ramen        | 12    | N      |</span></span>
+<span id="cb37-25"><a href="#cb37-25" aria-hidden="true" tabindex="-1"></a><span class="st">| C           | 2021-01-07 | ramen        | 12    | N      |</span></span>
+<span id="cb37-26"><a href="#cb37-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-27"><a href="#cb37-27" aria-hidden="true" tabindex="-1"></a><span class="st">Select all the columns customer_id, order_date, product_name, price and member. Do not miss out on any of the</span></span>
+<span id="cb37-28"><a href="#cb37-28" aria-hidden="true" tabindex="-1"></a><span class="st">columns while generating the output from the generated SQL query.</span></span>
+<span id="cb37-29"><a href="#cb37-29" aria-hidden="true" tabindex="-1"></a><span class="st">Generate the member column and make sure you do not make a mistake in creating that.</span></span>
+<span id="cb37-30"><a href="#cb37-30" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb37-31"><a href="#cb37-31" aria-hidden="true" tabindex="-1"></a>run_and_print(bonus_question_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[('A', datetime.date(2021, 1, 1), 'sushi', 10, 'Y'), ('A', datetime.date(2021, 1, 1), 'curry', 15, 'Y'), ('A', datetime.date(2021, 1, 7), 'curry', 15, 'Y'), ('A', datetime.date(2021, 1, 10), 'ramen', 12, 'Y'), ('A', datetime.date(2021, 1, 11), 'ramen', 12, 'Y'), ('A', datetime.date(2021, 1, 11), 'ramen', 12, 'Y'), ('B', datetime.date(2021, 1, 1), 'curry', 15, 'Y'), ('B', datetime.date(2021, 1, 2), 'curry', 15, 'Y'), ('B', datetime.date(2021, 1, 4), 'sushi', 10, 'Y'), ('B', datetime.date(2021, 1, 11), 'sushi', 10, 'Y'), ('B', datetime.date(2021, 1, 16), 'ramen', 12, 'Y'), ('B', datetime.date(2021, 2, 1), 'ramen', 12, 'Y'), ('C', datetime.date(2021, 1, 1), 'ramen', 12, 'N'), ('C', datetime.date(2021, 1, 1), 'ramen', 12, 'N'), ('C', datetime.date(2021, 1, 7), 'ramen', 12, 'N')]</code></pre>
 </div>
@@ -1277,31 +1202,28 @@ Creating table menu</code></pre>
 </tbody>
 </table>
 <div class="cell" data-execution_count="54">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>bonus_question_2 <span class="op">=</span> <span class="st">"""</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="st">Danny also requires further information about the `ranking` of customer products, but he purposely does not need the ranking for non-member purchases so he expects null `ranking` values for the records when customers are not yet part of the loyalty program.</span></span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="st">| customer_id | order_date | product_name | price | member | ranking |</span></span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="st">|-------------|------------|--------------|-------|--------|---------|</span></span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="st">| A           | 2021-01-01 | curry        | 15    | N      | null    |</span></span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a><span class="st">| A           | 2021-01-01 | sushi        | 10    | N      | null    |</span></span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a><span class="st">| A           | 2021-01-07 | curry        | 15    | Y      | 1       |</span></span>
-<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a><span class="st">| A           | 2021-01-10 | ramen        | 12    | Y      | 2       |</span></span>
-<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a><span class="st">| A           | 2021-01-11 | ramen        | 12    | Y      | 3       |</span></span>
-<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a><span class="st">| A           | 2021-01-11 | ramen        | 12    | Y      | 3       |</span></span>
-<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a><span class="st">| B           | 2021-01-01 | curry        | 15    | N      | null    |</span></span>
-<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a><span class="st">| B           | 2021-01-02 | curry        | 15    | N      | null    |</span></span>
-<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a><span class="st">| B           | 2021-01-04 | sushi        | 10    | N      | null    |</span></span>
-<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a><span class="st">| B           | 2021-01-11 | sushi        | 10    | Y      | 1       |</span></span>
-<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a><span class="st">| B           | 2021-01-16 | ramen        | 12    | Y      | 2       |</span></span>
-<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a><span class="st">| B           | 2021-02-01 | ramen        | 12    | Y      | 3       |</span></span>
-<span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a><span class="st">| C           | 2021-01-01 | ramen        | 12    | N      | null    |</span></span>
-<span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a><span class="st">| C           | 2021-01-01 | ramen        | 12    | N      | null    |</span></span>
-<span id="cb40-20"><a href="#cb40-20" aria-hidden="true" tabindex="-1"></a><span class="st">| C           | 2021-01-07 | ramen        | 12    | N      | null    |</span></span>
-<span id="cb40-21"><a href="#cb40-21" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb40-22"><a href="#cb40-22" aria-hidden="true" tabindex="-1"></a>run_and_print(bonus_question_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>bonus_question_2 <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="st">Danny also requires further information about the `ranking` of customer products, but he purposely does not need the ranking for non-member purchases so he expects null `ranking` values for the records when customers are not yet part of the loyalty program.</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="st">| customer_id | order_date | product_name | price | member | ranking |</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="st">|-------------|------------|--------------|-------|--------|---------|</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="st">| A           | 2021-01-01 | curry        | 15    | N      | null    |</span></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="st">| A           | 2021-01-01 | sushi        | 10    | N      | null    |</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a><span class="st">| A           | 2021-01-07 | curry        | 15    | Y      | 1       |</span></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a><span class="st">| A           | 2021-01-10 | ramen        | 12    | Y      | 2       |</span></span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a><span class="st">| A           | 2021-01-11 | ramen        | 12    | Y      | 3       |</span></span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a><span class="st">| A           | 2021-01-11 | ramen        | 12    | Y      | 3       |</span></span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a><span class="st">| B           | 2021-01-01 | curry        | 15    | N      | null    |</span></span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a><span class="st">| B           | 2021-01-02 | curry        | 15    | N      | null    |</span></span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a><span class="st">| B           | 2021-01-04 | sushi        | 10    | N      | null    |</span></span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a><span class="st">| B           | 2021-01-11 | sushi        | 10    | Y      | 1       |</span></span>
+<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a><span class="st">| B           | 2021-01-16 | ramen        | 12    | Y      | 2       |</span></span>
+<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a><span class="st">| B           | 2021-02-01 | ramen        | 12    | Y      | 3       |</span></span>
+<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a><span class="st">| C           | 2021-01-01 | ramen        | 12    | N      | null    |</span></span>
+<span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a><span class="st">| C           | 2021-01-01 | ramen        | 12    | N      | null    |</span></span>
+<span id="cb39-20"><a href="#cb39-20" aria-hidden="true" tabindex="-1"></a><span class="st">| C           | 2021-01-07 | ramen        | 12    | N      | null    |</span></span>
+<span id="cb39-21"><a href="#cb39-21" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb39-22"><a href="#cb39-22" aria-hidden="true" tabindex="-1"></a>run_and_print(bonus_question_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[('A', datetime.date(2021, 1, 1), 'sushi', 10, 'Y', 1), ('A', datetime.date(2021, 1, 1), 'curry', 15, 'Y', 1), ('A', datetime.date(2021, 1, 7), 'curry', 15, 'Y', 3), ('A', datetime.date(2021, 1, 10), 'ramen', 12, 'Y', 4), ('A', datetime.date(2021, 1, 11), 'ramen', 12, 'Y', 5), ('A', datetime.date(2021, 1, 11), 'ramen', 12, 'Y', 5), ('B', datetime.date(2021, 1, 1), 'curry', 15, 'Y', 1), ('B', datetime.date(2021, 1, 2), 'curry', 15, 'Y', 2), ('B', datetime.date(2021, 1, 4), 'sushi', 10, 'Y', 3), ('B', datetime.date(2021, 1, 11), 'sushi', 10, 'Y', 4), ('B', datetime.date(2021, 1, 16), 'ramen', 12, 'Y', 5), ('B', datetime.date(2021, 2, 1), 'ramen', 12, 'Y', 6), ('C', datetime.date(2021, 1, 1), 'ramen', 12, 'Y', 1), ('C', datetime.date(2021, 1, 1), 'ramen', 12, 'Y', 1), ('C', datetime.date(2021, 1, 7), 'ramen', 12, 'Y', 3)]</code></pre>
 </div>
