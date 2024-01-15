@@ -13,7 +13,7 @@ website:
         text: Blog      
       - href: portfolio.qmd
         text: Portfolio
-      - href: resume/Chirag_Sharma_Resume.pdf
+      - href: resume/Resume.pdf
         text: Resume
       - icon: github # add icons that link to social media, etc.
         href: https://github.com/Chirag1994
