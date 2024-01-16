@@ -209,7 +209,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#task-0-setup" id="toc-task-0-setup" class="nav-link" data-scroll-target="#task-0-setup">Task 0: Setup</a>
   <ul class="collapse">
   <li><a href="#instructions" id="toc-instructions" class="nav-link" data-scroll-target="#instructions">Instructions</a></li>
-  <li><a href="#instructions-1" id="toc-instructions-1" class="nav-link" data-scroll-target="#instructions-1">Instructions</a></li>
   </ul></li>
   <li><a href="#task-1-import-the-required-libraries" id="toc-task-1-import-the-required-libraries" class="nav-link" data-scroll-target="#task-1-import-the-required-libraries">Task 1: Import The Required Libraries</a></li>
   <li><a href="#task-2-download-the-youtube-video" id="toc-task-2-download-the-youtube-video" class="nav-link" data-scroll-target="#task-2-download-the-youtube-video">Task 2: Download the YouTube Video</a></li>
@@ -217,7 +216,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#task-4-create-a-textloader-using-langchain" id="toc-task-4-create-a-textloader-using-langchain" class="nav-link" data-scroll-target="#task-4-create-a-textloader-using-langchain">Task 4: Create a TextLoader using LangChain</a></li>
   <li><a href="#task-4-creating-an-in-memory-vector-store" id="toc-task-4-creating-an-in-memory-vector-store" class="nav-link" data-scroll-target="#task-4-creating-an-in-memory-vector-store">Task 4: Creating an In-Memory Vector Store</a>
   <ul class="collapse">
-  <li><a href="#instructions-2" id="toc-instructions-2" class="nav-link" data-scroll-target="#instructions-2">Instructions</a></li>
+  <li><a href="#instructions-1" id="toc-instructions-1" class="nav-link" data-scroll-target="#instructions-1">Instructions</a></li>
   </ul></li>
   <li><a href="#task-5-create-the-document-search" id="toc-task-5-create-the-document-search" class="nav-link" data-scroll-target="#task-5-create-the-document-search">Task 5: Create the Document Search</a></li>
   <li><a href="#task-5-create-the-queries" id="toc-task-5-create-the-queries" class="nav-link" data-scroll-target="#task-5-create-the-queries">Task 5: Create the Queries</a></li>
@@ -278,9 +277,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>True</code></pre>
 </div>
 </div>
-</section>
-<section id="instructions-1" class="level3">
-<h3 class="anchored" data-anchor-id="instructions-1">Instructions</h3>
 </section>
 </section>
 <section id="task-1-import-the-required-libraries" class="level2">
@@ -460,8 +456,8 @@ Deleting original file files\audio\Python Machine Learning Tutorial ｜ Splittin
 <p>Now that we have created Documents of the transcription, we will store that Document in a vector store. Vector stores allows LLMs to traverse through data to find similiarity between different data based on their distance in space.</p>
 <p>For large amounts of data, it is best to use a designated Vector Database. Since we are only using one transcript for this tutorial, we can create an in-memory vector store using the <code>docarray</code> package.</p>
 <p>We will also tokenize our queries using the <code>tiktoken</code> package. This means that our query will be seperated into smaller parts either by phrases, words or characters. Each of these parts are assigned a token which helps the model “understand” the text and relationships with other tokens.</p>
-<section id="instructions-2" class="level3">
-<h3 class="anchored" data-anchor-id="instructions-2">Instructions</h3>
+<section id="instructions-1" class="level3">
+<h3 class="anchored" data-anchor-id="instructions-1">Instructions</h3>
 <ul>
 <li>Import the <code>tiktoken</code> package.</li>
 </ul>
