@@ -2,7 +2,7 @@
 title: "Portfolio"
 comments: false
 listing:
-  contents: portfolio/
+  contents: portfolio/**/*.ipynb
   sort: "date desc"
   type: grid
   categories: true
