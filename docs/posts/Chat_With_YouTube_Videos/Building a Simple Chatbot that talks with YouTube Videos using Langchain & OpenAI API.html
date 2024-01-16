@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Chirag Sharma">
-<meta name="dcterms.date" content="2024-01-07">
-<meta name="description" content="In this post, we will explore how we can create a simple bot to ask Questions from YouTube Videos.">
+<meta name="dcterms.date" content="2024-01-02">
+<meta name="description" content="In this post, we’ll create a simple chatbot that can talk with YouTube videos using Langchain &amp; OpenAI API.">
 
-<title>Chirag Sharma - Building Multimodal AI Applications with Langchain &amp; OpenAI API</title>
+<title>Chirag Sharma - Building a Simple Chatbot to talk with YouTube Videos using Langchain &amp; OpenAI API.</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -160,16 +160,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Building Multimodal AI Applications with Langchain &amp; OpenAI API</h1>
+      <h1 class="title">Building a Simple Chatbot to talk with YouTube Videos using Langchain &amp; OpenAI API.</h1>
                   <div>
         <div class="description">
-          In this post, we will explore how we can create a simple bot to ask Questions from YouTube Videos.
+          In this post, we’ll create a simple chatbot that can talk with YouTube videos using Langchain &amp; OpenAI API.
         </div>
       </div>
                           <div class="quarto-categories">
-                <div class="quarto-category">OpenAI API</div>
+                <div class="quarto-category">GenerativeAI</div>
                 <div class="quarto-category">Langchain</div>
-                <div class="quarto-category">Whisper</div>
+                <div class="quarto-category">OpenAI</div>
+                <div class="quarto-category">LLMs</div>
               </div>
                   </div>
   </div>
@@ -187,7 +188,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">January 7, 2024</p>
+        <p class="date">January 2, 2024</p>
       </div>
     </div>
     
@@ -203,7 +204,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#goals" id="toc-goals" class="nav-link active" data-scroll-target="#goals">Goals</a></li>
+  <li><a href="#objectives" id="toc-objectives" class="nav-link active" data-scroll-target="#objectives">Objectives</a></li>
   <li><a href="#before-you-begin" id="toc-before-you-begin" class="nav-link" data-scroll-target="#before-you-begin">Before you begin</a></li>
   <li><a href="#task-0-setup" id="toc-task-0-setup" class="nav-link" data-scroll-target="#task-0-setup">Task 0: Setup</a>
   <ul class="collapse">
@@ -220,7 +221,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#task-5-create-the-document-search" id="toc-task-5-create-the-document-search" class="nav-link" data-scroll-target="#task-5-create-the-document-search">Task 5: Create the Document Search</a></li>
   <li><a href="#task-5-create-the-queries" id="toc-task-5-create-the-queries" class="nav-link" data-scroll-target="#task-5-create-the-queries">Task 5: Create the Queries</a></li>
-  <li><a href="#all-done-congrats" id="toc-all-done-congrats" class="nav-link" data-scroll-target="#all-done-congrats">All done, congrats!</a></li>
+  <li><a href="#thats-all." id="toc-thats-all." class="nav-link" data-scroll-target="#thats-all.">That’s all.</a></li>
   </ul>
 </nav>
     </div>
@@ -230,8 +231,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="goals" class="level2">
-<h2 class="anchored" data-anchor-id="goals">Goals</h2>
+<section id="objectives" class="level2">
+<h2 class="anchored" data-anchor-id="objectives">Objectives</h2>
 <p>Videos can be full of useful information, but getting hold of that info can be slow, since you need to watch the whole thing or try skipping through it. It can be much faster to use a bot to ask questions about the contents of the transcript.</p>
 <p>In this project, you’ll download a tutorial video from YouTube, transcribe the audio, and create a simple Q&amp;A bot to ask questions about the content.</p>
 <ul>
@@ -264,17 +265,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="cell" data-scrolled="true" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile .env</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">## saving the OpenAI API key in an environment file</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>OPENAI_API_KEY <span class="op">=</span> <span class="st">"PASTE_YOUR_OPENAI_API_KEY"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>OPENAI_API_KEY <span class="op">=</span> <span class="st">"PASTE_YOUR_OPENAI_API_KEY"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Overwriting .env</code></pre>
 </div>
 </div>
 <div class="cell" data-scrolled="true" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Importing libraries</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv, find_dotenv</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">## Loading the Secrets from the .env file</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(load_dotenv())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv, find_dotenv</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">## Loading the Secrets from the .env file</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(load_dotenv())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>True</code></pre>
 </div>
@@ -313,7 +312,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>We will also assign the variable <code>openai_api_key</code> to the environment variable “OPEN_AI_KEY”. This will help keep our key secure and remove the need to write it in the code here.</p>
 <div class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fetching the OpenAI API key</span></span>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># openai_api_key = os.getenv("OPENAI_API_KEY")</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>openai.api_key <span class="op">=</span> os.getenv(<span class="st">"OPENAI_API_KEY"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
@@ -595,7 +594,7 @@ This lesson is suitable for anyone who is interested in data pre-processing tech
 I don't know the answer to that question as it is subjective and can vary depending on personal opinions and criteria used to determine greatness.</code></pre>
 </div>
 </div>
-<div class="cell" data-scrolled="true" data-execution_count="34">
+<div class="cell" data-execution_count="34">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the query to be used for the QA system</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>query <span class="op">=</span> <span class="st">"How long is the circumference of the earth?"</span></span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the query through the RetrievalQA instance and store the response</span></span>
@@ -612,8 +611,8 @@ I don't know the answer to that question.</code></pre>
 </div>
 </div>
 </section>
-<section id="all-done-congrats" class="level2">
-<h2 class="anchored" data-anchor-id="all-done-congrats">All done, congrats!</h2>
+<section id="thats-all." class="level2">
+<h2 class="anchored" data-anchor-id="thats-all.">That’s all.</h2>
 
 
 </section>
