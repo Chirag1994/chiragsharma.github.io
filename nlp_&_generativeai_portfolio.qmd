@@ -1,7 +1,7 @@
 ---
-title: "SQL Portfolio"
+title: "NLP & GenerativeAI Portfolio"
 listing:
-  contents: portfolio/SQL_Portfolio/
+  contents: portfolio/NLP_&_GenerativeAI_Portfolio/
   sort: "date desc"
   type: default
   categories: false
