@@ -7,6 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Chirag Sharma">
+<meta name="dcterms.date" content="2024-01-02">
+<meta name="description" content="In this post, we’ll tackle the second case study using MySQL from 8WEEKSSQLCHALLENGE.com. We’ll Explore the Pizza Runner case study with us, delving into the data to optimize operations and unveil customer insights using SQL analytics. Join the journey where ’80s Retro Styling and Pizza Is The Future drive the success of this innovative pizza delivery venture!">
 
 <title>Chirag Sharma - Case Study #2 - Pizza Runner</title>
 <style>
@@ -123,9 +125,18 @@ ul.task-list li input[type="checkbox"] {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page">
+    <div class="quarto-title column-page-left">
       <h1 class="title">Case Study #2 - Pizza Runner</h1>
-                      </div>
+                  <div>
+        <div class="description">
+          In this post, we’ll tackle the second case study using MySQL from 8WEEKSSQLCHALLENGE.com. We’ll Explore the Pizza Runner case study with us, delving into the data to optimize operations and unveil customer insights using SQL analytics. Join the journey where ’80s Retro Styling and Pizza Is The Future drive the success of this innovative pizza delivery venture!
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">MySQL</div>
+                <div class="quarto-category">SQL</div>
+              </div>
+                  </div>
   </div>
     
   
@@ -138,6 +149,12 @@ ul.task-list li input[type="checkbox"] {
             </div>
     </div>
       
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">January 2, 2024</p>
+      </div>
+    </div>
     
       
     </div>
@@ -146,16 +163,57 @@ ul.task-list li input[type="checkbox"] {
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#case-study-2---pizza-runner" id="toc-case-study-2---pizza-runner" class="nav-link active" data-scroll-target="#case-study-2---pizza-runner">Case Study #2 - Pizza Runner</a>
+  <ul class="collapse">
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#available-data" id="toc-available-data" class="nav-link" data-scroll-target="#available-data">Available Data</a></li>
+  <li><a href="#entity-relationship-diagram" id="toc-entity-relationship-diagram" class="nav-link" data-scroll-target="#entity-relationship-diagram">Entity Relationship Diagram</a>
+  <ul class="collapse">
+  <li><a href="#table-1-runners" id="toc-table-1-runners" class="nav-link" data-scroll-target="#table-1-runners">Table 1: runners</a></li>
+  <li><a href="#table-2-customer_orders" id="toc-table-2-customer_orders" class="nav-link" data-scroll-target="#table-2-customer_orders">Table 2: customer_orders</a></li>
+  <li><a href="#table-3-runner_orders" id="toc-table-3-runner_orders" class="nav-link" data-scroll-target="#table-3-runner_orders">Table 3: runner_orders</a></li>
+  <li><a href="#table-4-pizza_names" id="toc-table-4-pizza_names" class="nav-link" data-scroll-target="#table-4-pizza_names">Table 4: pizza_names</a></li>
+  <li><a href="#table-5-pizza_recipes" id="toc-table-5-pizza_recipes" class="nav-link" data-scroll-target="#table-5-pizza_recipes">Table 5: pizza_recipes</a></li>
+  <li><a href="#table-6-pizza_toppings" id="toc-table-6-pizza_toppings" class="nav-link" data-scroll-target="#table-6-pizza_toppings">Table 6: pizza_toppings</a></li>
+  </ul></li>
+  <li><a href="#interactive-sql-session" id="toc-interactive-sql-session" class="nav-link" data-scroll-target="#interactive-sql-session">Interactive SQL Session</a></li>
+  <li><a href="#case-study-questions" id="toc-case-study-questions" class="nav-link" data-scroll-target="#case-study-questions">Case Study Questions</a>
+  <ul class="collapse">
+  <li><a href="#a.-pizza-metrics" id="toc-a.-pizza-metrics" class="nav-link" data-scroll-target="#a.-pizza-metrics">A. Pizza Metrics</a></li>
+  <li><a href="#b.-runner-and-customer-experience" id="toc-b.-runner-and-customer-experience" class="nav-link" data-scroll-target="#b.-runner-and-customer-experience">B. Runner and Customer Experience</a></li>
+  <li><a href="#c.-ingredient-optimisation" id="toc-c.-ingredient-optimisation" class="nav-link" data-scroll-target="#c.-ingredient-optimisation">C. Ingredient Optimisation</a></li>
+  <li><a href="#d.-pricing-and-ratings" id="toc-d.-pricing-and-ratings" class="nav-link" data-scroll-target="#d.-pricing-and-ratings">D. Pricing and Ratings</a></li>
+  <li><a href="#e.-bonus-questions" id="toc-e.-bonus-questions" class="nav-link" data-scroll-target="#e.-bonus-questions">E. Bonus Questions</a></li>
+  </ul></li>
+  <li><a href="#lets-start-solving-them." id="toc-lets-start-solving-them." class="nav-link" data-scroll-target="#lets-start-solving-them.">Let’s start solving them.</a>
+  <ul class="collapse">
+  <li><a href="#performing-the-data-cleaning-transformations-first" id="toc-performing-the-data-cleaning-transformations-first" class="nav-link" data-scroll-target="#performing-the-data-cleaning-transformations-first">Performing the Data Cleaning/ Transformations first!</a></li>
+  <li><a href="#a.-pizza-metrics-1" id="toc-a.-pizza-metrics-1" class="nav-link" data-scroll-target="#a.-pizza-metrics-1">A. Pizza Metrics</a></li>
+  <li><a href="#b.-runner-and-customer-experience-1" id="toc-b.-runner-and-customer-experience-1" class="nav-link" data-scroll-target="#b.-runner-and-customer-experience-1">B. Runner and Customer Experience</a></li>
+  <li><a href="#c.-ingredient-optimisation-1" id="toc-c.-ingredient-optimisation-1" class="nav-link" data-scroll-target="#c.-ingredient-optimisation-1">C. Ingredient Optimisation</a></li>
+  <li><a href="#d.-pricing-and-ratings-1" id="toc-d.-pricing-and-ratings-1" class="nav-link" data-scroll-target="#d.-pricing-and-ratings-1">D. Pricing and Ratings</a></li>
+  <li><a href="#e.-bonus-questions-1" id="toc-e.-bonus-questions-1" class="nav-link" data-scroll-target="#e.-bonus-questions-1">E. Bonus Questions</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content quarto-banner-title-block column-page" id="quarto-document-content">
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
 
 
 
+<section id="case-study-2---pizza-runner" class="level1">
+<h1>Case Study #2 - Pizza Runner</h1>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/13e24384-1-Case_study_2_3.png" class="img-fluid figure-img"></p>
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/5c03a555-1-Case_study_2_3.png" class="img-fluid figure-img"></p>
 <figcaption class="figure-caption">Case_study_2_3.png</figcaption>
 </figure>
 </div>
@@ -1383,6 +1441,7 @@ WHERE exclusions IS NOT NULL)</code></pre>
 </div>
 
 
+</section>
 </section>
 </section>
 
