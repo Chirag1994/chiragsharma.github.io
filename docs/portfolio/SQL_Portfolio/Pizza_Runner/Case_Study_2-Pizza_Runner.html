@@ -7,10 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Chirag Sharma">
-<meta name="dcterms.date" content="2024-01-05">
-<meta name="description" content="In this post, I will solve an end-to-end an analytical case study using SQL.">
 
-<title>Chirag Sharma - Solving Case Study #2 - Pizza Runner using SQL</title>
+<title>Chirag Sharma - Case Study #2 - Pizza Runner</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -125,18 +123,9 @@ ul.task-list li input[type="checkbox"] {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">Solving Case Study #2 - Pizza Runner using SQL</h1>
-                  <div>
-        <div class="description">
-          In this post, I will solve an end-to-end an analytical case study using SQL.
-        </div>
-      </div>
-                          <div class="quarto-categories">
-                <div class="quarto-category">SQL</div>
-                <div class="quarto-category">MySQL</div>
-              </div>
-                  </div>
+    <div class="quarto-title column-page">
+      <h1 class="title">Case Study #2 - Pizza Runner</h1>
+                      </div>
   </div>
     
   
@@ -149,12 +138,6 @@ ul.task-list li input[type="checkbox"] {
             </div>
     </div>
       
-      <div>
-      <div class="quarto-title-meta-heading">Published</div>
-      <div class="quarto-title-meta-contents">
-        <p class="date">January 5, 2024</p>
-      </div>
-    </div>
     
       
     </div>
@@ -163,54 +146,13 @@ ul.task-list li input[type="checkbox"] {
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#case-study-2---pizza-runner" id="toc-case-study-2---pizza-runner" class="nav-link active" data-scroll-target="#case-study-2---pizza-runner">Case Study #2 - Pizza Runner</a>
-  <ul class="collapse">
-  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#available-data" id="toc-available-data" class="nav-link" data-scroll-target="#available-data">Available Data</a></li>
-  <li><a href="#entity-relationship-diagram" id="toc-entity-relationship-diagram" class="nav-link" data-scroll-target="#entity-relationship-diagram">Entity Relationship Diagram</a>
-  <ul class="collapse">
-  <li><a href="#table-1-runners" id="toc-table-1-runners" class="nav-link" data-scroll-target="#table-1-runners">Table 1: runners</a></li>
-  <li><a href="#table-2-customer_orders" id="toc-table-2-customer_orders" class="nav-link" data-scroll-target="#table-2-customer_orders">Table 2: customer_orders</a></li>
-  <li><a href="#table-3-runner_orders" id="toc-table-3-runner_orders" class="nav-link" data-scroll-target="#table-3-runner_orders">Table 3: runner_orders</a></li>
-  <li><a href="#table-4-pizza_names" id="toc-table-4-pizza_names" class="nav-link" data-scroll-target="#table-4-pizza_names">Table 4: pizza_names</a></li>
-  <li><a href="#table-5-pizza_recipes" id="toc-table-5-pizza_recipes" class="nav-link" data-scroll-target="#table-5-pizza_recipes">Table 5: pizza_recipes</a></li>
-  <li><a href="#table-6-pizza_toppings" id="toc-table-6-pizza_toppings" class="nav-link" data-scroll-target="#table-6-pizza_toppings">Table 6: pizza_toppings</a></li>
-  </ul></li>
-  <li><a href="#interactive-sql-session" id="toc-interactive-sql-session" class="nav-link" data-scroll-target="#interactive-sql-session">Interactive SQL Session</a></li>
-  <li><a href="#case-study-questions" id="toc-case-study-questions" class="nav-link" data-scroll-target="#case-study-questions">Case Study Questions</a>
-  <ul class="collapse">
-  <li><a href="#a.-pizza-metrics" id="toc-a.-pizza-metrics" class="nav-link" data-scroll-target="#a.-pizza-metrics">A. Pizza Metrics</a></li>
-  <li><a href="#b.-runner-and-customer-experience" id="toc-b.-runner-and-customer-experience" class="nav-link" data-scroll-target="#b.-runner-and-customer-experience">B. Runner and Customer Experience</a></li>
-  <li><a href="#c.-ingredient-optimisation" id="toc-c.-ingredient-optimisation" class="nav-link" data-scroll-target="#c.-ingredient-optimisation">C. Ingredient Optimisation</a></li>
-  <li><a href="#d.-pricing-and-ratings" id="toc-d.-pricing-and-ratings" class="nav-link" data-scroll-target="#d.-pricing-and-ratings">D. Pricing and Ratings</a></li>
-  <li><a href="#e.-bonus-questions" id="toc-e.-bonus-questions" class="nav-link" data-scroll-target="#e.-bonus-questions">E. Bonus Questions</a></li>
-  </ul></li>
-  <li><a href="#lets-start-solving-them." id="toc-lets-start-solving-them." class="nav-link" data-scroll-target="#lets-start-solving-them.">Let’s start solving them.</a>
-  <ul class="collapse">
-  <li><a href="#performing-the-data-cleaning-transformations-first" id="toc-performing-the-data-cleaning-transformations-first" class="nav-link" data-scroll-target="#performing-the-data-cleaning-transformations-first">Performing the Data Cleaning/ Transformations first!</a></li>
-  <li><a href="#a.-pizza-metrics-1" id="toc-a.-pizza-metrics-1" class="nav-link" data-scroll-target="#a.-pizza-metrics-1">A. Pizza Metrics</a></li>
-  <li><a href="#b.-runner-and-customer-experience-1" id="toc-b.-runner-and-customer-experience-1" class="nav-link" data-scroll-target="#b.-runner-and-customer-experience-1">B. Runner and Customer Experience</a></li>
-  <li><a href="#c.-ingredient-optimisation-1" id="toc-c.-ingredient-optimisation-1" class="nav-link" data-scroll-target="#c.-ingredient-optimisation-1">C. Ingredient Optimisation</a></li>
-  <li><a href="#d.-pricing-and-ratings-1" id="toc-d.-pricing-and-ratings-1" class="nav-link" data-scroll-target="#d.-pricing-and-ratings-1">D. Pricing and Ratings</a></li>
-  <li><a href="#e.-bonus-questions-1" id="toc-e.-bonus-questions-1" class="nav-link" data-scroll-target="#e.-bonus-questions-1">E. Bonus Questions</a></li>
-  </ul></li>
-  </ul></li>
-  </ul>
-</nav>
-    </div>
+    
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content quarto-banner-title-block column-page" id="quarto-document-content">
 
 
 
 
-<section id="case-study-2---pizza-runner" class="level1">
-<h1>Case Study #2 - Pizza Runner</h1>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="Case_Study_2-Pizza_Runner_files/figure-html/13e24384-1-Case_study_2_3.png" class="img-fluid figure-img"></p>
@@ -1024,12 +966,20 @@ SELECT
 </figure>
 </div>
 <ul>
-<li><p><strong>6. What was the average speed for each runner for each delivery and do you notice any trend for these values?</strong></p></li>
-<li><p><strong>7. What is the successful delivery percentage for each runner?</strong></p></li>
+<li><strong>6. What was the average speed for each runner for each delivery and do you notice any trend for these values?</strong></li>
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/fdd637e2-1-Case_study_2_34.png" class="img-fluid figure-img"></p>
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/aefd2613-1-Case_study_2_37.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_37.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>7. What is the successful delivery percentage for each runner?</strong></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/b5373b83-1-Case_study_2_34.png" class="img-fluid figure-img"></p>
 <figcaption class="figure-caption">Case_study_2_34.png</figcaption>
 </figure>
 </div>
@@ -1089,6 +1039,94 @@ SELECT
 <figure class="figure">
 <p><img src="Case_Study_2-Pizza_Runner_files/figure-html/db69d4ed-1-Case_study_2_25.png" class="img-fluid figure-img"></p>
 <figcaption class="figure-caption">Case_study_2_25.png</figcaption>
+</figure>
+</div>
+<p><strong><code>Explanation</code></strong>:</p>
+<p><strong><em>This SQL script is designed to break down a column called <code>extras</code> in the <code>customer_orders_temp</code> table into individual values and create a new table named <code>extrasBreak_</code> to store these values. The process involves creating a temporary table (<code>extrasBreak</code>) to handle the extraction and transformation of the <code>extras</code> column..</em></strong></p>
+<p>Here’s a step-by-step breakdown of the query:</p>
+<p><strong>1) Dropping Existing Table (if exists):</strong></p>
+<pre><code>- DROP TABLE IF EXISTS extrasBreak: This command drops the extrasBreak table if it already exists.</code></pre>
+<p><strong>2) Creating Temporary Table (<code>extrasBreak</code>):</strong></p>
+<pre><code>- CREATE TEMPORARY TABLE extrasBreak AS
+  SELECT record_id, TRIM(value) AS extra_id
+  FROM (
+      SELECT record_id,
+           TRIM(SUBSTRING_INDEX(SUBSTRING_INDEX(extras, ',', n.digit + 1), ',', -1)) AS value
+      FROM customer_orders_temp
+      LEFT JOIN (
+           SELECT 0 AS digit UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4
+      ) n ON CHAR_LENGTH(extras) - CHAR_LENGTH(REPLACE(extras, ',', '')) &gt;= n.digit
+      WHERE TRIM(SUBSTRING_INDEX(SUBSTRING_INDEX(extras, ',', n.digit + 1), ',', -1)) &lt;&gt; ''
+   ) AS e;
+ - This query uses a set of nested functions to split the comma-separated values in the extras column (extrasBreak table creation). The SUBSTRING_INDEX function is employed to extract individual values based on commas. The temporary table is created with columns record_id and extra_id, where extra_id contains the extracted and trimmed values.</code></pre>
+<p><strong>3) Inserting Rows with Null or Empty Values:</strong></p>
+<pre><code>- INSERT INTO extrasBreak (record_id, extra_id)
+  SELECT record_id, NULL AS extra_id
+  FROM customer_orders_temp
+  WHERE extras IS NULL OR TRIM(extras) = '';</code></pre>
+<p><strong>4) Creating the Final Result Table (<code>extrasBreak_</code>):</strong></p>
+<pre><code>- CREATE TABLE extrasBreak_ AS
+  SELECT record_id,
+    CASE WHEN extra_id IS NULL THEN '' ELSE extra_id END AS extra_id
+  FROM extrasBreak
+  ORDER BY record_id, extra_id;</code></pre>
+<p><strong><code>Final Concise Explanation</code></strong>: In summary, this script transforms a comma-separated extras column in the customer_orders_temp table into individual values and creates a new table (extrasBreak_) for further analysis or usage.</p>
+<p>Unpivoting/breaking down the <code>extra_id</code> for later use into <code>extrasBreak_</code> temporary table.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/3a9f85d3-1-Case_study_2_48.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_48.png</figcaption>
+</figure>
+</div>
+<p>The output of the above query is as follows:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/b9a941da-1-Case_study_2_49.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_49.png</figcaption>
+</figure>
+</div>
+<p><strong><code>Explanation</code></strong>:</p>
+<p><strong><em>This SQL script is designed to break down a column called <code>exclusions</code> in the <code>customer_orders_temp</code> table into individual values and create a new table named <code>exclusionsBreak_</code> to store these values. The process involves creating a temporary table (<code>exclusionsBreak</code>) to handle the exclusionction and transformation of the <code>exclusions</code> column..</em></strong></p>
+<p>Here’s a step-by-step breakdown of the query:</p>
+<p><strong>1) Dropping Existing Table (if exists):</strong></p>
+<pre><code>- DROP TABLE IF EXISTS exclusionsBreak: This command drops the exclusionsBreak table if it already exists.</code></pre>
+<p><strong>2) Creating Temporary Table (<code>exclusionsBreak</code>):</strong></p>
+<pre><code>- CREATE TEMPORARY TABLE exclusionsBreak AS
+  SELECT record_id, TRIM(value) AS exclusion_id
+  FROM (
+      SELECT record_id,
+           TRIM(SUBSTRING_INDEX(SUBSTRING_INDEX(exclusions, ',', n.digit + 1), ',', -1)) AS value
+      FROM customer_orders_temp
+      LEFT JOIN (
+           SELECT 0 AS digit UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4
+      ) n ON CHAR_LENGTH(exclusions) - CHAR_LENGTH(REPLACE(exclusions, ',', '')) &gt;= n.digit
+      WHERE TRIM(SUBSTRING_INDEX(SUBSTRING_INDEX(exclusions, ',', n.digit + 1), ',', -1)) &lt;&gt; ''
+   ) AS e;
+ - This query uses a set of nested functions to split the comma-separated values in the exclusions column (exclusionsBreak table creation). The SUBSTRING_INDEX function is employed to exclusionct individual values based on commas. The temporary table is created with columns record_id and exclusion_id, where exclusion_id contains the extracted and trimmed values.</code></pre>
+<p><strong>3) Inserting Rows with Null or Empty Values:</strong></p>
+<pre><code>- INSERT INTO exclusionsBreak (record_id, exclusion_id)
+  SELECT record_id, NULL AS exclusion_id
+  FROM customer_orders_temp
+  WHERE exclusions IS NULL OR TRIM(exclusions) = '';</code></pre>
+<p><strong>4) Creating the Final Result Table (<code>exclusionsBreak_</code>):</strong></p>
+<pre><code>- CREATE TABLE exclusionsBreak_ AS
+  SELECT record_id,
+    CASE WHEN exclusion_id IS NULL THEN '' ELSE exclusion_id END AS exclusion_id
+  FROM exclusionsBreak
+  ORDER BY record_id, exclusion_id;</code></pre>
+<p><strong><code>Final Concise Explanation</code></strong>: In summary, this script transforms a comma-separated exclusions column in the customer_orders_temp table into individual values and creates a new table (exclusionsBreak_) for further analysis or usage.</p>
+<p>Unpivoting/breaking down the <code>exclusions_id</code> for later use into <code>exclusionsBreak_</code> temporary table.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/1fa2ecc2-1-Case_study_2_50.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_50.png</figcaption>
+</figure>
+</div>
+<p>The output of the above query looks as follows:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/70f955e6-1-Case_study_2_51.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_51.png</figcaption>
 </figure>
 </div>
 <ul>
@@ -1180,26 +1218,118 @@ WHERE exclusions IS NOT NULL)</code></pre>
 </figure>
 </div>
 <ul>
-<li><p><strong>4. Generate an order item for each record in the customers_orders table in the format of one of the following:</strong></p>
+<li><strong>4. Generate an order item for each record in the customers_orders table in the format of one of the following:</strong>
 <ul>
 <li><strong><code>Meat Lovers</code></strong></li>
 <li><strong><code>Meat Lovers - Exclude Beef</code></strong></li>
 <li><strong><code>Meat Lovers - Extra Bacon</code></strong></li>
 <li><strong><code>Meat Lovers - Exclude Cheese, Bacon - Extra Mushroom, Peppers</code></strong></li>
 </ul></li>
-<li><p><strong>5. Generate an alphabetically ordered comma separated ingredient list for each pizza order from the customer_orders table and add a 2x in front of any relevant ingredients For example: “Meat Lovers: 2xBacon, Beef, … , Salami”</strong></p></li>
-<li><p><strong>6. What is the total quantity of each ingredient used in all delivered pizzas sorted by most frequent first?</strong></p></li>
 </ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/e4f45cd5-1-Case_study_2_52.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_52.png</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/0adf0238-1-Case_study_2_53.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_53.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>5. Generate an alphabetically ordered comma separated ingredient list for each pizza order from the customer_orders table and add a 2x in front of any relevant ingredients For example: “Meat Lovers: 2xBacon, Beef, … , Salami”</strong></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/b0bafb3b-1-Case_study_2_56.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_56.png</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/ed9dbeec-1-Case_study_2_57.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_57.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>6. What is the total quantity of each ingredient used in all delivered pizzas sorted by most frequent first?</strong></li>
+</ul>
+<p><strong><code>Explanation</code></strong>: <strong><em>This SQL query calculates the total quantity of each pizza topping ingredient used in all delivered pizzas, sorting the results by the most frequently used toppings. Here’s a step-by-step explanation:</em></strong></p>
+<p><strong>1) Creation of Temporary Table (Common Table Expression - CTE):</strong></p>
+<pre><code>- WITH pizza_ingredients AS (...): Defines a CTE named pizza_ingredients to gather information about each pizza order and categorize toppings based on whether they are regular, extra, or excluded.
+- Subquery inside CTE:
+    - SELECT CO.order_id, CO.customer_id, PT.topping_name,
+      CASE WHEN PR.topping_id IN 
+          (SELECT extra_id FROM extrasBreak_ AS EB1 WHERE CO.record_id = EB1.record_id) THEN 2
+      WHEN PR.topping_id IN 
+          (SELECT exclusions_id FROM exclusionsBreak_ AS EB2 WHERE CO.record_id = EB2.record_id) THEN 0
+      ELSE 1 END AS ingredients_used: Assigns a value (2 for extra, 0 for excluded, and 1 for regular) to each topping           based on its category in the pizza order.
+    - FROM customer_orders_temp AS CO JOIN pizza_recipes_temp AS PR
+      ON CO.pizza_id = PR.pizza_id JOIN pizza_toppings AS PT
+      ON PT.topping_id = PR.topping_id
+    </code></pre>
+<p><strong>2) Main Query:</strong></p>
+<pre><code>- SELECT PI.topping_name, SUM(ingredients_used) AS qty_used_of_each_ingredients FROM pizza_ingredients AS PI: Counts the total quantity of each topping ingredient by summing the assigned values (2, 0, 1) based on their categories.
+- GROUP BY PI.topping_name: Groups the results by topping_name to aggregate the counts for each topping.
+- ORDER BY PI.topping_name: Orders the results alphabetically by topping_name.</code></pre>
+<p><strong><code>Final Concise Explanation</code></strong>: The query analyzes the pizza orders to determine the total quantity of each topping ingredient used. Toppings are categorized as regular, extra, or excluded, and the results are presented in descending order based on the most frequently used toppings. This information provides insights into the popularity of different toppings in delivered pizzas.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/cefb50b7-1-Case_study_2_54.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_54.png</figcaption>
+</figure>
+</div>
+<p>The output of the query is as follows:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/d99c5c42-1-Case_study_2_55.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_55.png</figcaption>
+</figure>
+</div>
 </section>
 <section id="d.-pricing-and-ratings-1" class="level3">
 <h3 class="anchored" data-anchor-id="d.-pricing-and-ratings-1">D. Pricing and Ratings</h3>
 <ul>
-<li><p><strong>1. If a Meat Lovers pizza costs \$12 and Vegetarian costs \$10 and there were no charges for changes - how much money has Pizza Runner made so far if there are no delivery fees?</strong></p></li>
-<li><p><strong>2. What if there was an additional \$1 charge for any pizza extras?</strong></p>
+<li><strong>1. If a Meat Lovers pizza costs \$12 and Vegetarian costs \$10 and there were no charges for changes - how much money has Pizza Runner made so far if there are no delivery fees?</strong></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/49d6f431-1-Case_study_2_38.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_38.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>2. What if there was an additional \$1 charge for any pizza extras?</strong>
 <ul>
 <li><strong>Add cheese is \$1 extra</strong></li>
 </ul></li>
-<li><p><strong>3. The Pizza Runner team now wants to add an additional ratings system that allows customers to rate their runner, how would you design an additional table for this new dataset - generate a schema for this new table and insert your own data for ratings for each successful customer order between 1 to 5.</strong></p></li>
+<li>12 and 10 are the cost of Meat Lovers and Vegetarian pizzas respectively.</li>
+<li>(CASE WHEN extras LIKE ‘%4%’ THEN 2 ELSE 1 END) represents all the orders where ‘cheese’ (extras that contains 4) is present.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/eb4b8e2c-1-Case_study_2_39.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_39.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>3. The Pizza Runner team now wants to add an additional ratings system that allows customers to rate their runner, how would you design an additional table for this new dataset - generate a schema for this new table and insert your own data for ratings for each successful customer order between 1 to 5.</strong></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/ec750692-1-Case_study_2_40.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_40.png</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/a4bd6e3f-1-Case_study_2_41.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_41.png</figcaption>
+</figure>
+</div>
+<ul>
 <li><p><strong>4. Using your newly generated table - can you join all of the information together to form a table which has the following information for successful deliveries?</strong></p>
 <ul>
 <li><code>customer_id</code></li>
@@ -1213,15 +1343,46 @@ WHERE exclusions IS NOT NULL)</code></pre>
 <li><code>Average speed</code></li>
 <li><code>Total number of pizzas</code></li>
 </ul></li>
-<li><p><strong>5. If a Meat Lovers pizza was \$12 and Vegetarian \$10 fixed prices with no cost for extras and each runner is paid \$0.30 per kilometre traveled - how much money does Pizza Runner have left over after these deliveries?</strong></p></li>
 </ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/ff4a7673-1-Case_study_2_42.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_42.png</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/46bac13e-1-Case_study_2_43.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_43.png</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>5. If a Meat Lovers pizza was \$12 and Vegetarian \$10 fixed prices with no cost for extras and each runner is paid \$0.30 per kilometre traveled - how much money does Pizza Runner have left over after these deliveries?</strong></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/86b237b1-1-Case_study_2_44.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_44.png</figcaption>
+</figure>
+</div>
 </section>
 <section id="e.-bonus-questions-1" class="level3">
 <h3 class="anchored" data-anchor-id="e.-bonus-questions-1">E. Bonus Questions</h3>
 <p>If Danny wants to expand his range of pizzas - how would this impact the existing data design? Write an <strong><code>INSERT</code></strong> statement to demonstrate what would happen if a new <strong><code>Supreme</code></strong> pizza with all the toppings was added to the Pizza Runner menu?</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/7858e83d-1-Case_study_2_45.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_45.png</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case_Study_2-Pizza_Runner_files/figure-html/65c1627a-1-Case_study_2_46.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Case_study_2_46.png</figcaption>
+</figure>
+</div>
 
 
-</section>
 </section>
 </section>
 
