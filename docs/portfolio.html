@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Chirag Sharma - Portfolio</title>
+<title>Portfolio</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -71,7 +71,7 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-date','listing-title','listing-reading-time','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: ['listing-title','listing-author','listing-date','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
       
       searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description","listing-categories"],
     };
@@ -94,7 +94,6 @@ ul.task-list li input[type="checkbox"] {
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<link rel="stylesheet" href="styles.css">
 </head>
 
 <body class="nav-fixed">
@@ -103,23 +102,20 @@ ul.task-list li input[type="checkbox"] {
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
-    <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Chirag Sharma</span>
-    </a>
-  </div>
             <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
     <a class="nav-link" href="./index.html" rel="" target="">
- <span class="menu-text">Home</span></a>
+ <span class="menu-text">Chirag Sharma’s Blog</span></a>
   </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./posts.html" rel="" target="">
+    <a class="nav-link" href="./blog.html" rel="" target="">
  <span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item">
@@ -127,7 +123,7 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Portfolio</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./resume/Resume.pdf" rel="" target="">
+    <a class="nav-link" href="./resume/chirag_sharma_resume.pdf" rel="" target="">
  <span class="menu-text">Resume</span></a>
   </li>  
   <li class="nav-item compact">
@@ -136,12 +132,12 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://medium.com/@chirag.sharma0378" rel="" target=""><i class="bi bi-medium" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/chiragsharma1994/" rel="" target=""><i class="bi bi-linkedin" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.linkedin.com/in/chiragsharma1994/" rel="" target=""><i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="mailto:chirag.sharma0378@gmail.com" rel="" target=""><i class="bi bi-envelope" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
@@ -174,149 +170,83 @@ ul.task-list li input[type="checkbox"] {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(9)</span></div><div class="category" data-category="Computer Vision">Computer Vision <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Deep Learning">Deep Learning <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Gradio">Gradio <span class="quarto-category-count">(2)</span></div><div class="category" data-category="HuggingFace Spaces">HuggingFace Spaces <span class="quarto-category-count">(2)</span></div><div class="category" data-category="MySQL">MySQL <span class="quarto-category-count">(3)</span></div><div class="category" data-category="Natural Language Processing">Natural Language Processing <span class="quarto-category-count">(1)</span></div><div class="category" data-category="PyTorch">PyTorch <span class="quarto-category-count">(1)</span></div><div class="category" data-category="SQL">SQL <span class="quarto-category-count">(3)</span></div><div class="category" data-category="TPUs">TPUs <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Tensorflow">Tensorflow <span class="quarto-category-count">(1)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(8)</span></div><div class="category" data-category="Computer Vision">Computer Vision <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Deep Learning">Deep Learning <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Gradio">Gradio <span class="quarto-category-count">(2)</span></div><div class="category" data-category="HuggingFace Spaces">HuggingFace Spaces <span class="quarto-category-count">(2)</span></div><div class="category" data-category="MySQL">MySQL <span class="quarto-category-count">(6)</span></div><div class="category" data-category="Natural Language Processing">Natural Language Processing <span class="quarto-category-count">(1)</span></div><div class="category" data-category="PyTorch">PyTorch <span class="quarto-category-count">(1)</span></div><div class="category" data-category="SQL">SQL <span class="quarto-category-count">(6)</span></div><div class="category" data-category="TPUs">TPUs <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Tensorflow">Tensorflow <span class="quarto-category-count">(1)</span></div></div></div>
 <!-- main -->
 <main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
 
 
 
-<section id="sql-portfolio" class="level1">
-<h1>SQL Portfolio</h1>
-<section id="sql-case-studies-projects" class="level5">
-<h5 class="anchored" data-anchor-id="sql-case-studies-projects"><a href="sql_portfolio.html">SQL Case Studies Projects</a></h5>
-<p>This series contains the SQL case studies I solved as part of the 8 Week SQL Challenge from 8weekssqlchallenge.com.</p>
-<p>This series contains 8 case studies that have been solved using MySQL RDBMS, with explanations.</p>
-</section>
-</section>
-<section id="nlp-generativeai-portfolio" class="level1">
-<h1>NLP &amp; GenerativeAI Portfolio</h1>
-<section id="nlp-generativeai-projects" class="level5">
-<h5 class="anchored" data-anchor-id="nlp-generativeai-projects"><a href="nlp_&amp;_generativeai_portfolio.html">NLP &amp; GenerativeAI Projects</a></h5>
-<p>This series contains all my NLP &amp; GenerativeAI Projects.</p>
-</section>
-</section>
-<section id="computer-vision-portfolio" class="level1">
-<h1>Computer Vision Portfolio</h1>
-<section id="computer-vision-projects" class="level5">
-<h5 class="anchored" data-anchor-id="computer-vision-projects"><a href="computer_vision_portfolio.html">Computer Vision Projects</a></h5>
-<p>This series contains all my Computer Vision Projects.</p>
 
 
 
-</section>
-</section>
 
 <div class="quarto-listing quarto-listing-container-grid" id="listing-listing">
+<div class="listing-actions-group">
+   <div class="input-group input-group-sm quarto-listing-sort">
+     <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
+     <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
+       <option value="" disabled="" selected="" hidden="">Order By</option>
+       <option value="index" data-direction="asc">Default</option>
+         <option value="listing-title" data-direction="asc">
+          Title
+        </option>
+         <option value="listing-date-sort" data-direction="asc">
+          Date - Oldest
+        </option>
+         <option value="listing-date-sort" data-direction="desc">
+          Date - Newest
+        </option>
+         <option value="listing-author" data-direction="asc">
+          Author
+        </option>
+     </select>
+  </div>
+</div>
 <div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-listing-file-modified-sort="1704570925241" data-listing-reading-time-sort="36">
-<a href="./portfolio/SQL_Portfolio/Balanced_Tree/Case_Study_7-Balanced_Tree_Clothing_Co..html" class="quarto-grid-link">
+<div class="g-col-1" data-index="0" data-categories="MySQL,SQL" data-listing-date-sort="1704565800000" data-listing-file-modified-sort="1708202377624" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="33">
+<a href="./portfolio/8WeeksSQLChallenge-Balanced_Tree/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./portfolio/8WeeksSQLChallenge-Balanced_Tree/Balanced_Tree_Cover_Image.png" class="thumbnail-image card-img" style="height: 150px;">
+</p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
-Case Study #7 - Balanced Tree Clothing Co.
+Case Study #7 - Balanced Tree.
 </h5>
-<div class="listing-reading-time card-text text-muted">
-36 min
-</div>
-<div class="card-text listing-description">
-Balanced Tree Clothing Company prides themselves on providing an optimised range of clothing and lifestyle wear for the modern adventurer!
-</div>
-</div>
-</div>
-</a>
-</div>
-<div class="g-col-1" data-index="1" data-listing-file-modified-sort="1705383598672" data-listing-reading-time-sort="10">
-<a href="./portfolio/SQL_Portfolio/Data_Bank/Case_Study_4-Data_Bank.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Case Study #4 - Data Bank
-</h5>
-<div class="listing-reading-time card-text text-muted">
-10 min
-</div>
-<div class="card-text listing-description">
-There is a new innovation in the financial industry called Neo-Banks: new aged digital only banks without physical branches.
-</div>
-</div>
-</div>
-</a>
-</div>
-<div class="g-col-1" data-index="2" data-listing-file-modified-sort="1705284068407" data-listing-reading-time-sort="11">
-<a href="./portfolio/SQL_Portfolio/Data_Mart/Case_Study_5-Data_Mart.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Case Study #5 - Data Mart
-</h5>
-<div class="listing-reading-time card-text text-muted">
-11 min
-</div>
-<div class="card-text listing-description">
-Data Mart is Danny’s latest…
-</div>
-</div>
-</div>
-</a>
-</div>
-<div class="g-col-1" data-index="3" data-listing-file-modified-sort="1704710374862" data-listing-reading-time-sort="22">
-<a href="./portfolio/SQL_Portfolio/Foodie_Fi/Case_Study_3-Foodie-Fi.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Case Study #3 - Foodie-Fi
-</h5>
-<div class="listing-reading-time card-text text-muted">
-22 min
-</div>
-<div class="card-text listing-description">
-Subscription based businesses are super popular and Danny…
-</div>
-</div>
-</div>
-</a>
-</div>
-<div class="g-col-1" data-index="4" data-categories="SQL,MySQL" data-listing-date-sort="1704479400000" data-listing-file-modified-sort="1705233713256" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="36">
-<a href="./portfolio/SQL_Portfolio/Clique_Bait/Case_Study_6-Clique_Bait.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Solving Case Study #6 - Clique Bait using SQL
-</h5>
-<div class="listing-reading-time card-text text-muted">
-36 min
-</div>
 <div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('SQL'); return false;">
-SQL
-</div>
 <div class="listing-category" onclick="window.quartoListingCategory('MySQL'); return false;">
 MySQL
 </div>
+<div class="listing-category" onclick="window.quartoListingCategory('SQL'); return false;">
+SQL
+</div>
 </div>
 <div class="card-text listing-description">
-In this post, we will solve an end-to-end an analytical case study using SQL.
+In this post, we’ll tackle the second case study using MySQL from 8weeksqlchallenge.com. We’ll Explore the Pizza Runner case study with us, delving into the data to optimize…
 </div>
-<div class="card-attribution card-text-small end">
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Chirag Sharma
+</div>
 <div class="listing-date">
-Jan 6, 2024
+Jan 7, 2024
 </div>
 </div>
 </div>
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="5" data-categories="MySQL,SQL" data-listing-date-sort="1704133800000" data-listing-file-modified-sort="1705897288623" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="43">
-<a href="./portfolio/SQL_Portfolio/Pizza_Runner/Case_Study_2-Pizza_Runner.html" class="quarto-grid-link">
+<div class="g-col-1" data-index="1" data-categories="MySQL,SQL" data-listing-date-sort="1704565800000" data-listing-file-modified-sort="1708202035154" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="40">
+<a href="./portfolio/8WeeksSQLChallenge-Clique_Bait/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./portfolio/8WeeksSQLChallenge-Clique_Bait/CliqueBait_Cover_Image.png" class="thumbnail-image card-img" style="height: 150px;">
+</p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
-Case Study #2 - Pizza Runner
+Case Study #6 - CliqueBait.
 </h5>
-<div class="listing-reading-time card-text text-muted">
-43 min
-</div>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('MySQL'); return false;">
 MySQL
@@ -326,9 +256,111 @@ SQL
 </div>
 </div>
 <div class="card-text listing-description">
-In this post, we’ll tackle the second case study using MySQL from 8WEEKSSQLCHALLENGE.com. We’ll Explore the Pizza Runner case study with us, delving into the data to…
+In this post, we’ll tackle the second case study using MySQL from 8weeksqlchallenge.com. We’ll Explore the Pizza Runner case study with us, delving into the data to optimize…
 </div>
-<div class="card-attribution card-text-small end">
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Chirag Sharma
+</div>
+<div class="listing-date">
+Jan 7, 2024
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="2" data-categories="MySQL,SQL" data-listing-date-sort="1704393000000" data-listing-file-modified-sort="1708199432317" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="51">
+<a href="./portfolio/8WeeksSQLChallenge-Data_Mart/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./portfolio/8WeeksSQLChallenge-Data_Mart/Data_Mart_Cover_Image.png" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Case Study #5 - Data Mart.
+</h5>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('MySQL'); return false;">
+MySQL
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('SQL'); return false;">
+SQL
+</div>
+</div>
+<div class="card-text listing-description">
+In this post, we’ll tackle the second case study using MySQL from 8weeksqlchallenge.com. We’ll Explore the Pizza Runner case study with us, delving into the data to optimize…
+</div>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Chirag Sharma
+</div>
+<div class="listing-date">
+Jan 5, 2024
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="3" data-categories="MySQL,SQL" data-listing-date-sort="1704220200000" data-listing-file-modified-sort="1708197955363" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="55">
+<a href="./portfolio/8WeeksSQLChallenge-Foodie_Fi/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./portfolio/8WeeksSQLChallenge-Foodie_Fi/Foodie_Fi_Cover_Image.png" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Case Study #3 - Foodie Fi.
+</h5>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('MySQL'); return false;">
+MySQL
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('SQL'); return false;">
+SQL
+</div>
+</div>
+<div class="card-text listing-description">
+In this post, we’ll tackle the third case study using MySQL from 8weeksqlchallenge.com. We’ll explore Foodie-Fi’s data-driven journey, deciphering user engagement patterns…
+</div>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Chirag Sharma
+</div>
+<div class="listing-date">
+Jan 3, 2024
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="4" data-categories="MySQL,SQL" data-listing-date-sort="1704133800000" data-listing-file-modified-sort="1708197328656" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="83">
+<a href="./portfolio/8WeeksSQLChallenge-Pizza_Runner/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./portfolio/8WeeksSQLChallenge-Pizza_Runner/Pizza_Runner_Cover_Image.png" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Case Study #2 - Pizza Runner.
+</h5>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('MySQL'); return false;">
+MySQL
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('SQL'); return false;">
+SQL
+</div>
+</div>
+<div class="card-text listing-description">
+In this post, we’ll tackle the second case study using MySQL from 8weeksqlchallenge.com. We’ll Explore the Pizza Runner case study with us, delving into the data to optimize…
+</div>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Chirag Sharma
+</div>
 <div class="listing-date">
 Jan 2, 2024
 </div>
@@ -337,16 +369,16 @@ Jan 2, 2024
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="6" data-categories="MySQL,SQL" data-listing-date-sort="1704047400000" data-listing-file-modified-sort="1705477942954" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="23">
-<a href="./portfolio/SQL_Portfolio/Danny'_Diner/Case_Study_1-Danny's_Diner.html" class="quarto-grid-link">
+<div class="g-col-1" data-index="5" data-categories="MySQL,SQL" data-listing-date-sort="1704047400000" data-listing-file-modified-sort="1708197338167" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="29">
+<a href="./portfolio/8WeeksSQLChallenge-Danny's_Diner/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./portfolio/8WeeksSQLChallenge-Danny's_Diner/Danny's_Diner_Cover_Image.png" class="thumbnail-image card-img" style="height: 150px;">
+</p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
-Case Study #1 - Danny’s Diner
+Case Study #1 - Danny’s Diner.
 </h5>
-<div class="listing-reading-time card-text text-muted">
-23 min
-</div>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('MySQL'); return false;">
 MySQL
@@ -356,9 +388,12 @@ SQL
 </div>
 </div>
 <div class="card-text listing-description">
-In this post, we’ll tackle the first case study using MySQL from 8WEEKSSQLCHALLENGE.com. We’ll help Danny’s Diner by figuring out when people visit, what they like, and how…
+In this post, we’ll tackle the first case study using MySQL from 8weeksqlchallenge.com. We’ll help Danny’s Diner by figuring out when people visit, what they like, and how…
 </div>
-<div class="card-attribution card-text-small end">
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Chirag Sharma
+</div>
 <div class="listing-date">
 Jan 1, 2024
 </div>
@@ -367,16 +402,16 @@ Jan 1, 2024
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="7" data-categories="Computer Vision,Deep Learning,PyTorch,Gradio,HuggingFace Spaces" data-listing-date-sort="1673202600000" data-listing-file-modified-sort="1684740227681" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12">
-<a href="./portfolio/Computer_Vision_Portfolio/Melanoma/melanoma-final-model-kaggle.html" class="quarto-grid-link">
+<div class="g-col-1" data-index="6" data-categories="Computer Vision,Deep Learning,PyTorch,Gradio,HuggingFace Spaces" data-listing-date-sort="1673202600000" data-listing-file-modified-sort="1708190419796" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12">
+<a href="./portfolio/Melanoma/melanoma-final-model-kaggle.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./portfolio/Melanoma/melanoma_cover_image.jpg" class="thumbnail-image card-img" style="height: 150px;">
+</p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
-Melanoma Skin Cancer Detection using Transfer Learning with PyTorch
+Melanoma Skin Cancer Detection using Transfer Learning with PyTorch.
 </h5>
-<div class="listing-reading-time card-text text-muted">
-12 min
-</div>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Computer Vision'); return false;">
 Computer Vision
@@ -395,9 +430,12 @@ HuggingFace Spaces
 </div>
 </div>
 <div class="card-text listing-description">
-In this post, we’ll demonstrate how to scape data from flipkart using BeautifulSoup &amp; Selenium using Python.
+In this post, we’ll use melanoma images, from the Kaggle Competition Dataset, of skin lesions to determine which images are likely to represent a melanoma. Melanoma is a…
 </div>
-<div class="card-attribution card-text-small end">
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Chirag Sharma
+</div>
 <div class="listing-date">
 Jan 9, 2023
 </div>
@@ -406,16 +444,16 @@ Jan 9, 2023
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="8" data-categories="Natural Language Processing,Deep Learning,Tensorflow,TPUs,Gradio,HuggingFace Spaces" data-listing-date-sort="1673202600000" data-listing-file-modified-sort="1684743955563" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14">
-<a href="./portfolio/NLP_&amp;_GenerativeAI_Portfolio/Multlingual_Toxic_Comment_Classification/Multilingual_Toxic_Comment_Classification_Final.html" class="quarto-grid-link">
+<div class="g-col-1" data-index="7" data-categories="Natural Language Processing,Deep Learning,Tensorflow,TPUs,Gradio,HuggingFace Spaces" data-listing-date-sort="1673202600000" data-listing-file-modified-sort="1708190831000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14">
+<a href="./portfolio/Multlingual_Toxic_Comment_Classification/Multilingual_Toxic_Comment_Classification_Final.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./portfolio/Multlingual_Toxic_Comment_Classification/multilingual_cover_image.jpg" class="thumbnail-image card-img" style="height: 150px;">
+</p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
-Multilingual Toxic Comment Classification using Tensorflow and TPUs
+Multilingual Toxic Comment Classification using Tensorflow and TPUs.
 </h5>
-<div class="listing-reading-time card-text text-muted">
-14 min
-</div>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Natural Language Processing'); return false;">
 Natural Language Processing
@@ -437,9 +475,12 @@ HuggingFace Spaces
 </div>
 </div>
 <div class="card-text listing-description">
-In this post, we’ll demonstrate how to scape data from flipkart using BeautifulSoup &amp; Selenium using Python.
+In this post, we’ll create an application that can identify toxicity in online conversations, where toxicity is defined as anything rude, disrespectful or otherwise likely…
 </div>
-<div class="card-attribution card-text-small end">
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Chirag Sharma
+</div>
 <div class="listing-date">
 Jan 9, 2023
 </div>

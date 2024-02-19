@@ -1,0 +1,392 @@
+---
+title: "Building a Simple Chatbot to talk with YouTube Videos using Langchain & OpenAI API."
+description: "In this post, we'll create a simple chatbot that can talk with YouTube videos using Langchain & OpenAI API."
+author: 
+  - name: "Chirag Sharma"
+    url: https://chirag1994.github.io/
+date: "2024-01-02"
+categories: [GenerativeAI, Langchain, OpenAI, LLMs]
+format: 
+  html: 
+    code-fold: false
+    code-summary: "code dropdown"
+image: "chat_with_youtube_videos.png"
+draft: false # "true" will mean this is a draft post so it wont show up on my site
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+## Objectives
+
+Videos can be full of useful information, but getting hold of that info can be slow, since you need to watch the whole thing or try skipping through it. It can be much faster to use a bot to ask questions about the contents of the transcript.
+
+In this project, you'll download a tutorial video from YouTube, transcribe the audio, and create a simple Q&A bot to ask questions about the content.
+
+- Understanding the building blocks of working with Multimodal AI projects
+- Working with some of the fundamental concepts of LangChain  
+- How to use the Whisper API to transcribe audio to text 
+- How to combine both LangChain and Whisper API to create ask questions of any YouTube video 
+
+## Before you begin
+
+You'll need a developer account with [OpenAI ](https://auth0.openai.com/u/signup/identifier?state=hKFo2SAyeTZBU1pzbUNWYWs3Wml5OWVvUVh4enZldC1LYU9PMaFur3VuaXZlcnNhbC1sb2dpbqN0aWTZIDFUakNoUGFMLUdNWFpfQkpqdncyZjVDQk9xUTE4U0xDo2NpZNkgRFJpdnNubTJNdTQyVDNLT3BxZHR3QjNOWXZpSFl6d0Q) and a create API Key. The API secret key will be stored in your 'Environment Variables' on the side menu. See the *getting-started.ipynb* notebook for details on setting this up.
+
+## Task 0: Setup
+
+The project requires several packages that need to be installed into Workspace.
+
+- `langchain` is a framework for developing generative AI applications.
+- `yt_dlp` lets you download YouTube videos.
+- `tiktoken` converts text into tokens.
+- `docarray` makes it easier to work with multi-model data (in this case mixing audio and text).
+
+### Instructions
+
+Run the following code to install the packages.
+
+#### Installing Relevant Libraries
+```{python, warning = FALSE, message = FALSE}
+!pip install langchain==0.0.228 yt_dlp==2023.7.6 tiktoken==0.5.1 docarray==0.38.0 chromadb==0.4.19 openai==0.28 --quiet
+```
+
+Write and Store your OpenAI API Key in the `.env` file as `OPENAI_API_KEY = "PASTE_YOUR_OPENAI_API_KEY"`.
+
+#### Loading the OpenAI API Secret file from `.env` file.
+```{python, warning = False, message = False}
+from dotenv import load_dotenv, find_dotenv
+## Loading the Secrets from the .env file
+print(load_dotenv())
+```
+
+## Task 1: Import The Required Libraries 
+
+For this project we need the `os` and the `yt_dlp` packages to download the YouTube video of your choosing, convert it to an `.mp3` and save the file. We will also be using the `openai` package to make easy calls to the OpenAI models we will use. 
+
+Import the following packages.
+
+- Import `os` 
+- Import `openai`
+- Import `yt_dlp` with the alias `youtube_dl`
+- From the `yt_dlp` package, import `DowloadError`
+- Assign `openai_api_key` to `os.getenv("OPENAI_API_KEY")`
+
+#### Importing the Required Packages including: "os" "openai" "yt_dlp as youtube_dl" and "from yt_dl import Download Error"
+```{python, warning = False, message = False}
+# Import the os package 
+import os
+# Import Glob package
+import glob
+# Import the openai package 
+import openai
+# Import the yt_dlp package as youtube_dl
+import yt_dlp as youtube_dl
+# Import DownloadError from yt_dlp 
+from yt_dlp import DownloadError
+# Import DocArray
+import docarray
+```
+
+We will also assign the variable `openai_api_key` to the environment variable "OPEN_AI_KEY". This will help keep our key secure and remove the need to write it in the code here. 
+
+```{python, warning = False, message = False}
+openai.api_key = os.getenv("OPENAI_API_KEY")
+```
+
+## Task 2: Download the YouTube Video
+
+After creating the setup, the first step we will need to do is download the video from Youtube and convert it to an audio file (.mp3). 
+
+We'll download a DataCamp tutorial about machine learning in Python.
+
+We will do this by setting a variable to store the `youtube_url` and the `output_dir` that we want the file to be stored. 
+
+The `yt_dlp` allows us to download and convert in a few steps but does require a few configuration steps. This code is provided to you. 
+
+Lastly, we will create a loop that looks in the `output_dir` to find any .mp3 files. Then we will store those in a list called `audio_files` that will be used later to send each file to the Whisper model for transcription. 
+
+Create the following: 
+- Two variables - `youtube_url` to store the Video URL and `output_dir` that will be the directory where the audio files will be saved. 
+- For this tutorial, we can set the `youtube_url` to the following `"https://www.youtube.com/watch?v=aqzxYofJ_ck"`and the `output_dir`to `files/audio/`. In the future, you can change these values. 
+- Use the `ydl_config` that is provided to you 
+
+```{python, warning = False, message = False}
+# An example YouTube tutorial video
+youtube_url = "https://www.youtube.com/watch?v=aqzxYofJ_ck"
+# Directory to store the downloaded video
+output_dir = "files/audio/"
+
+# Config for youtube-dl
+ydl_config = {
+    "format": "bestaudio/best",
+    "postprocessors": [
+        {
+            "key": "FFmpegExtractAudio",
+            "preferredcodec": "mp3",
+            "preferredquality": "192",
+        }
+    ],
+    "outtmpl": os.path.join(output_dir, "%(title)s.%(ext)s"),
+    "verbose": True
+}
+
+# Check if the output directory exists, if not create it
+if not os.path.exists(output_dir):
+    os.makedirs(output_dir)
+# Print a message indicating which video is being downloaded
+print(f"Downloading Video from the url : {youtube_url}")
+# Attempt to download the video using the specified configuration
+# If a DownloadError occurs, attempt to download the video again
+try:
+    with youtube_dl.YoutubeDL(ydl_config) as ydl:
+        ydl.download([youtube_url])
+except DownloadError:
+    with youtube_dl.YoutubeDL(ydl_config) as ydl:
+        ydl.download([youtube_url])
+```
+
+To find the audio files that we will use the `glob`module that looks in the `output_dir` to find any .mp3 files. Then we will append the file to a list called `audio_files`. This will be used later to send each file to the Whisper model for transcription. 
+
+Create the following: 
+- A variable called `audio_files`that uses the glob module to find all matching files with the `.mp3` file extension 
+- Select the first first file in the list and assign it to `audio_filename`
+- To verify the filename, print `audio_filename` 
+
+#### Find the audio file in the output directory
+```{python, warning = False, message = False}
+# Find all the audio files in the output directory
+audio_file = glob.glob(os.path.join(output_dir, "*.mp3"))
+
+# Select the first audio file in the list
+audio_filename = audio_file[0]
+
+# Print the name of the selected audio file
+print(audio_filename)
+```
+
+## Task 3: Transcribe the Video using Whisper
+
+In this step we will take the downloaded and converted Youtube video and send it to the Whisper model to be transcribed. To do this we will create variables for the `audio_file`, for the `output_file` and the model. 
+
+Using these variables we will:
+- create a list to store the transcripts
+- Read the Audio File 
+- Send the file to the Whisper Model using the OpenAI package 
+
+To complete this step, create the following: 
+- A variable named `audio_file`that is assigned the `audio_filename` we created in the last step
+- A variable named `output_file` that is assigned the value `"files/transcripts/transcript.txt"`
+- A variable named `model` that is assigned the value  `"whisper-1"`
+- An empty list called `transcripts`
+- A variable named `audio` that uses the `open` method and `"rb"` modifier on the `audio_file`
+- A variable to store the `response` from the `openai.Audio.transcribe` method that takes in the `model`and `audio` variables 
+- Append the `response["text"]`to the `transcripts` list. 
+
+```{python, warning = False, message = False}
+import openai
+
+# Define function parameters
+audio_file = audio_filename
+output_file = "files/transcripts/transcript.txt"
+model = "whisper-1"
+
+# Set the API key
+openai.api_key = os.getenv("OPENAI_API_KEY")
+
+# Transcribe the audio file to text using OpenAI API
+print("Converting Audio to Text.....")
+with open(audio_file, "rb") as audio:
+    response = openai.Audio.transcribe(model, audio)
+
+# Extract the transcript from the response
+transcript = response['text']
+```
+
+To save the transcripts to text files we will use the below provided code: 
+
+```{python, warning = False, message = False}
+# If an output file is specified, save the transcript to a .txt file
+if output_file is not None:
+    # Create the directory for the output file if it doesn't exist
+    os.makedirs(os.path.dirname(output_file), exist_ok=True)
+    # Write the transcript to the output file
+    with open(output_file, "w") as file:
+        file.write(transcript)
+
+# Print the transcript to the console to verify it worked 
+print(transcript)
+```
+
+## Task 4: Create a TextLoader using LangChain 
+
+In order to use text or other types of data with LangChain we must first convert that data into Documents. This is done by using loaders. In this tutorial, we will use the `TextLoader` that will take the text from our transcript and load it into a document.
+
+To complete this step, do the following: 
+- Import `TextLoader` from `langchain.document_loaders`
+- Create a variable called `loader` that uses the `TextLoader` method which takes in the directory of the transcripts `"./files/text"`
+- Create a variable called `docs` that is assigned the result of calling the `loader.load()` method. 
+
+```{python, warning = False, message = False}
+# Import the TextLoader class from the langchain.document_loaders module
+from langchain.document_loaders import TextLoader
+
+# Create a new instance of the TextLoader class, specifying the directory containing the text files
+loader = TextLoader("./files/transcripts/transcript.txt")
+
+# Load the documents from the specified directory using the TextLoader instance
+docs = loader.load()
+```
+
+```{python, warning = False, message = False}
+# Show the first element of docs to verify it has been loaded 
+docs[0]
+```
+
+## Task 4: Creating an In-Memory Vector Store 
+
+Now that we have created Documents of the transcription, we will store that Document in a vector store. Vector stores allows LLMs to traverse through data to find similiarity between different data based on their distance in space. 
+
+For large amounts of data, it is best to use a designated Vector Database. Since we are only using one transcript for this tutorial, we can create an in-memory vector store using the `docarray` package. 
+
+We will also tokenize our queries using the `tiktoken` package. This means that our query will be seperated into smaller parts either by phrases, words or characters. Each of these parts are assigned a token which helps the model "understand" the text and relationships with other tokens. 
+
+### Instructions
+
+- Import the `tiktoken` package. 
+
+```{python, warning = False, message = False}
+# Import the tiktoken package
+import tiktoken
+```
+
+## Task 5: Create the Document Search 
+
+We will now use LangChain to complete some important operations to create the Question and Answer experience. Let´s import the follwing: 
+
+- Import `RetrievalQA` from `langchain.chains` - this chain first retrieves documents from an assigned Retriver and then runs a QA chain for answering over those documents 
+- Import `ChatOpenAI` from `langchain.chat_models` - this imports the ChatOpenAI model that we will use to query the data 
+- Import `DocArrayInMemorySearch` from `langchain.vectorstores` - this gives the ability to search over the vector store we have created. 
+- Import `OpenAIEmbeddings` from `langchain.embeddings` - this will create embeddings for the data store in the vector store. 
+- Import `display` and `Markdown`from `IPython.display` - this will create formatted responses to the queries.
+
+```{python, warning = False, message = False}
+# Import the RetrievalQA class from the langchain.chains module
+from langchain.chains import RetrievalQA
+# Import the ChatOpenAI class from the langchain.chat_models module
+from langchain.chat_models import ChatOpenAI
+# Import the DocArrayInMemorySearch class from the langchain.vectorstores module
+from langchain.vectorstores import DocArrayInMemorySearch
+# Import the OpenAIEmbeddings class from the langchain.embeddings module
+from langchain.embeddings import OpenAIEmbeddings 
+```
+
+Now we will create a vector store that will use the `DocArrayInMemory` search methods which will search through the created embeddings created by the OpenAI Embeddings function. 
+
+To complete this step: 
+- Create a variable called `db`
+- Assign the `db` variable to store the result of the method `DocArrayInMemorySearch.from_documents`
+- In the DocArrayInMemorySearch method, pass in the `docs` and a function call to `OpenAIEmbeddings()`
+
+```{python, warning = False, message = False}
+# Create a new DocArrayInMemorySearch instance from the specified documents and embeddings
+db = DocArrayInMemorySearch.from_documents(
+    docs, OpenAIEmbeddings()
+)
+```
+
+We will now create a retriever from the `db` we created in the last step. This enables the retrieval of the stored embeddings. Since we are also using the `ChatOpenAI` model, will assigned that as our LLM.
+
+Create the following: 
+- A variable called `retriever` that is assigned `db.as_retriever()`
+- A variable called `llm` that creates the `ChatOpenAI` method with a set `temperature`of `0.0`. This will controle the variability in the responses we receive from the LLM. 
+
+```{python, warning = False, message = False}
+# Convert the DocArrayInMemorySearch instance to a retriever
+retriever = db.as_retriever()
+# Create a new ChatOpenAI instance with a temperature of 0.0
+llm = ChatOpenAI(temperature=0.0, model_name="gpt-3.5-turbo")
+```
+
+Our last step before starting to ask questions is to create the `RetrievalQA` chain. This chain takes in the:  
+- The `llm` we want to use
+- The `chain_type` which is how the model retrieves the data
+- The `retriever` that we have created 
+- An option called `verbose` that allows use to see the seperate steps of the chain 
+
+Create a variable called `qa_stuff`. This variable will be assigned the method `RetrievalQA.from_chain_type`. 
+
+Use the following settings inside this method: 
+- `llm=llm`
+- `chain_type="stuff"`
+- `retriever=retriever`
+- `verbose=True`
+
+```{python, warning = False, message = False}
+# Create a new RetrievalQA instance with the specified parameters
+qa_stuff = RetrievalQA.from_chain_type(
+llm=llm,
+chain_type="stuff",
+retriever=retriever,
+verbose=True,
+)
+    # The ChatOpenAI instance to use for generating responses
+    # The type of chain to use for the QA system
+    # The retriever to use for retrieving relevant documents
+    # Whether to print verbose output during retrieval and generation
+```
+
+## Task 5: Create the Queries 
+
+Now we are ready to create queries about the YouTube video and read the responses from the LLM. This done first by creating a query and then running the RetrievalQA we setup in the last step and passing it the query. 
+
+To create the questions to ask the model complete the following steps: 
+- Create a variable call `query` and assigned it a string value of `"What is this tutorial about?"`
+- Create a `response` variable that will store the result of `qa_stuff.run(query)` 
+- Show the `resposnse`
+
+```{python, warning = False, message = False}
+# Set the query to be used for the QA system
+query = "What is this tutorial about?"
+# Run the query through the RetrievalQA instance and store the response
+response = qa_stuff.run(query)
+# Print the response to the console
+print(response)
+```
+
+```{python, warning = False, message = False}
+# Set the query to be used for the QA system
+query = "What is the difference between a training set and test set?"
+# Run the query through the RetrievalQA instance and store the response
+response = qa_stuff.run(query)
+# Print the response to the console
+print(response)
+```
+
+```{python, warning = False, message = False}
+# Set the query to be used for the QA system
+query = "Who should watch this lesson?"
+# Run the query through the RetrievalQA instance and store the response
+response = qa_stuff.run(query)
+# Print the response to the console
+print(response)
+```
+
+```{python, warning = False, message = False}
+# Set the query to be used for the QA system
+query = "Who is the greatest football team on earth?"
+# Run the query through the RetrievalQA instance and store the response
+response = qa_stuff.run(query)
+# Print the response to the console
+print(response)
+```
+
+```{python, warning = False, message = False}
+# Set the query to be used for the QA system
+query = "How long is the circumference of the earth?"
+# Run the query through the RetrievalQA instance and store the response
+response = qa_stuff.run(query)
+# Print the response to the console
+print(response)
+```
+
+### That's all.

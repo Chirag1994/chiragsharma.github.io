@@ -1,45 +1,43 @@
 ---
 title: "Chirag Sharma"
-image: profile.jpg
-comments: false
+image: "my-profile-pic.jpg"
 about: 
   template: trestles
-  image-width: 15em
-  image-shape: rounded
+  image-shape: round
+  image-width: 14em
   links: 
     - text: LinkedIn
-      icon: linkedin
       href: https://www.linkedin.com/in/chiragsharma1994/
-    - text: Medium
-      icon: medium
-      href: https://medium.com/@chirag.sharma0378
     - text: GitHub
-      icon: github
       href: https://github.com/Chirag1994
     - text: Email
-      icon: envelope
       href: mailto:chirag.sharma0378@gmail.com
 ---
-### This content appears above the formatted about page content.
 
-:::{#hero-heading}
+### About Me
 
-Finley Malloc is the Chief Data Scientist at Wengo Analytics. When not innovating on data platforms, Finley enjoys spending  time unicycling and playing with her pet iguana.
+Hey there! 👋🏼 I'm Chirag, and my journey into the world of data science is driven by a passion for problem-solving and a fascination with the power of data.
 
-## Education
+I stumbled upon the magic of data science during my academic journey, where I found myself captivated by the idea of using data to uncover insights and drive meaningful change.
 
-University of California, San Diego | San Diego, CA
-PhD in Mathematics | Sept 2011 - June 2015
+My interest in this field deepened further during an internship at Ineuron Intelligence Pvt. Limited, where I witnessed firsthand the transformative potential of data analysis. From unraveling complex patterns to devising innovative solutions, I was hooked.
 
-Macalester College | St. Paul MA
-B.A in Economics | Sept 2007 - June 2011
+Now, armed with a blend of academic knowledge and practical experience, I'm on a mission to harness the power of data to tackle real-world challenges. Whether it's optimizing processes, identifying trends, or driving decision-making, I'm passionate about leveraging technology to make a positive impact.
 
-## Experience
+I believe that every data point holds a key to solving problems and unlocking opportunities, and I'm excited to continue this journey alongside fellow enthusiasts. Let's connect and explore the endless possibilities of a data-driven world together!
 
-Wengo Analytics | Head Data Scientist | April 2018 - present
+### Education
 
-GeoScynce | Chief Analyst | Sept 2012 - April 2018
+Master's in Economics | 2020 | Delhi School of Economics, University of Delhi
 
-:::
+Bachelor's in Economics (Hons.) | 2016 | Motitlal Nehru College, University of Delhi
 
-### This content appears below the formatted about page content.
+### Experience
+
+Concentrix | Sept 2023 - Present
+
+- Technical Advisor I 
+
+Data Science Intern | May 2022 - Nov 2022
+
+- Ineuron Intelligence Pvt. Limited

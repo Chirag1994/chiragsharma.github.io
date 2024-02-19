@@ -2,37 +2,45 @@ project:
   type: website
   output-dir: docs
 
-website:
-  title: "Chirag Sharma"
-  favicon: favicon\icons8-darth-vader-512.png
-  navbar:
-    right:
-      - href: index.qmd
-        text: Home
-      - href: posts.qmd
-        text: Blog      
+website: 
+  #title: 'Chirag Sharma'
+  favicon: favicon/icons8-darth-vader-512.png
+  site-url: https://chirag1994.github.io/
+  navbar: 
+    left:
+      - text: "Chirag Sharma's Blog"  
+        href: index.qmd
+      #- about.qmd  
+    right: 
+      - href: blog.qmd
+        text: Blog
       - href: portfolio.qmd
         text: Portfolio
-      - href: resume/Resume.pdf
+      - href: resume/chirag_sharma_resume.pdf
         text: Resume
-      - icon: github # add icons that link to social media, etc.
+      - icon: github
         href: https://github.com/Chirag1994
-      - icon: medium
-        href: https://medium.com/@chirag.sharma0378
       - icon: linkedin
         href: https://www.linkedin.com/in/chiragsharma1994/
-    page-footer: 
-      background: light
-      left: Copyright 2021, Chirag Sharma
-      right: This website is built by [Quarto](https://quarto.org/)          
+      - icon: envelope
+        href: mailto:chirag.sharma0378@gmail.com
+
+# format:
+#   html:
+#     theme:
+#       - mystyles.scss
+#     toc: true
+# 
+# editor: visual-studio-code
 
 format:
   html:
-    theme: 
-      - mystyle.scss
-    css: styles.css
     page-layout: full
-
-comments: 
-  giscus: 
-    repo:  Chirag1994/chiragsharma.github.io
+    sidebar: false
+    theme:
+      - mystyle.scss
+    # css: styles.css
+    mainfont: Roboto
+    #mainfont: Sharp Grotesk
+    toc: true
+    toc-expand: true

@@ -1,0 +1,1716 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.340">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Chirag Sharma">
+<meta name="dcterms.date" content="2024-01-01">
+<meta name="description" content="In this post, we’ll tackle the first case study using MySQL from 8weeksqlchallenge.com. We’ll help Danny’s Diner by figuring out when people visit, what they like, and how much they spend. We’ll use simple SQL queries to assist Danny in making decisions about loyalty programs and make data easy for the team to understand. Discover the secrets behind why this cozy Japanese restaurant is doing so well!">
+
+<title>Case Study #1 - Danny’s Diner.</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon/icons8-darth-vader-512.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html" rel="" target="">
+ <span class="menu-text">Chirag Sharma’s Blog</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html" rel="" target="">
+ <span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../portfolio.html" rel="" target="">
+ <span class="menu-text">Portfolio</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../resume/chirag_sharma_resume.pdf" rel="" target="">
+ <span class="menu-text">Resume</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/Chirag1994" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/chiragsharma1994/" rel="" target=""><i class="bi bi-linkedin" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="mailto:chirag.sharma0378@gmail.com" rel="" target=""><i class="bi bi-envelope" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-page">
+      <h1 class="title">Case Study #1 - Danny’s Diner.</h1>
+                  <div>
+        <div class="description">
+          In this post, we’ll tackle the first case study using MySQL from 8weeksqlchallenge.com. We’ll help Danny’s Diner by figuring out when people visit, what they like, and how much they spend. We’ll use simple SQL queries to assist Danny in making decisions about loyalty programs and make data easy for the team to understand. Discover the secrets behind why this cozy Japanese restaurant is doing so well!
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">MySQL</div>
+                <div class="quarto-category">SQL</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p><a href="https://chirag1994.github.io/">Chirag Sharma</a> </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">January 1, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block column-page" id="quarto-document-content">
+
+
+
+
+<section id="case-study-1---dannys-diner" class="level1">
+<h1>Case Study #1 - Danny’s Diner</h1>
+<p><img src="./Images/Case_Study_1-Danny's_Diner.png" alt="Image1" width="800" height="800"></p>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Danny seriously loves Japanese food so in the beginning of 2021, he decides to embark upon a risky venture and opens up a cute little restaurant that sells his 3 favourite foods: sushi, curry and ramen.</p>
+<p>Danny’s Diner is in need of your assistance to help the restaurant stay afloat - the restaurant has captured some very basic data from their few months of operation but have no idea how to use their data to help them run the business.</p>
+</section>
+<section id="problem-statement" class="level2">
+<h2 class="anchored" data-anchor-id="problem-statement">Problem Statement</h2>
+<p>Danny wants to use the data to answer a few simple questions about his customers, especially about their visiting patterns, how much money they’ve spent and also which menu items are their favourite. Having this deeper connection with his customers will help him deliver a better and more personalised experience for his loyal customers.</p>
+<p>He plans on using these insights to help him decide whether he should expand the existing customer loyalty program - additionally he needs help to generate some basic datasets so his team can easily inspect the data without needing to use SQL.</p>
+<p>Danny has provided you with a sample of his overall customer data due to privacy issues - but he hopes that these examples are enough for you to write fully functioning SQL queries to help him answer his questions!</p>
+<p>Danny has shared with you 3 key datasets for this case study:</p>
+<ul>
+<li><code>sales</code></li>
+<li><code>menu</code></li>
+<li><code>members</code></li>
+</ul>
+<p>You can inspect the entity relationship diagram and example data below.</p>
+<hr>
+</section>
+<section id="entity-relationship-diagram" class="level2">
+<h2 class="anchored" data-anchor-id="entity-relationship-diagram">Entity Relationship Diagram</h2>
+<p><img src="./Images/Case_Study_1-ER_Diagram.png" alt="Image1" width="800" height="800"></p>
+</section>
+<section id="example-datasets" class="level2">
+<h2 class="anchored" data-anchor-id="example-datasets">Example Datasets</h2>
+<p>All datasets exist within the <code>dannys_diner</code> database schema - be sure to include this reference within your SQL scripts as you start exploring the data and answering the case study questions.</p>
+<section id="table-1-sales" class="level3">
+<h3 class="anchored" data-anchor-id="table-1-sales">Table 1: sales</h3>
+<p>The <code>sales</code> table captures all <code>customer_id</code> level purchases with an corresponding <code>order_date</code> and <code>product_id</code> information for when and what menu items were ordered.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>customer_id</th>
+<th>order_date</th>
+<th>product_id</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>2021-01-01</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>A</td>
+<td>2021-01-01</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>A</td>
+<td>2021-01-07</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>A</td>
+<td>2021-01-10</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td>A</td>
+<td>2021-01-11</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>A</td>
+<td>2021-01-11</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td>B</td>
+<td>2021-01-01</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>2021-01-02</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>B</td>
+<td>2021-01-04</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>2021-01-11</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>B</td>
+<td>2021-01-16</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>2021-02-01</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>2021-01-01</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>C</td>
+<td>2021-01-01</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>2021-01-07</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="table-2-menu" class="level3">
+<h3 class="anchored" data-anchor-id="table-2-menu">Table 2: menu</h3>
+<p>The <code>menu</code> table maps the <code>product_id</code> to the actual <code>product_name</code> and <code>price</code> of each menu item.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>product_id</th>
+<th>product_name</th>
+<th>price</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>sushi</td>
+<td>10</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>curry</td>
+<td>15</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>ramen</td>
+<td>12</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="table-3-members" class="level3">
+<h3 class="anchored" data-anchor-id="table-3-members">Table 3: members</h3>
+<p>The final <code>members</code> table captures the <code>join_date</code> when a <code>customer_id</code> joined the beta version of the Danny’s Diner loyalty program.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>customer_id</th>
+<th>join_date</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>2021-01-07</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>2021-01-09</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="interactive-sql-session" class="level2">
+<h2 class="anchored" data-anchor-id="interactive-sql-session">Interactive SQL Session</h2>
+<p>The Dataset for this case study can be accessed from <a href="https://www.db-fiddle.com/f/2rM8RAnq7h5LLDTzZiRWcd/138">here</a>. I will be using MySQL to solve this case study. In order to solve yourself this case study, simply go to the above link and choose MySQL Dialect (version &gt; 8, if using MySQL version higher than 8 locally), copy &amp; paste the Database schema into MySQL.</p>
+<p>Here is the snapshot of it.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Creating the Database, Tables and Injecting the data into those tables --</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">DATABASE</span> dannys_diner;</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">USE</span> dannys_diner;</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> sales (</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  `customer_id` <span class="dt">VARCHAR</span>(<span class="dv">1</span>),</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  `order_date` <span class="dt">DATE</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  `product_id` <span class="dt">INTEGER</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> sales</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  (`customer_id`, `order_date`, `product_id`)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'A'</span>, <span class="st">'2021-01-01'</span>, <span class="st">'1'</span>),</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'A'</span>, <span class="st">'2021-01-01'</span>, <span class="st">'2'</span>),</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'A'</span>, <span class="st">'2021-01-07'</span>, <span class="st">'2'</span>),</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'A'</span>, <span class="st">'2021-01-10'</span>, <span class="st">'3'</span>),</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'A'</span>, <span class="st">'2021-01-11'</span>, <span class="st">'3'</span>),</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'A'</span>, <span class="st">'2021-01-11'</span>, <span class="st">'3'</span>),</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'B'</span>, <span class="st">'2021-01-01'</span>, <span class="st">'2'</span>),</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'B'</span>, <span class="st">'2021-01-02'</span>, <span class="st">'2'</span>),</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'B'</span>, <span class="st">'2021-01-04'</span>, <span class="st">'1'</span>),</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'B'</span>, <span class="st">'2021-01-11'</span>, <span class="st">'1'</span>),</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'B'</span>, <span class="st">'2021-01-16'</span>, <span class="st">'3'</span>),</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'B'</span>, <span class="st">'2021-02-01'</span>, <span class="st">'3'</span>),</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'C'</span>, <span class="st">'2021-01-01'</span>, <span class="st">'3'</span>),</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'C'</span>, <span class="st">'2021-01-01'</span>, <span class="st">'3'</span>),</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'C'</span>, <span class="st">'2021-01-07'</span>, <span class="st">'3'</span>);</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> menu (</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  `product_id` <span class="dt">INTEGER</span>,</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>  `product_name` <span class="dt">VARCHAR</span>(<span class="dv">5</span>),</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>  `price` <span class="dt">INTEGER</span>);</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> menu</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>  (`product_id`, `product_name`, `price`)</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'1'</span>, <span class="st">'sushi'</span>, <span class="st">'10'</span>),</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'2'</span>, <span class="st">'curry'</span>, <span class="st">'15'</span>),</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'3'</span>, <span class="st">'ramen'</span>, <span class="st">'12'</span>);</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> members (</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>  `customer_id` <span class="dt">VARCHAR</span>(<span class="dv">1</span>),</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>  `join_date` <span class="dt">DATE</span></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> members</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>  (`customer_id`, `join_date`)</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'A'</span>, <span class="st">'2021-01-07'</span>),</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'B'</span>, <span class="st">'2021-01-09'</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="case-study-questions" class="level2">
+<h2 class="anchored" data-anchor-id="case-study-questions">Case Study Questions</h2>
+<p>Each of the following case study questions can be answered using a single SQL statement:</p>
+<section id="what-is-the-total-amount-each-customer-spent-at-the-restaurant" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-the-total-amount-each-customer-spent-at-the-restaurant">1. What is the total amount each customer spent at the restaurant?</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> SALES.customer_id, <span class="fu">SUM</span>(MENU.price) <span class="kw">as</span> Total_amt_spend</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> SALES</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> MENU <span class="kw">ON</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>SALES.product_id <span class="op">=</span> MENU.product_id</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> SALES.customer_id</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> <span class="fu">SUM</span>(SALES.customer_id) <span class="kw">ASC</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>customer_id</th>
+<th>Total_amt_spend</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>76</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>74</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>36</td>
+</tr>
+</tbody>
+</table>
+<section id="analysis-of-total-amount-spent-by-customers" class="level4">
+<h4 class="anchored" data-anchor-id="analysis-of-total-amount-spent-by-customers">Analysis of Total Amount Spent by Customers</h4>
+<ol type="1">
+<li><p><strong>Customer Spending Overview</strong>:</p>
+<ul>
+<li>Customer A has spent a total of $76 at the restaurant, making them the highest spender among all customers.</li>
+<li>Customer B follows closely behind, with a total expenditure of $74.</li>
+<li>Customer C has spent $36 in total, which is notably lower compared to customers A and B.</li>
+</ul></li>
+<li><p><strong>Identifying High-Value Customers</strong>:</p>
+<ul>
+<li>Customers A and B emerge as high-value customers, contributing significantly to the restaurant’s revenue.</li>
+<li>Focusing on retaining and incentivizing these customers through loyalty programs or personalized offers could enhance customer retention and overall profitability.</li>
+</ul></li>
+<li><p><strong>Opportunities for Targeted Marketing</strong>:</p>
+<ul>
+<li>Targeted marketing campaigns can be designed to attract new customers or encourage existing ones to increase their spending.</li>
+<li>By analyzing the preferences and behavior of high-spending customers, the restaurant can refine its menu offerings and promotional activities to cater to their preferences effectively.</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="how-many-days-has-each-customer-visited-the-restaurant" class="level3">
+<h3 class="anchored" data-anchor-id="how-many-days-has-each-customer-visited-the-restaurant">2. How many days has each customer visited the restaurant?</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> SALES.customer_id, <span class="fu">SUM</span>(MENU.price) <span class="kw">as</span> Total_amt_spend</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> SALES</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> MENU <span class="kw">ON</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>SALES.product_id <span class="op">=</span> MENU.product_id</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> SALES.customer_id</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> <span class="fu">SUM</span>(SALES.customer_id) <span class="kw">ASC</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>customer_id</th>
+<th>number_of_visits</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>6</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<section id="analysis-of-customer-visitation-patterns" class="level4">
+<h4 class="anchored" data-anchor-id="analysis-of-customer-visitation-patterns">Analysis of Customer Visitation Patterns</h4>
+<ol type="1">
+<li><p><strong>Frequency of Visits</strong>:</p>
+<ul>
+<li>Customer A has visited the restaurant on 4 different days, indicating moderate visitation frequency.</li>
+<li>Customer B has visited the restaurant on 6 days, suggesting a higher frequency of visits compared to other customers.</li>
+<li>Customer C has visited the restaurant on 2 days, indicating relatively infrequent visits.</li>
+</ul></li>
+<li><p><strong>Leveraging Personalized Marketing for Customer Retention and Revenue Growth</strong>:</p>
+<ul>
+<li>Implementing personalized marketing strategies tailored to customers like Customer C presents an opportunity for enhanced customer retention and revenue growth. By offering customized plans based on individual preferences, the restaurant can foster loyalty, encourage repeat visits, and ultimately drive increased spending. This targeted approach not only strengthens customer relationships but also maximizes profitability, contributing to long-term sustainability and success.</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="what-was-the-first-item-from-the-menu-purchased-by-each-customer" class="level3">
+<h3 class="anchored" data-anchor-id="what-was-the-first-item-from-the-menu-purchased-by-each-customer">3. What was the first item from the menu purchased by each customer?</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> item_purchased_by_customer</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">as</span> (<span class="kw">SELECT</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    SALES.customer_id <span class="kw">as</span> customer_id,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    SALES.order_date <span class="kw">as</span> order_date,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    MENU.product_name <span class="kw">as</span> product_name,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">DENSE_RANK</span>() <span class="kw">OVER</span> (<span class="kw">PARTITION</span> <span class="kw">BY</span> SALES.customer_id <span class="kw">ORDER</span> <span class="kw">BY</span> SALES.order_date) <span class="kw">as</span> `Dense_Rank`</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> SALES</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">LEFT</span> <span class="kw">JOIN</span> MENU <span class="kw">ON</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    SALES.product_id <span class="op">=</span> MENU.product_id</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> customer_id,</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>        product_name</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        <span class="kw">FROM</span> item_purchased_by_customer</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> `Dense_Rank` <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> customer_id, product_name;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>customer_id</th>
+<th>product_name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>sushi</td>
+</tr>
+<tr class="even">
+<td>A</td>
+<td>curry</td>
+</tr>
+<tr class="odd">
+<td>B</td>
+<td>curry</td>
+</tr>
+<tr class="even">
+<td>C</td>
+<td>ramen</td>
+</tr>
+</tbody>
+</table>
+<section id="analysis-of-first-menu-item-purchased-by-customers" class="level4">
+<h4 class="anchored" data-anchor-id="analysis-of-first-menu-item-purchased-by-customers">Analysis of First Menu Item Purchased by Customers</h4>
+<ol type="1">
+<li><p><strong>Initial Menu Preferences</strong>:</p>
+<ul>
+<li>Customer A’s first purchase was sushi, indicating a preference for this menu item from the outset.</li>
+<li>Customer B’s initial purchase was curry, suggesting a different menu preference compared to Customer A.</li>
+<li>Customer C’s first purchase was ramen, indicating yet another distinct menu preference.</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="what-is-the-most-purchased-item-on-the-menu-and-how-many-times-was-it-purchased-by-all-customers" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-the-most-purchased-item-on-the-menu-and-how-many-times-was-it-purchased-by-all-customers">4. What is the most purchased item on the menu and how many times was it purchased by all customers?</h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> MENU.product_name,</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">COUNT</span>(SALES.customer_id) <span class="kw">as</span> item_count</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> MENU</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">INNER</span> <span class="kw">JOIN</span> SALES <span class="kw">ON</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>MENU.product_id <span class="op">=</span> SALES.product_id</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> MENU.product_name</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> item_count <span class="kw">DESC</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">1</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>product_name</th>
+<th>item_count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ramen</td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+<section id="analysis-of-most-purchased-item-on-the-menu" class="level4">
+<h4 class="anchored" data-anchor-id="analysis-of-most-purchased-item-on-the-menu">Analysis of Most Purchased Item on the Menu</h4>
+<ol type="1">
+<li><p><strong>Most Popular Menu Item</strong>:</p>
+<ul>
+<li>The analysis reveals that “ramen” is the most purchased item on the menu, with a total of 8 purchases by all customers.</li>
+<li>This indicates a high level of popularity and demand for ramen among the restaurant’s clientele.</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="which-item-was-the-most-popular-for-each-customer" class="level3">
+<h3 class="anchored" data-anchor-id="which-item-was-the-most-popular-for-each-customer">5. Which item was the most popular for each customer?</h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> most_popular</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">AS</span> (<span class="kw">SELECT</span> SALES.customer_id,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>        MENU.product_name,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">COUNT</span>(MENU.product_name) <span class="kw">AS</span> order_cnt,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">DENSE_RANK</span>() <span class="kw">OVER</span> (<span class="kw">PARTITION</span> <span class="kw">BY</span> SALES.customer_id <span class="kw">ORDER</span> <span class="kw">BY</span> <span class="fu">COUNT</span>(SALES.customer_id) <span class="kw">DESC</span>) <span class="kw">as</span> `Dense_Rank`</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">FROM</span> SALES <span class="kw">JOIN</span> MENU <span class="kw">ON</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        MENU.product_id <span class="op">=</span> SALES.product_id</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        <span class="kw">GROUP</span> <span class="kw">BY</span> SALES.customer_id, MENU.product_name</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> customer_id, product_name, order_cnt</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> most_popular</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> `Dense_Rank` <span class="op">=</span> <span class="dv">1</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>customer_id</th>
+<th>product_name</th>
+<th>order_cnt</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>ramen</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>curry</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>B</td>
+<td>sushi</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>ramen</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>ramen</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<section id="analysis-of-most-popular-item-for-each-customer" class="level4">
+<h4 class="anchored" data-anchor-id="analysis-of-most-popular-item-for-each-customer">Analysis of Most Popular Item for Each Customer</h4>
+<ol type="1">
+<li><p><strong>Customer-Specific Preferences</strong>:</p>
+<ul>
+<li>Customer A’s most popular item is “ramen,” with a total of 3 orders, indicating a preference for this menu item.</li>
+<li>Customer B has multiple most popular items, including “curry,” “sushi,” and “ramen,” each with 2 orders, suggesting diverse preferences.</li>
+<li>Customer C’s most popular item is also “ramen,” with 3 orders, indicating a consistent preference for this menu item.</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="which-item-was-purchased-first-by-the-customer-after-they-became-a-member" class="level3">
+<h3 class="anchored" data-anchor-id="which-item-was-purchased-first-by-the-customer-after-they-became-a-member">6. Which item was purchased first by the customer after they became a member?</h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> first_item_purchased <span class="kw">AS</span> (</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    MEMBERS.customer_id <span class="kw">AS</span> customer_id,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    SALES.product_id <span class="kw">AS</span> product_id,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">DENSE_RANK</span>() <span class="kw">OVER</span> (<span class="kw">PARTITION</span> <span class="kw">BY</span> MEMBERS.customer_id <span class="kw">ORDER</span> <span class="kw">BY</span> SALES.order_date <span class="kw">ASC</span>) <span class="kw">AS</span> DRank</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> MEMBERS</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">JOIN</span> SALES <span class="kw">ON</span> SALES.customer_id <span class="op">=</span> MEMBERS.customer_id <span class="kw">AND</span> SALES.order_date <span class="op">&gt;</span> MEMBERS.join_date</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    first_item_purchased.customer_id <span class="kw">AS</span> customer_id,</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    MENU.product_name</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> first_item_purchased</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> MENU <span class="kw">ON</span> first_item_purchased.product_id <span class="op">=</span> MENU.product_id</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> Drank <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> customer_id <span class="kw">ASC</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>customer_id</th>
+<th>product_name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>ramen</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>sushi</td>
+</tr>
+</tbody>
+</table>
+<section id="analysis-of-first-item-purchased-by-customers-after-becoming-a-member" class="level4">
+<h4 class="anchored" data-anchor-id="analysis-of-first-item-purchased-by-customers-after-becoming-a-member">Analysis of First Item Purchased by Customers After Becoming a Member</h4>
+<ol type="1">
+<li><p><strong>Membership Engagement</strong>:</p>
+<ul>
+<li>Customer A’s first purchase after becoming a member was “ramen,” indicating their choice of menu item soon after joining the loyalty program.</li>
+<li>Customer B’s initial purchase post-membership was “sushi,” suggesting a different menu preference compared to Customer A.</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="which-item-was-purchased-just-before-the-customer-became-a-member" class="level3">
+<h3 class="anchored" data-anchor-id="which-item-was-purchased-just-before-the-customer-became-a-member">7. Which item was purchased just before the customer became a member?</h3>
+<div class="sourceCode" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> first_item_purchased <span class="kw">AS</span> (</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    MEMBERS.customer_id <span class="kw">AS</span> customer_id,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    SALES.product_id <span class="kw">AS</span> product_id,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">DENSE_RANK</span>() <span class="kw">OVER</span> (<span class="kw">PARTITION</span> <span class="kw">BY</span> MEMBERS.customer_id <span class="kw">ORDER</span> <span class="kw">BY</span> SALES.order_date <span class="kw">DESC</span>) <span class="kw">AS</span> DRank</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> MEMBERS</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> SALES <span class="kw">ON</span> SALES.customer_id <span class="op">=</span> MEMBERS.customer_id <span class="kw">AND</span> SALES.order_date <span class="op">&lt;</span> MEMBERS.join_date</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    first_item_purchased.customer_id <span class="kw">AS</span> customer_id,</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    MENU.product_name</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> first_item_purchased</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> MENU <span class="kw">ON</span> first_item_purchased.product_id <span class="op">=</span> MENU.product_id</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> Drank <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> customer_id <span class="kw">ASC</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>customer_id</th>
+<th>product_name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>sushi</td>
+</tr>
+<tr class="even">
+<td>A</td>
+<td>curry</td>
+</tr>
+<tr class="odd">
+<td>B</td>
+<td>sushi</td>
+</tr>
+</tbody>
+</table>
+<section id="analysis-of-last-item-purchased-before-becoming-a-member" class="level4">
+<h4 class="anchored" data-anchor-id="analysis-of-last-item-purchased-before-becoming-a-member">Analysis of Last Item Purchased Before Becoming a Member</h4>
+<ol type="1">
+<li><p><strong>Pre-Membership Purchases</strong>:</p>
+<ul>
+<li>Customer A’s last purchases before becoming a member were “sushi” and “curry,” indicating their menu preferences just before joining the loyalty program.</li>
+<li>Customer B’s final purchase before membership was also “sushi,” suggesting their menu choice before becoming a member.</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="what-is-the-total-items-and-amount-spent-for-each-member-before-they-became-a-member" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-the-total-items-and-amount-spent-for-each-member-before-they-became-a-member">8. What is the total items and amount spent for each member before they became a member?</h3>
+<div class="sourceCode" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> SALES.customer_id,</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>        <span class="fu">COUNT</span>(SALES.product_id) <span class="kw">AS</span> total_items_purchased,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>        <span class="fu">SUM</span>(MENU.price) <span class="kw">AS</span> amount_spent</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> SALES</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="kw">INNER</span> <span class="kw">JOIN</span> MEMBERS</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="kw">ON</span> SALES.customer_id <span class="op">=</span> MEMBERS.customer_id <span class="kw">AND</span> SALES.order_date <span class="op">&lt;</span> MEMBERS.join_date</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> MENU</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="kw">ON</span> MENU.product_id <span class="op">=</span> SALES.product_id</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> SALES.customer_id</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> SALES.customer_id;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>customer_id</th>
+<th>total_items_purchased</th>
+<th>amount_spent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>2</td>
+<td>25</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>3</td>
+<td>40</td>
+</tr>
+</tbody>
+</table>
+<section id="analysis-of-total-items-and-amount-spent-before-becoming-a-member" class="level4">
+<h4 class="anchored" data-anchor-id="analysis-of-total-items-and-amount-spent-before-becoming-a-member">Analysis of Total Items and Amount Spent Before Becoming a Member</h4>
+<ol type="1">
+<li><p><strong>Pre-Membership Purchases Overview</strong>:</p>
+<ul>
+<li>Customer A made a total of 2 purchases before becoming a member, with a corresponding total amount spent of $25.</li>
+<li>Customer B made 3 purchases before joining the loyalty program, amounting to a total expenditure of $40.</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="if-each-1-spent-equates-to-10-points-and-sushi-has-a-2x-points-multiplier-how-many-points-would-each-customer-have" class="level3">
+<h3 class="anchored" data-anchor-id="if-each-1-spent-equates-to-10-points-and-sushi-has-a-2x-points-multiplier-how-many-points-would-each-customer-have">9. If each $1 spent equates to 10 points and sushi has a 2x points multiplier how many points would each customer have?</h3>
+<div class="sourceCode" id="cb10"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> cte <span class="kw">AS</span> (</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    MENU.product_id,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    (<span class="cf">CASE</span> <span class="cf">WHEN</span> MENU.product_name <span class="op">=</span> <span class="st">'sushi'</span> <span class="cf">THEN</span> <span class="dv">20</span> <span class="op">*</span> MENU.price</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">ELSE</span> <span class="dv">10</span> <span class="op">*</span> MENU.price <span class="cf">END</span>) <span class="kw">AS</span> Points</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> MENU)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> SALES.customer_id <span class="kw">AS</span> Customer_Id,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">SUM</span>(cte.points) <span class="kw">AS</span> Total_Points</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> SALES <span class="kw">LEFT</span> <span class="kw">JOIN</span> cte <span class="kw">ON</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>SALES.product_id <span class="op">=</span> cte.product_id</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> SALES.customer_id</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> SALES.customer_id;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>customer_id</th>
+<th>Total_Points</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>860</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>940</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>360</td>
+</tr>
+</tbody>
+</table>
+<section id="analysis-of-loyalty-points-earned-by-customers" class="level4">
+<h4 class="anchored" data-anchor-id="analysis-of-loyalty-points-earned-by-customers">Analysis of Loyalty Points Earned by Customers</h4>
+<ol type="1">
+<li><p><strong>Total Loyalty Points Earned</strong>:</p>
+<ul>
+<li>Customer A has earned a total of 860 loyalty points based on their purchases.</li>
+<li>Customer B has accumulated 940 loyalty points, indicating a higher level of engagement with the loyalty program.</li>
+<li>Customer C has earned 360 loyalty points, reflecting their lower spending and engagement compared to other customers.</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="in-the-first-week-after-a-customer-joins-the-program-including-their-join-date-they-earn-2x-points-on-all-items-not-just-sushi-how-many-points-do-customer-a-and-b-have-at-the-end-of-january" class="level3">
+<h3 class="anchored" data-anchor-id="in-the-first-week-after-a-customer-joins-the-program-including-their-join-date-they-earn-2x-points-on-all-items-not-just-sushi-how-many-points-do-customer-a-and-b-have-at-the-end-of-january">10. In the first week after a customer joins the program (including their join date) they earn 2x points on all items, not just sushi how many points do customer A and B have at the end of January?</h3>
+<div class="sourceCode" id="cb11"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> dates_cte <span class="kw">AS</span> (</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> customer_id, join_date,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    DATE_ADD(join_date, <span class="dt">INTERVAL</span> <span class="dv">6</span> <span class="dt">DAY</span>) <span class="kw">AS</span> valid_date,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">LAST_DAY</span>(<span class="st">'2021-01-01'</span>) <span class="kw">AS</span> month_end_date</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> members</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>) <span class="kw">SELECT</span> DC.customer_id,</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">SUM</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> S.order_date <span class="kw">BETWEEN</span> DC.join_date <span class="kw">AND</span> DC.valid_date <span class="cf">THEN</span> M.price <span class="op">*</span> <span class="dv">20</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>             <span class="cf">WHEN</span> M.product_name <span class="op">=</span> <span class="st">'sushi'</span> <span class="cf">THEN</span> M.price <span class="op">*</span> <span class="dv">20</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>             <span class="cf">ELSE</span> M.price <span class="op">*</span> <span class="dv">10</span> <span class="cf">END</span>) <span class="kw">AS</span> total_points</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> dates_cte <span class="kw">AS</span> DC</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> sales <span class="kw">AS</span> S</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="kw">ON</span> DC.customer_id <span class="op">=</span> S.customer_id</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> menu <span class="kw">AS</span> M</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="kw">ON</span> M.product_id <span class="op">=</span> S.product_id</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> S.order_date <span class="op">&lt;=</span> DC.month_end_date</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> DC.customer_id;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>customer_id</th>
+<th>total_points</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>B</td>
+<td>820</td>
+</tr>
+<tr class="even">
+<td>A</td>
+<td>1370</td>
+</tr>
+</tbody>
+</table>
+<section id="analysis-of-loyalty-points-earned-in-january-with-2x-points-promotion" class="level4">
+<h4 class="anchored" data-anchor-id="analysis-of-loyalty-points-earned-in-january-with-2x-points-promotion">Analysis of Loyalty Points Earned in January with 2x Points Promotion</h4>
+<ol type="1">
+<li><p><strong>Total Points Earned in January</strong>:</p>
+<ul>
+<li>Customer A has earned a total of 1370 loyalty points by the end of January, taking advantage of the 2x points promotion in the first week after joining the program.</li>
+<li>Customer B has accumulated 820 loyalty points by the end of January, also benefiting from the promotional offer during the first week.</li>
+</ul></li>
+</ol>
+</section>
+</section>
+</section>
+<section id="bonus-questions" class="level2">
+<h2 class="anchored" data-anchor-id="bonus-questions">BONUS QUESTIONS:</h2>
+<section id="part-1---join-all-the-things-recreate-the-table-with-customer_id-order_date-product_name-price-member-yn-that-looks-like-the-below" class="level3">
+<h3 class="anchored" data-anchor-id="part-1---join-all-the-things-recreate-the-table-with-customer_id-order_date-product_name-price-member-yn-that-looks-like-the-below">Part 1 - Join All The Things: Recreate the table with: customer_id, order_date, product_name, price, member (Y/N) that looks like the below:</h3>
+<p>Desired Table:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>customer_id</th>
+<th>order_date</th>
+<th>product_name</th>
+<th>price</th>
+<th>Member</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>2021-01-01</td>
+<td>sushi</td>
+<td>10</td>
+<td>N</td>
+</tr>
+<tr class="even">
+<td>A</td>
+<td>2021-01-01</td>
+<td>curry</td>
+<td>15</td>
+<td>N</td>
+</tr>
+<tr class="odd">
+<td>A</td>
+<td>2021-01-07</td>
+<td>curry</td>
+<td>15</td>
+<td>Y</td>
+</tr>
+<tr class="even">
+<td>A</td>
+<td>2021-01-10</td>
+<td>ramen</td>
+<td>12</td>
+<td>Y</td>
+</tr>
+<tr class="odd">
+<td>A</td>
+<td>2021-01-11</td>
+<td>ramen</td>
+<td>12</td>
+<td>Y</td>
+</tr>
+<tr class="even">
+<td>A</td>
+<td>2021-01-11</td>
+<td>ramen</td>
+<td>12</td>
+<td>Y</td>
+</tr>
+<tr class="odd">
+<td>B</td>
+<td>2021-01-01</td>
+<td>curry</td>
+<td>15</td>
+<td>N</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>2021-01-02</td>
+<td>curry</td>
+<td>15</td>
+<td>N</td>
+</tr>
+<tr class="odd">
+<td>B</td>
+<td>2021-01-04</td>
+<td>sushi</td>
+<td>10</td>
+<td>N</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>2021-01-11</td>
+<td>sushi</td>
+<td>10</td>
+<td>Y</td>
+</tr>
+<tr class="odd">
+<td>B</td>
+<td>2021-01-16</td>
+<td>ramen</td>
+<td>12</td>
+<td>Y</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>2021-02-01</td>
+<td>ramen</td>
+<td>12</td>
+<td>Y</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>2021-01-01</td>
+<td>ramen</td>
+<td>12</td>
+<td>N</td>
+</tr>
+<tr class="even">
+<td>C</td>
+<td>2021-01-01</td>
+<td>ramen</td>
+<td>12</td>
+<td>N</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>2021-01-07</td>
+<td>ramen</td>
+<td>12</td>
+<td>N</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb12"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    SALES.customer_id,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    SALES.order_date,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    MENU.product_name,</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    MENU.price,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">CASE</span> <span class="cf">WHEN</span> SALES.order_date <span class="op">&gt;=</span> MEMBERS.join_date <span class="cf">THEN</span> <span class="st">'Y'</span> <span class="cf">ELSE</span> <span class="st">'N'</span> <span class="cf">END</span> <span class="kw">AS</span> `Member`</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> SALES <span class="kw">LEFT</span> <span class="kw">JOIN</span> MEMBERS <span class="kw">ON</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>SALES.customer_id <span class="op">=</span> MEMBERS.customer_id</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> MENU <span class="kw">ON</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>SALES.product_id <span class="op">=</span> MENU.product_id</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> SALES.customer_id <span class="kw">ASC</span>, SALES.order_date <span class="kw">ASC</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>customer_id</th>
+<th>order_date</th>
+<th>product_name</th>
+<th>price</th>
+<th>Member</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>2021-01-01</td>
+<td>sushi</td>
+<td>10</td>
+<td>N</td>
+</tr>
+<tr class="even">
+<td>A</td>
+<td>2021-01-01</td>
+<td>curry</td>
+<td>15</td>
+<td>N</td>
+</tr>
+<tr class="odd">
+<td>A</td>
+<td>2021-01-07</td>
+<td>curry</td>
+<td>15</td>
+<td>Y</td>
+</tr>
+<tr class="even">
+<td>A</td>
+<td>2021-01-10</td>
+<td>ramen</td>
+<td>12</td>
+<td>Y</td>
+</tr>
+<tr class="odd">
+<td>A</td>
+<td>2021-01-11</td>
+<td>ramen</td>
+<td>12</td>
+<td>Y</td>
+</tr>
+<tr class="even">
+<td>A</td>
+<td>2021-01-11</td>
+<td>ramen</td>
+<td>12</td>
+<td>Y</td>
+</tr>
+<tr class="odd">
+<td>B</td>
+<td>2021-01-01</td>
+<td>curry</td>
+<td>15</td>
+<td>N</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>2021-01-02</td>
+<td>curry</td>
+<td>15</td>
+<td>N</td>
+</tr>
+<tr class="odd">
+<td>B</td>
+<td>2021-01-04</td>
+<td>sushi</td>
+<td>10</td>
+<td>N</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>2021-01-11</td>
+<td>sushi</td>
+<td>10</td>
+<td>Y</td>
+</tr>
+<tr class="odd">
+<td>B</td>
+<td>2021-01-16</td>
+<td>ramen</td>
+<td>12</td>
+<td>Y</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>2021-02-01</td>
+<td>ramen</td>
+<td>12</td>
+<td>Y</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>2021-01-01</td>
+<td>ramen</td>
+<td>12</td>
+<td>N</td>
+</tr>
+<tr class="even">
+<td>C</td>
+<td>2021-01-01</td>
+<td>ramen</td>
+<td>12</td>
+<td>N</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>2021-01-07</td>
+<td>ramen</td>
+<td>12</td>
+<td>N</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="part-2---rank-all-the-things-danny-also-requires-further-information-about-the-ranking-of-customer-products-but-he-purposely-does-not-need-the-ranking-for-non-member-purchases-so-he-expects-null-ranking-values-for-the-records-when-customers-are-not-yet-part-of-the-loyalty-program." class="level3">
+<h3 class="anchored" data-anchor-id="part-2---rank-all-the-things-danny-also-requires-further-information-about-the-ranking-of-customer-products-but-he-purposely-does-not-need-the-ranking-for-non-member-purchases-so-he-expects-null-ranking-values-for-the-records-when-customers-are-not-yet-part-of-the-loyalty-program.">Part 2 - Rank All The Things: Danny also requires further information about the ranking of customer products, but he purposely does not need the ranking for non-member purchases so he expects null ranking values for the records when customers are not yet part of the loyalty program.:</h3>
+<p>Desired Table:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>customer_id</th>
+<th>order_date</th>
+<th>product_name</th>
+<th>price</th>
+<th>Member</th>
+<th>ranking</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>2021-01-01</td>
+<td>sushi</td>
+<td>10</td>
+<td>N</td>
+<td>null</td>
+</tr>
+<tr class="even">
+<td>A</td>
+<td>2021-01-01</td>
+<td>curry</td>
+<td>15</td>
+<td>N</td>
+<td>null</td>
+</tr>
+<tr class="odd">
+<td>A</td>
+<td>2021-01-07</td>
+<td>curry</td>
+<td>15</td>
+<td>Y</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>A</td>
+<td>2021-01-10</td>
+<td>ramen</td>
+<td>12</td>
+<td>Y</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>A</td>
+<td>2021-01-11</td>
+<td>ramen</td>
+<td>12</td>
+<td>Y</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>A</td>
+<td>2021-01-11</td>
+<td>ramen</td>
+<td>12</td>
+<td>Y</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td>B</td>
+<td>2021-01-01</td>
+<td>curry</td>
+<td>15</td>
+<td>N</td>
+<td>null</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>2021-01-02</td>
+<td>curry</td>
+<td>15</td>
+<td>N</td>
+<td>null</td>
+</tr>
+<tr class="odd">
+<td>B</td>
+<td>2021-01-04</td>
+<td>sushi</td>
+<td>10</td>
+<td>N</td>
+<td>null</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>2021-01-11</td>
+<td>sushi</td>
+<td>10</td>
+<td>Y</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>B</td>
+<td>2021-01-16</td>
+<td>ramen</td>
+<td>12</td>
+<td>Y</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>2021-02-01</td>
+<td>ramen</td>
+<td>12</td>
+<td>Y</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>2021-01-01</td>
+<td>ramen</td>
+<td>12</td>
+<td>N</td>
+<td>NULL</td>
+</tr>
+<tr class="even">
+<td>C</td>
+<td>2021-01-01</td>
+<td>ramen</td>
+<td>12</td>
+<td>N</td>
+<td>NULL</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>2021-01-07</td>
+<td>ramen</td>
+<td>12</td>
+<td>N</td>
+<td>NULL</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb13"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> all_data <span class="kw">AS</span> (</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    SALES.customer_id, SALES.order_date, MENU.product_name, MENU.price,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">CASE</span> <span class="cf">WHEN</span> SALES.order_date <span class="op">&gt;=</span> MEMBERS.join_date <span class="cf">THEN</span> <span class="st">'Y'</span> <span class="cf">ELSE</span> <span class="st">'N'</span> <span class="cf">END</span> <span class="kw">AS</span> `Member`</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> SALES <span class="kw">LEFT</span> <span class="kw">JOIN</span> MENU <span class="kw">ON</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>SALES.product_id <span class="op">=</span> MENU.product_id</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> MEMBERS <span class="kw">ON</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>SALES.customer_id <span class="op">=</span> MEMBERS.customer_id)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> all_data.<span class="op">*</span>,</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">CASE</span> <span class="cf">WHEN</span> all_data.<span class="kw">Member</span> <span class="op">=</span> <span class="st">'Y'</span> <span class="cf">THEN</span> <span class="fu">RANK</span>() <span class="kw">OVER</span> (<span class="kw">PARTITION</span> <span class="kw">BY</span> all_data.customer_id, all_data.<span class="kw">member</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>            <span class="kw">ORDER</span> <span class="kw">BY</span> all_data.order_date) <span class="cf">ELSE</span> <span class="kw">NULL</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">END</span> <span class="kw">AS</span> <span class="st">'ranking'</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> all_data;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>customer_id</th>
+<th>order_date</th>
+<th>product_name</th>
+<th>price</th>
+<th>Member</th>
+<th>ranking</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>2021-01-01</td>
+<td>sushi</td>
+<td>10</td>
+<td>N</td>
+<td>null</td>
+</tr>
+<tr class="even">
+<td>A</td>
+<td>2021-01-01</td>
+<td>curry</td>
+<td>15</td>
+<td>N</td>
+<td>null</td>
+</tr>
+<tr class="odd">
+<td>A</td>
+<td>2021-01-07</td>
+<td>curry</td>
+<td>15</td>
+<td>Y</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>A</td>
+<td>2021-01-10</td>
+<td>ramen</td>
+<td>12</td>
+<td>Y</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>A</td>
+<td>2021-01-11</td>
+<td>ramen</td>
+<td>12</td>
+<td>Y</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>A</td>
+<td>2021-01-11</td>
+<td>ramen</td>
+<td>12</td>
+<td>Y</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td>B</td>
+<td>2021-01-01</td>
+<td>curry</td>
+<td>15</td>
+<td>N</td>
+<td>null</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>2021-01-02</td>
+<td>curry</td>
+<td>15</td>
+<td>N</td>
+<td>null</td>
+</tr>
+<tr class="odd">
+<td>B</td>
+<td>2021-01-04</td>
+<td>sushi</td>
+<td>10</td>
+<td>N</td>
+<td>null</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>2021-01-11</td>
+<td>sushi</td>
+<td>10</td>
+<td>Y</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>B</td>
+<td>2021-01-16</td>
+<td>ramen</td>
+<td>12</td>
+<td>Y</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>2021-02-01</td>
+<td>ramen</td>
+<td>12</td>
+<td>Y</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>2021-01-01</td>
+<td>ramen</td>
+<td>12</td>
+<td>N</td>
+<td>NULL</td>
+</tr>
+<tr class="even">
+<td>C</td>
+<td>2021-01-01</td>
+<td>ramen</td>
+<td>12</td>
+<td>N</td>
+<td>NULL</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>2021-01-07</td>
+<td>ramen</td>
+<td>12</td>
+<td>N</td>
+<td>NULL</td>
+</tr>
+</tbody>
+</table>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

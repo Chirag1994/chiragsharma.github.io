@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Chirag Sharma</title>
+<title>Blog</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -31,9 +31,12 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./favicon/icons8-darth-vader-512.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-listing/list.min.js"></script>
+<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
@@ -58,7 +61,38 @@ ul.task-list li input[type="checkbox"] {
     "search-submit-button-title": "Submit"
   }
 }</script>
+<script>
 
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-listing .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-title','listing-author','listing-date','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description","listing-categories"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -75,13 +109,13 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" rel="" target="" aria-current="page">
+    <a class="nav-link" href="./index.html" rel="" target="">
  <span class="menu-text">Chirag Sharma’s Blog</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./blog.html" rel="" target="">
+    <a class="nav-link active" href="./blog.html" rel="" target="" aria-current="page">
  <span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item">
@@ -115,74 +149,141 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-page-left">
+      <h1 class="title">Blog</h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
-    <h2 id="toc-title">On this page</h2>
-  <ul>
-  <li><a href="#about-me" id="toc-about-me" class="nav-link active" data-scroll-target="#about-me">About Me</a></li>
-  <li><a href="#education" id="toc-education" class="nav-link" data-scroll-target="#education">Education</a></li>
-  <li><a href="#experience" id="toc-experience" class="nav-link" data-scroll-target="#experience">Experience</a></li>
-  </ul>
-</nav>
-    </div>
+        
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(2)</span></div><div class="category" data-category="BeautifulSoup">BeautifulSoup <span class="quarto-category-count">(1)</span></div><div class="category" data-category="GenerativeAI">GenerativeAI <span class="quarto-category-count">(1)</span></div><div class="category" data-category="LLMs">LLMs <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Langchain">Langchain <span class="quarto-category-count">(1)</span></div><div class="category" data-category="OpenAI">OpenAI <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Python">Python <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Web Scrapping">Web Scrapping <span class="quarto-category-count">(1)</span></div></div></div>
 <!-- main -->
-<div class="quarto-about-trestles column-page-left">
-  <div class="about-entity">
-    <img src="my-profile-pic.jpg" class="about-image
-  round " style="height: 14em; width: 14em;">
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Chirag Sharma</h1>
-</div>
-<div class="quarto-title-meta">
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+
+
+
+
+
+
+
+
+<div class="quarto-listing quarto-listing-container-grid" id="listing-listing">
+<div class="listing-actions-group">
+   <div class="input-group input-group-sm quarto-listing-sort">
+     <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
+     <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
+       <option value="" disabled="" selected="" hidden="">Order By</option>
+       <option value="index" data-direction="asc">Default</option>
+         <option value="listing-title" data-direction="asc">
+          Title
+        </option>
+         <option value="listing-date-sort" data-direction="asc">
+          Date - Oldest
+        </option>
+         <option value="listing-date-sort" data-direction="desc">
+          Date - Newest
+        </option>
+         <option value="listing-author" data-direction="asc">
+          Author
+        </option>
+     </select>
   </div>
-</header>
-    <div class="about-links">
-  <a href="https://www.linkedin.com/in/chiragsharma1994/" class="about-link" rel="" target="">
-     <span class="about-link-text">LinkedIn</span>
-  </a>
-  <a href="https://github.com/Chirag1994" class="about-link" rel="" target="">
-     <span class="about-link-text">GitHub</span>
-  </a>
-  <a href="mailto:chirag.sharma0378@gmail.com" class="about-link" rel="" target="">
-     <span class="about-link-text">Email</span>
-  </a>
 </div>
-  </div>
-  <div class="about-contents"><main class="content column-page-left" id="quarto-document-content">
-
-<section id="about-me" class="level3">
-<h3 data-anchor-id="about-me">About Me</h3>
-<p>Hey there! 👋🏼 I’m Chirag, and my journey into the world of data science is driven by a passion for problem-solving and a fascination with the power of data.</p>
-<p>I stumbled upon the magic of data science during my academic journey, where I found myself captivated by the idea of using data to uncover insights and drive meaningful change.</p>
-<p>My interest in this field deepened further during an internship at Ineuron Intelligence Pvt. Limited, where I witnessed firsthand the transformative potential of data analysis. From unraveling complex patterns to devising innovative solutions, I was hooked.</p>
-<p>Now, armed with a blend of academic knowledge and practical experience, I’m on a mission to harness the power of data to tackle real-world challenges. Whether it’s optimizing processes, identifying trends, or driving decision-making, I’m passionate about leveraging technology to make a positive impact.</p>
-<p>I believe that every data point holds a key to solving problems and unlocking opportunities, and I’m excited to continue this journey alongside fellow enthusiasts. Let’s connect and explore the endless possibilities of a data-driven world together!</p>
-</section>
-<section id="education" class="level3">
-<h3 data-anchor-id="education">Education</h3>
-<p>Master’s in Economics | 2020 | Delhi School of Economics, University of Delhi</p>
-<p>Bachelor’s in Economics (Hons.) | 2016 | Motitlal Nehru College, University of Delhi</p>
-</section>
-<section id="experience" class="level3">
-<h3 data-anchor-id="experience">Experience</h3>
-<p>Concentrix | Sept 2023 - Present</p>
-<ul>
-<li>Technical Advisor I</li>
-</ul>
-<p>Data Science Intern | May 2022 - Nov 2022</p>
-<ul>
-<li>Ineuron Intelligence Pvt. Limited</li>
-</ul>
-
-
-</section>
-</main></div>
+<div class="list grid quarto-listing-cols-3">
+<div class="g-col-1" data-index="0" data-categories="GenerativeAI,Langchain,OpenAI,LLMs" data-listing-date-sort="1704133800000" data-listing-file-modified-sort="1708341922301" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="13">
+<a href="./blog/Chat_with_YouTube_Videos/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./blog/Chat_with_YouTube_Videos/chat_with_youtube_videos.png" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Building a Simple Chatbot to talk with YouTube Videos using Langchain &amp; OpenAI API.
+</h5>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('GenerativeAI'); return false;">
+GenerativeAI
 </div>
- <!-- /main -->
+<div class="listing-category" onclick="window.quartoListingCategory('Langchain'); return false;">
+Langchain
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('OpenAI'); return false;">
+OpenAI
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('LLMs'); return false;">
+LLMs
+</div>
+</div>
+<div class="card-text listing-description">
+In this post, we’ll create a simple chatbot that can talk with YouTube videos using Langchain &amp; OpenAI API.
+</div>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Chirag Sharma
+</div>
+<div class="listing-date">
+Jan 2, 2024
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="1" data-categories="Web Scrapping,Python,BeautifulSoup" data-listing-date-sort="1673202600000" data-listing-file-modified-sort="1708341282509" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5">
+<a href="./blog/Web_Scraping/Web_Scraping_Tutorial.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./blog/Web_Scraping/webscraping_cover_image.png" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Web Scraping using BeautifulSoup &amp; Selenium in Python.
+</h5>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('Web Scrapping'); return false;">
+Web Scrapping
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Python'); return false;">
+Python
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('BeautifulSoup'); return false;">
+BeautifulSoup
+</div>
+</div>
+<div class="card-text listing-description">
+In this post, we’ll demonstrate how to scape data from flipkart using BeautifulSoup &amp; Selenium using Python.
+</div>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Chirag Sharma
+</div>
+<div class="listing-date">
+Jan 9, 2023
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+</div>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+</div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -203,6 +304,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
   const isCodeAnnotation = (el) => {
     for (const clz of el.classList) {
       if (clz.startsWith('code-annotation-')) {                     

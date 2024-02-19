@@ -1,8 +1,8 @@
 ---
-title: "Portfolio"
+title: "Blog"
 listing:
   type: grid
-  contents: portfolio
+  contents: blog
   sort: "date desc"
   categories: true
   sort-ui: true

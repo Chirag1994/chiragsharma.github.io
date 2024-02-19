@@ -1,0 +1,2359 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.340">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Chirag Sharma">
+<meta name="dcterms.date" content="2024-01-03">
+<meta name="description" content="In this post, we’ll tackle the third case study using MySQL from 8weeksqlchallenge.com. We’ll explore Foodie-Fi’s data-driven journey, deciphering user engagement patterns, content preferences, and subscription revenue impact, uncovering the recipe for its success in the specialized food streaming niche.">
+
+<title>Case Study #3 - Foodie Fi.</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon/icons8-darth-vader-512.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html" rel="" target="">
+ <span class="menu-text">Chirag Sharma’s Blog</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html" rel="" target="">
+ <span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../portfolio.html" rel="" target="">
+ <span class="menu-text">Portfolio</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../resume/chirag_sharma_resume.pdf" rel="" target="">
+ <span class="menu-text">Resume</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/Chirag1994" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/chiragsharma1994/" rel="" target=""><i class="bi bi-linkedin" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="mailto:chirag.sharma0378@gmail.com" rel="" target=""><i class="bi bi-envelope" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-page">
+      <h1 class="title">Case Study #3 - Foodie Fi.</h1>
+                  <div>
+        <div class="description">
+          In this post, we’ll tackle the third case study using MySQL from 8weeksqlchallenge.com. We’ll explore Foodie-Fi’s data-driven journey, deciphering user engagement patterns, content preferences, and subscription revenue impact, uncovering the recipe for its success in the specialized food streaming niche.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">MySQL</div>
+                <div class="quarto-category">SQL</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p><a href="https://chirag1994.github.io/">Chirag Sharma</a> </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">January 3, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block column-page" id="quarto-document-content">
+
+
+
+
+<section id="case-study-3---foodie-fi" class="level1">
+<h1>Case Study #3 - Foodie-Fi</h1>
+<p><img src="./Images/Case_Study_3-Foodie_Fi.png" alt="Image1" width="800" height="800"></p>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Subscription based businesses are super popular and Danny realised that there was a large gap in the market - he wanted to create a new streaming service that only had food related content - something like Netflix but with only cooking shows!</p>
+<p>Danny finds a few smart friends to launch his new startup Foodie-Fi in 2020 and started selling monthly and annual subscriptions, giving their customers unlimited on-demand access to exclusive food videos from around the world!</p>
+<p>Danny created Foodie-Fi with a data driven mindset and wanted to ensure all future investment decisions and new features were decided using data. This case study focuses on using subscription style digital data to answer important business questions.</p>
+</section>
+<section id="available-data" class="level2">
+<h2 class="anchored" data-anchor-id="available-data">Available Data</h2>
+<p>Danny has shared the data design for Foodie-Fi and also short descriptions on each of the database tables - our case study focuses on only 2 tables but there will be a challenge to create a new table for the Foodie-Fi team.</p>
+<p>All datasets exist within the foodie_fi database schema - be sure to include this reference within your SQL scripts as you start exploring the data and answering the case study questions.</p>
+</section>
+<section id="entity-relationship-diagram" class="level2">
+<h2 class="anchored" data-anchor-id="entity-relationship-diagram">Entity Relationship Diagram</h2>
+<p><img src="./Images/Case_Study_3-ER_Diagram.png" alt="Image1" width="800" height="800"></p>
+<section id="table-1-plans" class="level3">
+<h3 class="anchored" data-anchor-id="table-1-plans">Table 1: plans</h3>
+<p>Customers can choose which plans to join Foodie-Fi when they first sign up.</p>
+<p>Basic plan customers have limited access and can only stream their videos and is only available monthly at $9.90</p>
+<p>Pro plan customers have no watch time limits and are able to download videos for offline viewing. Pro plans start at $19.90 a month or $199 for an annual subscription.</p>
+<p>Customers can sign up to an initial 7 day free trial will automatically continue with the pro monthly subscription plan unless they cancel, downgrade to basic or upgrade to an annual pro plan at any point during the trial.</p>
+<p>When customers cancel their Foodie-Fi service - they will have a <code>churn</code> plan record with a <code>null</code> price but their plan will continue until the end of the billing period.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>plan_id</th>
+<th>plan_name</th>
+<th>price</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>trial</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>basic monthly</td>
+<td>9.90</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>pro monthly</td>
+<td>19.90</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>pro annual</td>
+<td>199</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>churn</td>
+<td>null</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="table-2-subscriptions" class="level3">
+<h3 class="anchored" data-anchor-id="table-2-subscriptions">Table 2: subscriptions</h3>
+<p>Customer subscriptions show the exact date where their specific <code>plan_id</code> starts.</p>
+<p>If customers downgrade from a pro plan or cancel their subscription - the higher plan will remain in place until the period is over - the <code>start_date</code> in the <code>subscriptions</code> table will reflect the date that the actual plan changes.</p>
+<p>When customers upgrade their account from a basic plan to a pro or annual pro plan - the higher plan will take effect straightaway.</p>
+<p>When customers churn - they will keep their access until the end of their current billing period but the <code>start_date</code> will be technically the day they decided to cancel their service.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>customer_id</th>
+<th>plan_id</th>
+<th>start_date</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>0</td>
+<td>2020-08-01</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>1</td>
+<td>2020-08-08</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>0</td>
+<td>2020-09-20</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>3</td>
+<td>2020-09-27</td>
+</tr>
+<tr class="odd">
+<td>11</td>
+<td>0</td>
+<td>2020-11-19</td>
+</tr>
+<tr class="even">
+<td>11</td>
+<td>4</td>
+<td>2020-11-26</td>
+</tr>
+<tr class="odd">
+<td>13</td>
+<td>0</td>
+<td>2020-12-15</td>
+</tr>
+<tr class="even">
+<td>13</td>
+<td>1</td>
+<td>2020-12-22</td>
+</tr>
+<tr class="odd">
+<td>13</td>
+<td>2</td>
+<td>2021-03-29</td>
+</tr>
+<tr class="even">
+<td>15</td>
+<td>0</td>
+<td>2020-03-17</td>
+</tr>
+<tr class="odd">
+<td>15</td>
+<td>2</td>
+<td>2020-03-24</td>
+</tr>
+<tr class="even">
+<td>15</td>
+<td>4</td>
+<td>2020-04-29</td>
+</tr>
+<tr class="odd">
+<td>16</td>
+<td>0</td>
+<td>2020-05-31</td>
+</tr>
+<tr class="even">
+<td>16</td>
+<td>1</td>
+<td>2020-06-07</td>
+</tr>
+<tr class="odd">
+<td>16</td>
+<td>3</td>
+<td>2020-10-21</td>
+</tr>
+<tr class="even">
+<td>18</td>
+<td>0</td>
+<td>2020-07-06</td>
+</tr>
+<tr class="odd">
+<td>18</td>
+<td>2</td>
+<td>2020-07-13</td>
+</tr>
+<tr class="even">
+<td>19</td>
+<td>0</td>
+<td>2020-06-22</td>
+</tr>
+<tr class="odd">
+<td>19</td>
+<td>2</td>
+<td>2020-06-29</td>
+</tr>
+<tr class="even">
+<td>19</td>
+<td>3</td>
+<td>2020-08-29</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="interactive-sql-session" class="level2">
+<h2 class="anchored" data-anchor-id="interactive-sql-session">Interactive SQL Session</h2>
+<p>The Dataset for this case study can be accessed from <a href="https://www.db-fiddle.com/f/rHJhRrXy5hbVBNJ6F6b9gJ/16">here</a>. I will be using MySQL to solve this case study. In order to solve yourself this case study, simply go to the above link and choose MySQL Dialect (version &gt; 8, if using MySQL version higher than 8 locally), copy &amp; paste the Database schema into MySQL.</p>
+<p>Here is the snapshot of it.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">SCHEMA</span> foodie_fi;</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">USE</span> foodie_fi;</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> plans (</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  plan_id <span class="dt">INTEGER</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  plan_name <span class="dt">VARCHAR</span>(<span class="dv">13</span>),</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  price <span class="dt">DECIMAL</span>(<span class="dv">5</span>,<span class="dv">2</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> plans</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  (plan_id, plan_name, price)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'0'</span>, <span class="st">'trial'</span>, <span class="st">'0'</span>),</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'1'</span>, <span class="st">'basic monthly'</span>, <span class="st">'9.90'</span>),</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'2'</span>, <span class="st">'pro monthly'</span>, <span class="st">'19.90'</span>),</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'3'</span>, <span class="st">'pro annual'</span>, <span class="st">'199'</span>),</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'4'</span>, <span class="st">'churn'</span>, <span class="kw">null</span>);</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> subscriptions (</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  customer_id <span class="dt">INTEGER</span>,</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  plan_id <span class="dt">INTEGER</span>,</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  start_date <span class="dt">DATE</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> subscriptions</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  (customer_id, plan_id, start_date)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'1'</span>, <span class="st">'0'</span>, <span class="st">'2020-08-01'</span>),</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'1'</span>, <span class="st">'1'</span>, <span class="st">'2020-08-08'</span>),</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'2'</span>, <span class="st">'0'</span>, <span class="st">'2020-09-20'</span>),</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'2'</span>, <span class="st">'3'</span>, <span class="st">'2020-09-27'</span>),</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'3'</span>, <span class="st">'0'</span>, <span class="st">'2020-01-13'</span>),</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'3'</span>, <span class="st">'1'</span>, <span class="st">'2020-01-20'</span>),</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'4'</span>, <span class="st">'0'</span>, <span class="st">'2020-01-17'</span>),</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'4'</span>, <span class="st">'1'</span>, <span class="st">'2020-01-24'</span>),</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'4'</span>, <span class="st">'4'</span>, <span class="st">'2020-04-21'</span>),</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'5'</span>, <span class="st">'0'</span>, <span class="st">'2020-08-03'</span>),</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'5'</span>, <span class="st">'1'</span>, <span class="st">'2020-08-10'</span>),</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'6'</span>, <span class="st">'0'</span>, <span class="st">'2020-12-23'</span>),</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'6'</span>, <span class="st">'1'</span>, <span class="st">'2020-12-30'</span>),</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'6'</span>, <span class="st">'4'</span>, <span class="st">'2021-02-26'</span>),</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'7'</span>, <span class="st">'0'</span>, <span class="st">'2020-02-05'</span>),</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'7'</span>, <span class="st">'1'</span>, <span class="st">'2020-02-12'</span>),</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'7'</span>, <span class="st">'2'</span>, <span class="st">'2020-05-22'</span>),</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'8'</span>, <span class="st">'0'</span>, <span class="st">'2020-06-11'</span>),</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'8'</span>, <span class="st">'1'</span>, <span class="st">'2020-06-18'</span>),</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'8'</span>, <span class="st">'2'</span>, <span class="st">'2020-08-03'</span>),</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'9'</span>, <span class="st">'0'</span>, <span class="st">'2020-12-07'</span>),</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'9'</span>, <span class="st">'3'</span>, <span class="st">'2020-12-14'</span>),</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'10'</span>, <span class="st">'0'</span>, <span class="st">'2020-09-19'</span>),</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'10'</span>, <span class="st">'2'</span>, <span class="st">'2020-09-26'</span>),</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'11'</span>, <span class="st">'0'</span>, <span class="st">'2020-11-19'</span>),</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'11'</span>, <span class="st">'4'</span>, <span class="st">'2020-11-26'</span>),</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'12'</span>, <span class="st">'0'</span>, <span class="st">'2020-09-22'</span>),</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'12'</span>, <span class="st">'1'</span>, <span class="st">'2020-09-29'</span>),</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'13'</span>, <span class="st">'0'</span>, <span class="st">'2020-12-15'</span>),</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'13'</span>, <span class="st">'1'</span>, <span class="st">'2020-12-22'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="case-study-questions" class="level2">
+<h2 class="anchored" data-anchor-id="case-study-questions">Case Study Questions</h2>
+<p>This case study is split into an initial data understanding question before diving straight into data analysis questions before finishing with 1 single extension challenge.</p>
+<section id="a.-customer-journey" class="level3">
+<h3 class="anchored" data-anchor-id="a.-customer-journey">A. Customer Journey</h3>
+<p>Based off the 8 sample customers provided in the sample from the subscriptions table, write a brief description about each customer’s onboarding journey.</p>
+<p>Try to keep it as short as possible - you may also want to run some sort of join to make your explanations a bit easier!</p>
+</section>
+<section id="b.-data-analysis-questions" class="level3">
+<h3 class="anchored" data-anchor-id="b.-data-analysis-questions">B. Data Analysis Questions</h3>
+<ol type="1">
+<li><p>How many customers has Foodie-Fi ever had?</p></li>
+<li><p>What is the monthly distribution of trial plan start_date values for our dataset - use the start of the month as the group by value.</p></li>
+<li><p>What plan start_date values occur after the year 2020 for our dataset? Show the breakdown by count of events for each plan_name.</p></li>
+<li><p>What is the customer count and percentage of customers who have churned rounded to 1 decimal place?</p></li>
+<li><p>How many customers have churned straight after their initial free trial - what percentage is this rounded to the nearest whole number?</p></li>
+<li><p>What is the number and percentage of customer plans after their initial free trial?</p></li>
+<li><p>What is the customer count and percentage breakdown of all 5 plan_name values at 2020-12-31?</p></li>
+<li><p>How many customers have upgraded to an annual plan in 2020?</p></li>
+<li><p>How many days on average does it take for a customer to an annual plan from the day they join Foodie-Fi?</p></li>
+<li><p>Can you further breakdown this average value into 30 day periods (i.e.&nbsp;0-30 days, 31-60 days etc)</p></li>
+<li><p>How many customers downgraded from a pro monthly to a basic monthly plan in 2020?</p></li>
+</ol>
+</section>
+<section id="c.-challenge-payment-question" class="level3">
+<h3 class="anchored" data-anchor-id="c.-challenge-payment-question">C. Challenge Payment Question</h3>
+<p>The Foodie-Fi team wants you to create a new payments table for the year 2020 that includes amounts paid by each customer in the subscriptions table with the following requirements:</p>
+<ul>
+<li>monthly payments always occur on the same day of month as the original start_date of any monthly paid plan</li>
+<li>upgrades from basic to monthly or pro plans are reduced by the current paid amount in that month and start immediately</li>
+<li>upgrades from pro monthly to pro annual are paid at the end of the current billing period and also starts at the end of the month period</li>
+<li>once a customer churns they will no longer make payments</li>
+</ul>
+<p>Example outputs for this table might look like the following:</p>
+<table class="table">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 11%">
+<col style="width: 22%">
+<col style="width: 18%">
+<col style="width: 10%">
+<col style="width: 19%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>customer_id</th>
+<th>plan_id</th>
+<th>plan_name</th>
+<th>payment_date</th>
+<th>amount</th>
+<th>payment_order</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>1</td>
+<td>basic monthly</td>
+<td>2020-08-08</td>
+<td>9.90</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>1</td>
+<td>basic monthly</td>
+<td>2020-09-08</td>
+<td>9.90</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>1</td>
+<td>basic monthly</td>
+<td>2020-10-08</td>
+<td>9.90</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>1</td>
+<td>basic monthly</td>
+<td>2020-11-08</td>
+<td>9.90</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>1</td>
+<td>basic monthly</td>
+<td>2020-12-08</td>
+<td>9.90</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>3</td>
+<td>pro annual</td>
+<td>2020-09-27</td>
+<td>199.00</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>13</td>
+<td>1</td>
+<td>basic monthly</td>
+<td>2020-12-22</td>
+<td>9.90</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>15</td>
+<td>2</td>
+<td>pro monthly</td>
+<td>2020-03-24</td>
+<td>19.90</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>15</td>
+<td>2</td>
+<td>pro monthly</td>
+<td>2020-04-24</td>
+<td>19.90</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>16</td>
+<td>1</td>
+<td>basic monthly</td>
+<td>2020-06-07</td>
+<td>9.90</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>16</td>
+<td>1</td>
+<td>basic monthly</td>
+<td>2020-07-07</td>
+<td>9.90</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>16</td>
+<td>1</td>
+<td>basic monthly</td>
+<td>2020-08-07</td>
+<td>9.90</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td>16</td>
+<td>1</td>
+<td>basic monthly</td>
+<td>2020-09-07</td>
+<td>9.90</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td>16</td>
+<td>1</td>
+<td>basic monthly</td>
+<td>2020-10-07</td>
+<td>9.90</td>
+<td>5</td>
+</tr>
+<tr class="odd">
+<td>16</td>
+<td>3</td>
+<td>pro annual</td>
+<td>2020-10-21</td>
+<td>189.10</td>
+<td>6</td>
+</tr>
+<tr class="even">
+<td>18</td>
+<td>2</td>
+<td>pro monthly</td>
+<td>2020-07-13</td>
+<td>19.90</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>18</td>
+<td>2</td>
+<td>pro monthly</td>
+<td>2020-08-13</td>
+<td>19.90</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>18</td>
+<td>2</td>
+<td>pro monthly</td>
+<td>2020-09-13</td>
+<td>19.90</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td>18</td>
+<td>2</td>
+<td>pro monthly</td>
+<td>2020-10-13</td>
+<td>19.90</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td>18</td>
+<td>2</td>
+<td>pro monthly</td>
+<td>2020-11-13</td>
+<td>19.90</td>
+<td>5</td>
+</tr>
+<tr class="odd">
+<td>18</td>
+<td>2</td>
+<td>pro monthly</td>
+<td>2020-12-13</td>
+<td>19.90</td>
+<td>6</td>
+</tr>
+<tr class="even">
+<td>19</td>
+<td>2</td>
+<td>pro monthly</td>
+<td>2020-06-29</td>
+<td>19.90</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>19</td>
+<td>2</td>
+<td>pro monthly</td>
+<td>2020-07-29</td>
+<td>19.90</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>19</td>
+<td>3</td>
+<td>pro annual</td>
+<td>2020-08-29</td>
+<td>199.00</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="d.-outside-the-box-questions" class="level3">
+<h3 class="anchored" data-anchor-id="d.-outside-the-box-questions">D. Outside The Box Questions</h3>
+<p>The following are open ended questions which might be asked during a technical interview for this case study - there are no right or wrong answers, but answers that make sense from both a technical and a business perspective make an amazing impression!</p>
+<ol type="1">
+<li><p>How would you calculate the rate of growth for Foodie-Fi?</p></li>
+<li><p>What key metrics would you recommend Foodie-Fi management to track over time to assess performance of their overall business?</p></li>
+<li><p>What are some key customer journeys or experiences that you would analyse further to improve customer retention?</p></li>
+<li><p>If the Foodie-Fi team were to create an exit survey shown to customers who wish to cancel their subscription, what questions would you include in the survey?</p></li>
+<li><p>What business levers could the Foodie-Fi team use to reduce the customer churn rate? How would you validate the effectiveness of your ideas?</p></li>
+</ol>
+</section>
+</section>
+<section id="lets-start-solving-them." class="level2">
+<h2 class="anchored" data-anchor-id="lets-start-solving-them.">Let’s start solving them.</h2>
+<section id="a.-customer-journey-1" class="level3">
+<h3 class="anchored" data-anchor-id="a.-customer-journey-1">A. Customer Journey</h3>
+<p>Based off the 8 sample customers provided in the sample from the subscriptions table, write a brief description about each customer’s onboarding journey.</p>
+<p>Try to keep it as short as possible - you may also want to run some sort of join to make your explanations a bit easier!</p>
+<p>SQL Query:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    S.customer_id, P.plan_name, P.price, S.start_date</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> Subscriptions <span class="kw">AS</span> S</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> Plans <span class="kw">AS</span> P <span class="kw">ON</span> P.plan_id <span class="op">=</span> S.plan_id</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> customer_id <span class="kw">IN</span> (<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>customer_id</th>
+<th>plan_name</th>
+<th>price</th>
+<th>start_date</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>trial</td>
+<td>0.00</td>
+<td>2020-08-01</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>basic monthly</td>
+<td>9.90</td>
+<td>2020-08-08</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>trial</td>
+<td>0.00</td>
+<td>2020-09-20</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>pro annual</td>
+<td>199.00</td>
+<td>2020-09-27</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>trial</td>
+<td>0.00</td>
+<td>2020-01-13</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>basic monthly</td>
+<td>9.90</td>
+<td>2020-01-20</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>trial</td>
+<td>0.00</td>
+<td>2020-01-17</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>basic monthly</td>
+<td>9.90</td>
+<td>2020-01-24</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>churn</td>
+<td></td>
+<td>2020-04-21</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>trial</td>
+<td>0.00</td>
+<td>2020-08-03</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>basic monthly</td>
+<td>9.90</td>
+<td>2020-08-10</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>trial</td>
+<td>0.00</td>
+<td>2020-12-23</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td>basic monthly</td>
+<td>9.90</td>
+<td>2020-12-30</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>churn</td>
+<td></td>
+<td>2021-02-26</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>trial</td>
+<td>0.00</td>
+<td>2020-02-05</td>
+</tr>
+<tr class="even">
+<td>7</td>
+<td>basic monthly</td>
+<td>9.90</td>
+<td>2020-02-12</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>pro monthly</td>
+<td>19.90</td>
+<td>2020-05-22</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>trial</td>
+<td>0.00</td>
+<td>2020-06-11</td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td>basic monthly</td>
+<td>9.90</td>
+<td>2020-06-18</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>pro monthly</td>
+<td>19.90</td>
+<td>2020-08-03</td>
+</tr>
+</tbody>
+</table>
+<p>Customer 1 signed up on ‘2020-08-01’ for free-trial and on ‘2020-08-08’ customer took the basic monthly plan as the system automatically upgrades to pro monthly plan.</p>
+<p>Customer 2 signed up on ‘2020-09-20’ for free trial and on ‘2020-09-27’ customer upgraded to pro annual subscription.</p>
+<p>Customer 3 signed up on ‘2020-01-13’ for free trial and on ‘2020-01-20’ customer took the basic monthly plan instead of going for the pro monthly plan as what system automatically upgrades to.</p>
+<p>Customer 4 signed up on ‘2020-01-17’ for free trial, on ‘2020-01-24’ customer took the basic monthly plan and then churned out on ‘2020-0421’ (after 3 months of free-trial).</p>
+<p>Customer 5 signed up on ‘2020-08-03’ for free-trial and on ‘2020-08-10’ customer took the basic monthly plan instead of going for the pro monthly plan as what system automatically upgrades to.</p>
+<p>Customer 6 signed up on ‘2020-12-23’ for free trial, on ‘2020-12-30’ customer took the basic monthly plan and then churned out on ‘2021-02-26’ (after 2 months of free-trial).</p>
+<p>Customer 7 signed up on ‘2020-02-05’ for free-trial, on ‘2020-02-12’ customer took the basic monthly plan and then using the basic monthly plan for 3 months upgraded his plan to pro monthly on ‘2020-05-22’.</p>
+<p>Same goes to customer 8, customer signed up on ‘2020-06-11’ for free-trial, on ‘2020-06-18’ customer took the basic monthly plan and then using the basic monthly plan for 2 months upgraded his plan to pro monthly on ‘2020-08-03’.</p>
+</section>
+</section>
+<section id="b.-data-analysis-questions-1" class="level2">
+<h2 class="anchored" data-anchor-id="b.-data-analysis-questions-1">B. Data Analysis Questions</h2>
+<section id="how-many-customers-has-foodie-fi-ever-had" class="level3">
+<h3 class="anchored" data-anchor-id="how-many-customers-has-foodie-fi-ever-had">1. How many customers has Foodie-Fi ever had?</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> customer_id) <span class="kw">AS</span> num_customers</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> SUBSCRIPTIONS;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>num_customers</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1000</td>
+</tr>
+</tbody>
+</table>
+<section id="insights-number-of-customers-in-foodie-fi" class="level4">
+<h4 class="anchored" data-anchor-id="insights-number-of-customers-in-foodie-fi">Insights: Number of Customers in Foodie-Fi</h4>
+<ol type="1">
+<li><p><strong>Customer Acquisition/Total Number of Customers</strong>:</p>
+<ul>
+<li>The platform has successfully onboarded 1000 customers, indicating a healthy level of customer acquisition.</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="what-is-the-monthly-distribution-of-trial-plan-start_date-values-for-our-dataset---use-the-start-of-the-month-as-the-group-by-value." class="level3">
+<h3 class="anchored" data-anchor-id="what-is-the-monthly-distribution-of-trial-plan-start_date-values-for-our-dataset---use-the-start-of-the-month-as-the-group-by-value.">2. What is the monthly distribution of trial plan start_date values for our dataset - use the start of the month as the group by value.</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">MONTH</span>(S.start_date) <span class="kw">AS</span> month_number,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    MONTHNAME(S.start_date) <span class="kw">AS</span> month_name,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">COUNT</span>(S.customer_id) <span class="kw">AS</span> customer_cnt</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> subscriptions <span class="kw">AS</span> S</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> plans <span class="kw">AS</span> P <span class="kw">ON</span> S.plan_id <span class="op">=</span> P.plan_id</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> P.plan_name <span class="op">=</span> <span class="st">'trial'</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> month_number, month_name</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> <span class="dt">MONTH</span>(S.start_date);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>month_number</th>
+<th>month_name</th>
+<th>customer_cnt</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>January</td>
+<td>88</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>February</td>
+<td>68</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>March</td>
+<td>94</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>April</td>
+<td>81</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>May</td>
+<td>88</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>June</td>
+<td>79</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>July</td>
+<td>89</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>August</td>
+<td>88</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>September</td>
+<td>87</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>October</td>
+<td>79</td>
+</tr>
+<tr class="odd">
+<td>11</td>
+<td>November</td>
+<td>75</td>
+</tr>
+<tr class="even">
+<td>12</td>
+<td>December</td>
+<td>84</td>
+</tr>
+</tbody>
+</table>
+<section id="insights-monthly-distribution-of-trial-plan-start-dates" class="level4">
+<h4 class="anchored" data-anchor-id="insights-monthly-distribution-of-trial-plan-start-dates">Insights: Monthly Distribution of Trial Plan Start Dates</h4>
+<ol type="1">
+<li><p><strong>Monthly Breakdown</strong>:</p>
+<ul>
+<li>The number of customers starting trial plans shows variations across different months.</li>
+<li>Months like March, July, and August witnessed relatively higher numbers of trial plan initiations.</li>
+<li>The distribution highlights potential seasonal patterns or promotional activities that may have influenced trial plan sign-ups.</li>
+<li>Understanding the monthly distribution helps in identifying trends and seasonality in customer acquisition.</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="what-plan-start_date-values-occur-after-the-year-2020-for-our-dataset-show-the-breakdown-by-count-of-events-for-each-plan_name." class="level3">
+<h3 class="anchored" data-anchor-id="what-plan-start_date-values-occur-after-the-year-2020-for-our-dataset-show-the-breakdown-by-count-of-events-for-each-plan_name.">3. What plan start_date values occur after the year 2020 for our dataset? Show the breakdown by count of events for each plan_name.</h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    P.plan_name,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">COUNT</span>(S.customer_id) <span class="kw">AS</span> customer_cnt</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> subscriptions <span class="kw">AS</span> S</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> plans <span class="kw">AS</span> P <span class="kw">ON</span> S.plan_id <span class="op">=</span> P.plan_id</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> <span class="dt">YEAR</span>(S.start_date) <span class="op">&gt;</span> <span class="dv">2020</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> P.plan_name</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> P.plan_name;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>plan_name</th>
+<th>customer_cnt</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>basic monthly</td>
+<td>8</td>
+</tr>
+<tr class="even">
+<td>churn</td>
+<td>71</td>
+</tr>
+<tr class="odd">
+<td>pro annual</td>
+<td>63</td>
+</tr>
+<tr class="even">
+<td>pro monthly</td>
+<td>60</td>
+</tr>
+</tbody>
+</table>
+<section id="insights-plan-start-dates-after-2020" class="level4">
+<h4 class="anchored" data-anchor-id="insights-plan-start-dates-after-2020">Insights: Plan Start Dates after 2020</h4>
+<ol type="1">
+<li><p><strong>Breakdown by Plan Name</strong>:</p>
+<ul>
+<li>Basic Monthly: 8 events started after 2020 for the basic monthly plan.</li>
+<li>Churn: There are 71 churn events recorded after 2020.</li>
+<li>Pro Annual: 63 customers started their pro annual plans after 2020.</li>
+<li>Pro Monthly: 60 customers initiated their pro monthly plans after 2020.</li>
+</ul></li>
+<li><p><strong>Observations</strong>:</p>
+<ul>
+<li>The majority of events after 2020 are churn events, indicating customers canceling their subscriptions.</li>
+<li>Pro annual and pro monthly plans also have significant post-2020 start dates, suggesting continued subscription renewals and new sign-ups.</li>
+<li>Monitoring churn rates and understanding the reasons behind churn events is crucial for retaining customers.</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="what-is-the-customer-count-and-percentage-of-customers-who-have-churned-rounded-to-1-decimal-place" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-the-customer-count-and-percentage-of-customers-who-have-churned-rounded-to-1-decimal-place">4. What is the customer count and percentage of customers who have churned rounded to 1 decimal place?</h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> S.customer_id) <span class="kw">AS</span> churn_cnt,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ROUND</span>(<span class="fl">100.0</span> <span class="op">*</span> <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> S.customer_id)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        <span class="op">/</span>(<span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> subscriptions.customer_id)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>            <span class="kw">FROM</span> foodie_fi.subscriptions),<span class="dv">1</span>) <span class="kw">AS</span> churn_percentage</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> subscriptions <span class="kw">AS</span> S</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> plans <span class="kw">AS</span> P</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="kw">ON</span> S.plan_id <span class="op">=</span> P.plan_id</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> P.plan_name <span class="op">=</span> <span class="st">'churn'</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>churn_cnt</th>
+<th>churn_percentage</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>307</td>
+<td>30.7</td>
+</tr>
+</tbody>
+</table>
+<section id="insights-churn-rate-analysis" class="level4">
+<h4 class="anchored" data-anchor-id="insights-churn-rate-analysis">Insights: Churn Rate Analysis</h4>
+<ol type="1">
+<li><p><strong>Churn Count and Percentage</strong>:</p>
+<ul>
+<li>Churn Count: The total number of customers who have churned is 307.</li>
+<li>Churn Percentage: The churn rate, rounded to one decimal place, is 30.7%.</li>
+</ul></li>
+<li><p><strong>Observations</strong>:</p>
+<ul>
+<li>Churn is a significant factor impacting Foodie-Fi’s customer base, with almost one-third of customers canceling their subscriptions.</li>
+<li>Understanding the reasons behind churn and implementing strategies to reduce it is essential for maintaining a stable and growing subscriber base.</li>
+</ul></li>
+<li><p><strong>Implications</strong>:</p>
+<ul>
+<li>Monitoring and analyzing churn metrics regularly is crucial for identifying trends and implementing proactive measures to mitigate churn.</li>
+<li>Implementing retention strategies such as personalized offers, improved customer support, and content recommendations can help reduce churn and improve customer satisfaction.</li>
+<li>Continuous evaluation of churn metrics and adjustment of retention strategies based on insights gained will be essential for long-term business success.</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="how-many-customers-have-churned-straight-after-their-initial-free-trial---what-percentage-is-this-rounded-to-the-nearest-whole-number" class="level3">
+<h3 class="anchored" data-anchor-id="how-many-customers-have-churned-straight-after-their-initial-free-trial---what-percentage-is-this-rounded-to-the-nearest-whole-number">5. How many customers have churned straight after their initial free trial - what percentage is this rounded to the nearest whole number?</h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> next_plan_cte <span class="kw">AS</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    (<span class="kw">SELECT</span> <span class="op">*</span>, <span class="fu">LEAD</span>(plan_id, <span class="dv">1</span>) <span class="kw">OVER</span> (<span class="kw">PARTITION</span> <span class="kw">BY</span> customer_id <span class="kw">ORDER</span> <span class="kw">BY</span> start_date) <span class="kw">AS</span> next_plan</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">FROM</span> subscriptions),</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    churners <span class="kw">AS</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        (<span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> next_plan_cte</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>            <span class="kw">WHERE</span> next_plan<span class="op">=</span><span class="dv">4</span> <span class="kw">AND</span> plan_id <span class="op">=</span> <span class="dv">0</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> <span class="fu">COUNT</span>(customer_id) <span class="kw">AS</span> <span class="st">'churners_after_trail'</span>,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        <span class="fu">ROUND</span>(<span class="fl">100.0</span> <span class="op">*</span> <span class="fu">COUNT</span>(customer_id)<span class="op">/</span>(<span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> customer_id) <span class="kw">AS</span> <span class="st">'distinct_customers'</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>                <span class="kw">FROM</span> subscriptions),<span class="dv">2</span>) <span class="kw">AS</span> <span class="st">'churn_percentage_after_trial'</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> churners;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>churners_cnt_after_trial</th>
+<th>churners_percentage_after_trial</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>92</td>
+<td>9.20</td>
+</tr>
+</tbody>
+</table>
+<section id="insights-churn-rate-after-free-trial" class="level4">
+<h4 class="anchored" data-anchor-id="insights-churn-rate-after-free-trial">Insights: Churn Rate after Free Trial</h4>
+<ol type="1">
+<li><p><strong>Churners after Free Trial</strong>:</p>
+<ul>
+<li>Churners Count after Trial: There are 92 customers who have churned immediately after their initial free trial period.</li>
+<li>Churn Percentage after Trial: The percentage of customers who churned after their free trial, rounded to the nearest whole number, is 9%.</li>
+</ul></li>
+<li><p><strong>Observations</strong>:</p>
+<ul>
+<li>The churn rate after the free trial period is a critical metric for understanding the effectiveness of the trial in converting users to paid subscribers.</li>
+<li>A churn rate of 9% suggests that a significant portion of customers are not converting to paid plans after their trial period.</li>
+</ul></li>
+<li><p><strong>Implications</strong>:</p>
+<ul>
+<li>Analyzing the reasons why customers churn after the trial period and addressing any pain points or barriers to subscription conversion is essential. -Implementing strategies to improve the trial experience, provide value during the trial period, and incentivize conversion to paid plans can help reduce churn after the trial.</li>
+<li>Continuous monitoring of churn metrics post-trial and iterating on trial offerings based on customer feedback and behavior will be crucial for improving conversion rates and overall subscriber retention.</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="what-is-the-number-and-percentage-of-customer-plans-after-their-initial-free-trial" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-the-number-and-percentage-of-customer-plans-after-their-initial-free-trial">6. What is the number and percentage of customer plans after their initial free trial?</h3>
+<div class="sourceCode" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> next_plan_cte <span class="kw">AS</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    (<span class="kw">SELECT</span> subscriptions.customer_id,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>        subscriptions.plan_id, plans.plan_name, start_date,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">LEAD</span>(subscriptions.plan_id, <span class="dv">1</span>) <span class="kw">OVER</span> (<span class="kw">PARTITION</span> <span class="kw">BY</span> customer_id <span class="kw">ORDER</span> <span class="kw">BY</span> start_date) <span class="kw">AS</span> next_plan</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">FROM</span> subscriptions</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">JOIN</span> plans <span class="kw">ON</span> subscriptions.plan_id <span class="op">=</span> plans.plan_id)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> next_plan_cte.plan_name,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">COUNT</span>(next_plan_cte.customer_id) <span class="kw">AS</span> customer_cnt,  <span class="co">-- Specify the table for clarity</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ROUND</span>(<span class="fl">100.0</span> <span class="op">*</span> <span class="fu">COUNT</span>(next_plan_cte.customer_id) <span class="op">/</span> (<span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> customer_id) <span class="kw">AS</span> distinct_customers <span class="kw">FROM</span> subscriptions), <span class="dv">2</span>) <span class="kw">AS</span> <span class="ot">"percentage"</span>  <span class="co">-- Use double quotes for aliases</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> next_plan_cte</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> next_plan_cte.plan_name <span class="op">!=</span> <span class="st">'trial'</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> next_plan_cte.plan_name;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>plan_name</th>
+<th>customer_cnt</th>
+<th>percentage</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>basic monthly</td>
+<td>546</td>
+<td>54.60</td>
+</tr>
+<tr class="even">
+<td>pro annual</td>
+<td>258</td>
+<td>25.80</td>
+</tr>
+<tr class="odd">
+<td>churn</td>
+<td>307</td>
+<td>30.70</td>
+</tr>
+<tr class="even">
+<td>pro monthly</td>
+<td>539</td>
+<td>53.90</td>
+</tr>
+</tbody>
+</table>
+<section id="insights-customer-plans-after-free-trial" class="level4">
+<h4 class="anchored" data-anchor-id="insights-customer-plans-after-free-trial">Insights: Customer Plans after Free Trial</h4>
+<ol type="1">
+<li><p><strong>Customer Plan Distribution</strong>:</p>
+<ul>
+<li>Basic Monthly: 546 customers (54.60%) opted for the Basic Monthly plan after their free trial.</li>
+<li>Pro Annual: 258 customers (25.80%) chose the Pro Annual plan after their free trial.</li>
+<li>Churn: 307 customers (30.70%) churned after their free trial, indicating that they did not continue with any paid subscription.</li>
+<li>Pro Monthly: 539 customers (53.90%) selected the Pro Monthly plan after their free trial.</li>
+</ul></li>
+<li><p><strong>Observations</strong>:</p>
+<ul>
+<li>The majority of customers opt for either the Basic Monthly or Pro Monthly plans after the free trial, accounting for approximately 54.60% and 53.90%, respectively.</li>
+<li>A significant portion of customers (25.80%) choose the Pro Annual plan, indicating a preference for longer-term commitments.</li>
+<li>The churn rate after the free trial is notably high, with 30.70% of customers opting out of any paid subscription.</li>
+</ul></li>
+<li><p><strong>Implications</strong>:</p>
+<ul>
+<li>Offering a variety of subscription plans caters to different customer preferences and financial capabilities.</li>
+<li>Understanding the reasons behind churn after the trial period is crucial for improving retention and conversion rates.</li>
+<li>Implementing targeted marketing strategies, personalized offers, and enhancing the value proposition for paid plans can help reduce churn and increase subscription conversions post-trial.</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="what-is-the-customer-count-and-percentage-breakdown-of-all-5-plan_name-values-at-2020-12-31" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-the-customer-count-and-percentage-breakdown-of-all-5-plan_name-values-at-2020-12-31">7. What is the customer count and percentage breakdown of all 5 plan_name values at 2020-12-31?</h3>
+<div class="sourceCode" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> activeSubscriptions <span class="kw">AS</span> (</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> S.customer_id, S.start_date, P.plan_name,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">LEAD</span>(S.start_date) <span class="kw">OVER</span> (<span class="kw">PARTITION</span> <span class="kw">BY</span> S.customer_id <span class="kw">ORDER</span> <span class="kw">BY</span> S.start_date) <span class="kw">AS</span> next_date</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> Plans <span class="kw">AS</span> P <span class="kw">JOIN</span> Subscriptions <span class="kw">AS</span> S</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="kw">ON</span> P.plan_id <span class="op">=</span> S.plan_id)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> A.plan_name, <span class="fu">COUNT</span>(A.customer_id) <span class="kw">AS</span> customer_count,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ROUND</span>(<span class="fl">100.0</span> <span class="op">*</span> (<span class="fu">COUNT</span>(A.customer_id))<span class="op">/</span>(<span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> customer_id) <span class="kw">FROM</span> Subscriptions),<span class="dv">2</span>) <span class="kw">AS</span> customer_percentage</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> activeSubscriptions <span class="kw">AS</span> A</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> (next_date <span class="kw">IS</span> <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="kw">AND</span> (A.start_date <span class="op">&lt;</span> <span class="st">'2020-12-31'</span> <span class="kw">AND</span> A.next_date <span class="op">&gt;</span> <span class="st">'2020-12-31'</span>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">OR</span> (A.start_date <span class="op">&lt;</span> <span class="st">'2020-12-31'</span> <span class="kw">AND</span> A.next_date <span class="kw">IS</span> <span class="kw">NULL</span>))</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> A.plan_name</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> A.plan_name;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>plan_name</th>
+<th>customer_count</th>
+<th>customer_percentage</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>basic monthly</td>
+<td>224</td>
+<td>22.40</td>
+</tr>
+<tr class="even">
+<td>churn</td>
+<td>235</td>
+<td>23.50</td>
+</tr>
+<tr class="odd">
+<td>pro annual</td>
+<td>195</td>
+<td>19.50</td>
+</tr>
+<tr class="even">
+<td>pro monthly</td>
+<td>326</td>
+<td>32.60</td>
+</tr>
+<tr class="odd">
+<td>trial</td>
+<td>19</td>
+<td>1.90</td>
+</tr>
+</tbody>
+</table>
+<section id="insights-customer-breakdown-by-plan-at-2020-12-31" class="level4">
+<h4 class="anchored" data-anchor-id="insights-customer-breakdown-by-plan-at-2020-12-31">Insights: Customer Breakdown by Plan at 2020-12-31</h4>
+<ol type="1">
+<li><p><strong>Customer Distribution</strong>:</p>
+<ul>
+<li>Basic Monthly: There are 224 customers (22.40%) subscribed to the Basic Monthly plan.</li>
+<li>Churn: 235 customers (23.50%) have churned, meaning they no longer have an active subscription.</li>
+<li>Pro Annual: 195 customers (19.50%) are subscribed to the Pro Annual plan.</li>
+<li>Pro Monthly: 326 customers (32.60%) have opted for the Pro Monthly plan.</li>
+<li>Trial: A small portion of customers, 19 (1.90%), are still in the trial phase as of December 31, 2020.</li>
+</ul></li>
+<li><p><strong>Observations</strong>:</p>
+<ul>
+<li>The Pro Monthly plan has the highest customer count at 32.60%, indicating its popularity among subscribers.</li>
+<li>Basic Monthly and Churn plans have relatively similar customer counts, with 22.40% and 23.50%, respectively.</li>
+<li>The Pro Annual plan has a lower customer count compared to Pro Monthly but still maintains a significant portion at 19.50%.</li>
+<li>The Trial phase has a minimal impact on the customer base, with only 1.90% of customers still in the trial period.</li>
+</ul></li>
+<li><p><strong>Implications</strong>:</p>
+<ul>
+<li>Understanding the distribution of customers across different plans helps in evaluating the effectiveness of pricing strategies and plan offerings.</li>
+<li>Analyzing churn rates alongside active subscriptions provides insights into customer retention and satisfaction levels.</li>
+<li>Targeted marketing and retention efforts can be tailored based on plan preferences and customer behavior to maximize subscription revenue and minimize churn.</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="how-many-customers-have-upgraded-to-an-annual-plan-in-2020" class="level3">
+<h3 class="anchored" data-anchor-id="how-many-customers-have-upgraded-to-an-annual-plan-in-2020">8. How many customers have upgraded to an annual plan in 2020?</h3>
+<div class="sourceCode" id="cb10"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">COUNT</span>(S.customer_id) <span class="kw">AS</span> num_of_customers</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> subscriptions <span class="kw">AS</span> S</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> plan_id <span class="op">=</span> <span class="dv">3</span> <span class="kw">AND</span> <span class="dt">YEAR</span>(start_date) <span class="op">=</span> <span class="st">'2020'</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>num_of_customers</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>195</td>
+</tr>
+</tbody>
+</table>
+<section id="insights-customer-upgrades-to-annual-plan-in-2020" class="level4">
+<h4 class="anchored" data-anchor-id="insights-customer-upgrades-to-annual-plan-in-2020">Insights: Customer Upgrades to Annual Plan in 2020</h4>
+<ol type="1">
+<li><p><strong>Number of Upgrades</strong>:</p>
+<ul>
+<li>Annual Plan Upgrades: In 2020, a total of 195 customers upgraded to the annual subscription plan.</li>
+</ul></li>
+<li><p><strong>Observations</strong>:</p>
+<ul>
+<li>The annual subscription plan attracted a considerable number of customers, indicating its appeal and value proposition.</li>
+</ul></li>
+<li><p><strong>Implications</strong>:</p>
+<ul>
+<li>The popularity of the annual plan upgrade suggests that customers are interested in committing to Foodie-Fi for a longer duration, possibly due to cost savings or enhanced benefits offered by the annual subscription.</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="how-many-days-on-average-does-it-take-for-a-customer-to-an-annual-plan-from-the-day-they-join-foodie-fi" class="level3">
+<h3 class="anchored" data-anchor-id="how-many-days-on-average-does-it-take-for-a-customer-to-an-annual-plan-from-the-day-they-join-foodie-fi">9. How many days on average does it take for a customer to an annual plan from the day they join Foodie-Fi?</h3>
+<div class="sourceCode" id="cb11"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> trial_cte <span class="kw">AS</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>(<span class="kw">SELECT</span> customer_id, start_date <span class="kw">AS</span> trial_date <span class="kw">FROM</span> subscriptions <span class="kw">WHERE</span> plan_id <span class="op">=</span> <span class="dv">0</span>),</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    annual_cte <span class="kw">AS</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a> (<span class="kw">SELECT</span> customer_id, start_date <span class="kw">AS</span> annual_date <span class="kw">FROM</span> subscriptions <span class="kw">WHERE</span> plan_id <span class="op">=</span> <span class="dv">3</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">ROUND</span>(<span class="fu">AVG</span>(DATEDIFF(annual_date,trial_date)),<span class="dv">0</span>) <span class="kw">AS</span> <span class="st">'avg_num_of_days'</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> trial_cte <span class="kw">JOIN</span> annual_cte <span class="kw">ON</span> trial_cte.customer_id <span class="op">=</span> annual_cte.customer_id;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>avg_num_of_days</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>105</td>
+</tr>
+</tbody>
+</table>
+<section id="insights-average-time-to-upgrade-to-annual-plan" class="level4">
+<h4 class="anchored" data-anchor-id="insights-average-time-to-upgrade-to-annual-plan">Insights: Average Time to Upgrade to Annual Plan</h4>
+<ol type="1">
+<li><p><strong>Average Time to Upgrade</strong>:</p>
+<ul>
+<li>Average Duration: On average, it takes approximately 105 days for customers to upgrade from the trial plan to an annual subscription plan.</li>
+</ul></li>
+<li><p><strong>Observations</strong>:</p>
+<ul>
+<li>Customers typically take over three months to transition from the trial plan to the annual subscription, indicating a deliberative decision-making process or possibly a trial period evaluation.</li>
+</ul></li>
+<li><p><strong>Implications</strong>:</p>
+<ul>
+<li>Foodie-Fi can implement targeted campaigns or incentives to prompt trial users to upgrade sooner, thereby increasing conversion rates and revenue. Additionally, personalized communication or offers tailored to users’ preferences can expedite the upgrade process.</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="can-you-further-breakdown-this-average-value-into-30-day-periods-i.e.-0-30-days-31-60-days-etc" class="level3">
+<h3 class="anchored" data-anchor-id="can-you-further-breakdown-this-average-value-into-30-day-periods-i.e.-0-30-days-31-60-days-etc">10. Can you further breakdown this average value into 30 day periods (i.e.&nbsp;0-30 days, 31-60 days etc)</h3>
+<div class="sourceCode" id="cb12"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> trial_plan <span class="kw">AS</span> (</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">SELECT</span> customer_id, start_date <span class="kw">AS</span> trial_date</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> foodie_fi.subscriptions <span class="kw">WHERE</span> plan_id <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>), annual_plan <span class="kw">AS</span> (</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">SELECT</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    customer_id, start_date <span class="kw">AS</span> annual_date</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> foodie_fi.subscriptions <span class="kw">WHERE</span> plan_id <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>), bins <span class="kw">AS</span> (</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- bins CTE: Put customers in 30-day buckets based on the average number of days taken to upgrade to a pro annual plan.</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">SELECT</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">FLOOR</span>((DATEDIFF(annual.annual_date, trial.trial_date) <span class="op">-</span> <span class="dv">1</span>) <span class="op">/</span> <span class="dv">30</span>) <span class="op">+</span> <span class="dv">1</span> <span class="kw">AS</span> avg_days_to_upgrade</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> trial_plan <span class="kw">AS</span> trial</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  <span class="kw">JOIN</span> annual_plan <span class="kw">AS</span> annual</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">ON</span> trial.customer_id <span class="op">=</span> annual.customer_id</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">CONCAT</span>(((avg_days_to_upgrade <span class="op">-</span> <span class="dv">1</span>) <span class="op">*</span> <span class="dv">30</span> <span class="op">+</span> <span class="dv">1</span>), <span class="st">' - '</span>, (avg_days_to_upgrade <span class="op">*</span> <span class="dv">30</span>), <span class="st">' days'</span>) <span class="kw">AS</span> day_period_bucket,</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> num_of_customers</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> bins</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> avg_days_to_upgrade</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> avg_days_to_upgrade;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>day_period_bucket</th>
+<th>num_of_customers</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1 - 30 days</td>
+<td>49</td>
+</tr>
+<tr class="even">
+<td>31 - 60 days</td>
+<td>24</td>
+</tr>
+<tr class="odd">
+<td>61 - 90 days</td>
+<td>34</td>
+</tr>
+<tr class="even">
+<td>91 - 120 days</td>
+<td>35</td>
+</tr>
+<tr class="odd">
+<td>121 - 150 days</td>
+<td>42</td>
+</tr>
+<tr class="even">
+<td>151 - 180 days</td>
+<td>36</td>
+</tr>
+<tr class="odd">
+<td>181 - 210 days</td>
+<td>26</td>
+</tr>
+<tr class="even">
+<td>211 - 240 days</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td>241 - 270 days</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td>271 - 300 days</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>301 - 330 days</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>331 - 360 days</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<section id="insights-breakdown-of-average-time-to-upgrade-by-30-day-periods" class="level4">
+<h4 class="anchored" data-anchor-id="insights-breakdown-of-average-time-to-upgrade-by-30-day-periods">Insights: Breakdown of Average Time to Upgrade by 30-Day Periods</h4>
+<ol type="1">
+<li><p><strong>Key Findings</strong>:</p>
+<ul>
+<li>Initial Upgrade Activity: The majority of customers (49) upgrade within the first month (1 - 30 days) after their trial period ends, indicating prompt conversion for a significant portion of users.</li>
+<li>Gradual Adoption: A notable number of customers continue to upgrade gradually over time, with 24 customers upgrading between 31 to 60 days, and 34 between 61 to 90 days.</li>
+<li>Steady Conversion: Conversion remains consistent over time, with a relatively even distribution of customers upgrading across subsequent 30-day intervals, until a decline observed after 180 days.</li>
+</ul></li>
+<li><p><strong>Observations</strong>:</p>
+<ul>
+<li>Quick Conversions: The early spike in upgrades suggests that a substantial portion of customers are convinced of the value proposition shortly after their trial ends.</li>
+<li>Longer Adoption Period: Some customers take longer to convert, possibly indicating a longer evaluation or decision-making process, necessitating ongoing engagement strategies during this period.</li>
+<li>Late Adopters: A few customers upgrade much later, highlighting the importance of persistent engagement efforts to encourage conversion even beyond the initial months.</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="how-many-customers-downgraded-from-a-pro-monthly-to-a-basic-monthly-plan-in-2020" class="level3">
+<h3 class="anchored" data-anchor-id="how-many-customers-downgraded-from-a-pro-monthly-to-a-basic-monthly-plan-in-2020">11. How many customers downgraded from a pro monthly to a basic monthly plan in 2020?</h3>
+<div class="sourceCode" id="cb13"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> downgraded_cte <span class="kw">AS</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>(<span class="kw">SELECT</span> customer_id, plan_id, start_date,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">LEAD</span>(plan_id, <span class="dv">1</span>) <span class="kw">OVER</span> (<span class="kw">PARTITION</span> <span class="kw">BY</span> customer_id <span class="kw">ORDER</span> <span class="kw">BY</span> start_date) <span class="kw">AS</span> next_plan</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> subscriptions)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">COUNT</span>(customer_id)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> downgraded_cte</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> plan_id <span class="op">=</span> <span class="st">'2'</span> <span class="kw">and</span> next_plan <span class="op">=</span> <span class="st">'1'</span> <span class="kw">AND</span> <span class="dt">YEAR</span>(start_date);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>customer_cnt</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<section id="insights-downgrade-from-pro-monthly-to-basic-monthly-in-2020" class="level4">
+<h4 class="anchored" data-anchor-id="insights-downgrade-from-pro-monthly-to-basic-monthly-in-2020">Insights: Downgrade from Pro Monthly to Basic Monthly in 2020</h4>
+<ol type="1">
+<li><p><strong>Key Finding</strong>:</p>
+<ul>
+<li>No Downgrades Detected: There were no instances of customers downgrading from the pro monthly plan to the basic monthly plan in 2020, indicating a retention of pro monthly subscribers or a lack of documented downgrades during this period.</li>
+</ul></li>
+</ol>
+</section>
+</section>
+</section>
+<section id="c.-challenge-payment-question-1" class="level2">
+<h2 class="anchored" data-anchor-id="c.-challenge-payment-question-1">C. Challenge Payment Question</h2>
+<p>The Foodie-Fi team wants you to create a new payments table for the year 2020 that includes amounts paid by each customer in the subscriptions table with the following requirements:</p>
+<ul>
+<li>monthly payments always occur on the same day of month as the original start_date of any monthly paid plan</li>
+<li>upgrades from basic to monthly or pro plans are reduced by the current paid amount in that month and start immediately</li>
+<li>upgrades from pro monthly to pro annual are paid at the end of the current billing period and also starts at the end of the month period</li>
+<li>once a customer churns they will no longer make payments</li>
+</ul>
+<p>Example outputs for this table might look like the following:</p>
+<table class="table">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 11%">
+<col style="width: 20%">
+<col style="width: 19%">
+<col style="width: 9%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>customer_id</th>
+<th>plan_id</th>
+<th>plan_name</th>
+<th>payment_date</th>
+<th>amount</th>
+<th>payment_order</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>1</td>
+<td>basic monthly</td>
+<td>2020-08-08</td>
+<td>9.90</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>1</td>
+<td>basic monthly</td>
+<td>2020-09-08</td>
+<td>9.90</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>1</td>
+<td>basic monthly</td>
+<td>2020-10-08</td>
+<td>9.90</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>1</td>
+<td>basic monthly</td>
+<td>2020-11-08</td>
+<td>9.90</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>1</td>
+<td>basic monthly</td>
+<td>2020-12-08</td>
+<td>9.90</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>3</td>
+<td>pro annual</td>
+<td>2020-09-27</td>
+<td>199.00</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>13</td>
+<td>1</td>
+<td>basic monthly</td>
+<td>2020-12-22</td>
+<td>9.90</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>15</td>
+<td>2</td>
+<td>pro monthly</td>
+<td>2020-03-24</td>
+<td>19.90</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>15</td>
+<td>2</td>
+<td>pro monthly</td>
+<td>2020-04-24</td>
+<td>19.90</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>16</td>
+<td>1</td>
+<td>basic monthly</td>
+<td>2020-06-07</td>
+<td>9.90</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>16</td>
+<td>1</td>
+<td>basic monthly</td>
+<td>2020-07-07</td>
+<td>9.90</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>16</td>
+<td>1</td>
+<td>basic monthly</td>
+<td>2020-08-07</td>
+<td>9.90</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td>16</td>
+<td>1</td>
+<td>basic monthly</td>
+<td>2020-09-07</td>
+<td>9.90</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td>16</td>
+<td>1</td>
+<td>basic monthly</td>
+<td>2020-10-07</td>
+<td>9.90</td>
+<td>5</td>
+</tr>
+<tr class="odd">
+<td>16</td>
+<td>3</td>
+<td>pro annual</td>
+<td>2020-10-21</td>
+<td>189.10</td>
+<td>6</td>
+</tr>
+<tr class="even">
+<td>18</td>
+<td>2</td>
+<td>pro monthly</td>
+<td>2020-07-13</td>
+<td>19.90</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>18</td>
+<td>2</td>
+<td>pro monthly</td>
+<td>2020-08-13</td>
+<td>19.90</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>18</td>
+<td>2</td>
+<td>pro monthly</td>
+<td>2020-09-13</td>
+<td>19.90</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td>18</td>
+<td>2</td>
+<td>pro monthly</td>
+<td>2020-10-13</td>
+<td>19.90</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td>18</td>
+<td>2</td>
+<td>pro monthly</td>
+<td>2020-11-13</td>
+<td>19.90</td>
+<td>5</td>
+</tr>
+<tr class="odd">
+<td>18</td>
+<td>2</td>
+<td>pro monthly</td>
+<td>2020-12-13</td>
+<td>19.90</td>
+<td>6</td>
+</tr>
+<tr class="even">
+<td>19</td>
+<td>2</td>
+<td>pro monthly</td>
+<td>2020-06-29</td>
+<td>19.90</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>19</td>
+<td>2</td>
+<td>pro monthly</td>
+<td>2020-07-29</td>
+<td>19.90</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>19</td>
+<td>3</td>
+<td>pro annual</td>
+<td>2020-08-29</td>
+<td>199.00</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb14"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Use a recursive CTE to increment rows for all monthly paid plans until customers changing the plan, except 'pro annual'</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> RECURSIVE dateRecursion <span class="kw">AS</span> (</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>        s.customer_id, s.plan_id, p.plan_name, s.start_date <span class="kw">AS</span> payment_date,</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>        <span class="co">-- column last_date: last day of the current plan</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">CASE</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>            <span class="co">-- if a customer kept using the current plan, last_date = '2020-12-31'</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>            <span class="cf">WHEN</span> <span class="fu">LEAD</span>(s.start_date) <span class="kw">OVER</span>(<span class="kw">PARTITION</span> <span class="kw">BY</span> s.customer_id <span class="kw">ORDER</span> <span class="kw">BY</span> s.start_date) <span class="kw">IS</span> <span class="kw">NULL</span> <span class="cf">THEN</span> <span class="st">'2020-12-31'</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>            <span class="co">-- if a customer changed the plan, last_date = (month difference between start_date and changing date) + start_date</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>            <span class="cf">ELSE</span> DATE_ADD(</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>                start_date,</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>                <span class="dt">INTERVAL</span> DATEDIFF(<span class="fu">LEAD</span>(s.start_date) <span class="kw">OVER</span>(<span class="kw">PARTITION</span> <span class="kw">BY</span> s.customer_id <span class="kw">ORDER</span> <span class="kw">BY</span> s.start_date), start_date) <span class="dt">MONTH</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>            ) <span class="cf">END</span> <span class="kw">AS</span> last_date,</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>        p.price <span class="kw">AS</span> amount</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> subscriptions s</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">JOIN</span> plans p <span class="kw">ON</span> s.plan_id <span class="op">=</span> p.plan_id</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- exclude trials because they didn't generate payments</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span> p.plan_name <span class="kw">NOT</span> <span class="kw">IN</span> (<span class="st">'trial'</span>)</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>        <span class="kw">AND</span> <span class="dt">YEAR</span>(start_date) <span class="op">=</span> <span class="dv">2020</span></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>    <span class="kw">UNION</span> <span class="kw">ALL</span></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>        customer_id,</span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>        plan_id,</span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>        plan_name,</span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>        <span class="co">-- increment payment_date by monthly</span></span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>        DATE_ADD(payment_date, <span class="dt">INTERVAL</span> <span class="dv">1</span> <span class="dt">MONTH</span>) <span class="kw">AS</span> payment_date,</span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>        last_date,</span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>        amount</span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> dateRecursion</span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- stop incrementing when payment_date = last_date</span></span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span> DATE_ADD(payment_date, <span class="dt">INTERVAL</span> <span class="dv">1</span> <span class="dt">MONTH</span>) <span class="op">&lt;=</span> last_date</span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a>        <span class="kw">AND</span> plan_name <span class="op">!=</span> <span class="st">'pro annual'</span></span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a><span class="co">-- Create a new table [payments]</span></span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a>    customer_id,</span>
+<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a>    plan_id,</span>
+<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a>    plan_name,</span>
+<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a>    payment_date,</span>
+<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a>    amount,</span>
+<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ROW_NUMBER</span>() <span class="kw">OVER</span>(<span class="kw">PARTITION</span> <span class="kw">BY</span> customer_id <span class="kw">ORDER</span> <span class="kw">BY</span> payment_date) <span class="kw">AS</span> payment_order</span>
+<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> dateRecursion</span>
+<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a><span class="co">-- exclude churns</span></span>
+<span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> amount <span class="kw">IS</span> <span class="kw">NOT</span> <span class="kw">NULL</span></span>
+<span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> customer_id;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<table class="table">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 11%">
+<col style="width: 20%">
+<col style="width: 19%">
+<col style="width: 9%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>customer_id</th>
+<th>plan_id</th>
+<th>plan_name</th>
+<th>payment_date</th>
+<th>amount</th>
+<th>payment_order</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>1</td>
+<td>basic monthly</td>
+<td>2020-08-08</td>
+<td>9.90</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>1</td>
+<td>basic monthly</td>
+<td>2020-09-08</td>
+<td>9.90</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>1</td>
+<td>basic monthly</td>
+<td>2020-10-08</td>
+<td>9.90</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>1</td>
+<td>basic monthly</td>
+<td>2020-11-08</td>
+<td>9.90</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>1</td>
+<td>basic monthly</td>
+<td>2020-12-08</td>
+<td>9.90</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>3</td>
+<td>pro annual</td>
+<td>2020-09-27</td>
+<td>199.00</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>13</td>
+<td>1</td>
+<td>basic monthly</td>
+<td>2020-12-22</td>
+<td>9.90</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>15</td>
+<td>2</td>
+<td>pro monthly</td>
+<td>2020-03-24</td>
+<td>19.90</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>15</td>
+<td>2</td>
+<td>pro monthly</td>
+<td>2020-04-24</td>
+<td>19.90</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>16</td>
+<td>1</td>
+<td>basic monthly</td>
+<td>2020-06-07</td>
+<td>9.90</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>16</td>
+<td>1</td>
+<td>basic monthly</td>
+<td>2020-07-07</td>
+<td>9.90</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>16</td>
+<td>1</td>
+<td>basic monthly</td>
+<td>2020-08-07</td>
+<td>9.90</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td>16</td>
+<td>1</td>
+<td>basic monthly</td>
+<td>2020-09-07</td>
+<td>9.90</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td>16</td>
+<td>1</td>
+<td>basic monthly</td>
+<td>2020-10-07</td>
+<td>9.90</td>
+<td>5</td>
+</tr>
+<tr class="odd">
+<td>16</td>
+<td>3</td>
+<td>pro annual</td>
+<td>2020-10-21</td>
+<td>189.10</td>
+<td>6</td>
+</tr>
+<tr class="even">
+<td>18</td>
+<td>2</td>
+<td>pro monthly</td>
+<td>2020-07-13</td>
+<td>19.90</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>18</td>
+<td>2</td>
+<td>pro monthly</td>
+<td>2020-08-13</td>
+<td>19.90</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>18</td>
+<td>2</td>
+<td>pro monthly</td>
+<td>2020-09-13</td>
+<td>19.90</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td>18</td>
+<td>2</td>
+<td>pro monthly</td>
+<td>2020-10-13</td>
+<td>19.90</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td>18</td>
+<td>2</td>
+<td>pro monthly</td>
+<td>2020-11-13</td>
+<td>19.90</td>
+<td>5</td>
+</tr>
+<tr class="odd">
+<td>18</td>
+<td>2</td>
+<td>pro monthly</td>
+<td>2020-12-13</td>
+<td>19.90</td>
+<td>6</td>
+</tr>
+<tr class="even">
+<td>19</td>
+<td>2</td>
+<td>pro monthly</td>
+<td>2020-06-29</td>
+<td>19.90</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>19</td>
+<td>2</td>
+<td>pro monthly</td>
+<td>2020-07-29</td>
+<td>19.90</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>19</td>
+<td>3</td>
+<td>pro annual</td>
+<td>2020-08-29</td>
+<td>199.00</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="d.-outside-the-box-questions-1" class="level2">
+<h2 class="anchored" data-anchor-id="d.-outside-the-box-questions-1">D. Outside The Box Questions</h2>
+<p>The following are open ended questions which might be asked during a technical interview for this case study - there are no right or wrong answers, but answers that make sense from both a technical and a business perspective make an amazing impression!</p>
+<section id="how-would-you-calculate-the-rate-of-growth-for-foodie-fi" class="level3">
+<h3 class="anchored" data-anchor-id="how-would-you-calculate-the-rate-of-growth-for-foodie-fi">1. How would you calculate the rate of growth for Foodie-Fi?</h3>
+<p><strong>Answer:</strong></p>
+<p>To assess the rate of growth for Foodie-Fi, we should analyze the following multiple key indicators:</p>
+<ol type="1">
+<li><strong>Customer Base Growth</strong>:
+<ul>
+<li>Calculate the overall growth in the customer base over specific time periods (for instance, monthly or quarterly.),.</li>
+<li>Monitor the acquisition of new customers and the retention of the existing ones.</li>
+</ul></li>
+<li><strong>Subscription Plan Adoption</strong>:
+<ul>
+<li>Analyze the uptake of different subscription plans (Basic, Pro Monthly, Pro Annual) to understand the customer preferences.</li>
+<li>Evaluate the growth rate of Pro Plans compared to the overall customer base.</li>
+</ul></li>
+<li><strong>Churn Reduction</strong>:
+<ul>
+<li>Investigate the reduction in churn by assessing the number of customers downgrading or canceling their subscriptions.</li>
+<li>Calculate the churn rate and observe its trend over time.</li>
+</ul></li>
+<li><strong>Revenue Growth</strong>:
+<ul>
+<li>Monitor the revenue growth over time, by considering both the increase in the customer base and potential changes in subscription plans.</li>
+</ul></li>
+<li><strong>Conversion Rates</strong>:
+<ul>
+<li>Analyze the conversion rates from Trial users to Paid subscribers, providing insights into the effectiveness of the trial period in conversting users.</li>
+</ul></li>
+</ol>
+</section>
+<section id="what-key-metrics-would-you-recommend-foodie-fi-management-to-track-over-time-to-assess-performance-of-their-overall-business" class="level3">
+<h3 class="anchored" data-anchor-id="what-key-metrics-would-you-recommend-foodie-fi-management-to-track-over-time-to-assess-performance-of-their-overall-business">2. What key metrics would you recommend Foodie-Fi management to track over time to assess performance of their overall business?</h3>
+<p><strong>Answer:</strong></p>
+<p>To comprehensively assess the performance of Foodie-Fi, it is recommended to track the following metrics over time.</p>
+<ol type="1">
+<li><p><strong>Customer Base Growth</strong>:</p>
+<ul>
+<li>Monitor the overall growth or contraction of the customer base on a regular basis (for instance, monthly, or quarterly or annually).</li>
+</ul></li>
+<li><p><strong>Revenue Breakdown</strong>:</p>
+<ul>
+<li>Analyze the revenue streams from different subscription plans, with a focus on Pro plan customers. This breakdown helps understand the contribution of various plans to the overall revenue.</li>
+</ul></li>
+<li><p><strong>Churn Rate</strong>:</p>
+<ul>
+<li>Calculate and track the churn rate over time. Identifying patterns in customer attrition provides insights into service quality, and customer statisfaction and hence, increase in the customer base.</li>
+</ul></li>
+<li><p><strong>Customer Acquisition and Conversion Rates</strong>:</p>
+<ul>
+<li>Assess the effectiveness of marketing strategies by tracking customer acquisition rates. Additionally, monitor the conversion rates from tria to paid subscriptions.</li>
+</ul></li>
+<li><p><strong>Average Revenue Per User (ARPU)</strong>:</p>
+<ul>
+<li>Calculate the average revenue generated by each user to understand the averae contribution of each customers to the overall revenue.</li>
+</ul></li>
+</ol>
+</section>
+<section id="what-are-some-key-customer-journeys-or-experiences-that-you-would-analyse-further-to-improve-customer-retention" class="level3">
+<h3 class="anchored" data-anchor-id="what-are-some-key-customer-journeys-or-experiences-that-you-would-analyse-further-to-improve-customer-retention">3. What are some key customer journeys or experiences that you would analyse further to improve customer retention?</h3>
+<p><strong>Answer:</strong></p>
+<p>The key areas to understand the customer retention are the following ones:</p>
+<ol type="1">
+<li><p><strong>Plan Changes</strong>:</p>
+<ul>
+<li>Understand the specific triggers that lead the customers to changes their plans. This could involve analyzing the benefits they seek, such as unlimited streaming or offline access. Additionally, explore whether promotional offers or plan-specific features influences plan changes.</li>
+<li>Implement an exit survey strategy for users who either downgrade or cancel their plans. Collecting feedback directly from users can uncover nuanced insights into their decision making process.</li>
+</ul></li>
+<li><p><strong>Customer Support</strong>:</p>
+<ul>
+<li>We can identify the common queries, concerns, or issues faced by customers from the customer support interactions. Additionally track how effectively customer issues are resolved over time. This helps us understand if the customers are unhappy with the resolutions and our services, thereby leading them to churn out.</li>
+</ul></li>
+<li><p><strong>Content Preferences</strong>:</p>
+<ul>
+<li>Explore not only what customers are looking for but also gather insights into why certain content might not meet their expectations. Are there any programs that are not in the video library because of which customers are looking for? Conducting surveys of feedback sessions helps to understand specific content preferences and expectations.</li>
+</ul></li>
+<li><p><strong>Platform Comparison</strong>:</p>
+<ul>
+<li>Consider comparing Foodie-Fi with other platforms. Identify features, shows that competitors offer and where Foodie-Fi might lack. This competitive analysis can reveal opportunities for improvement. Additionally assess user perceptions of Foodie-Fi to competitors through surveys or reviews.</li>
+</ul></li>
+<li><p><strong>Personalized Recommendations</strong>:</p>
+<ul>
+<li>Understand how personalized recommendation can positively impact retention. Analyze successful cases where tailored content suggestions lead to increased engagement. Implement ML algorithms to enhance recommendation precision, ensuring users receive content aligned with their preferences.</li>
+<li>Implement a feedback mechanism for users to provide explicit feedback on recommended content. This can refine algorithms and enhance the accuracy of personalized suggestions.</li>
+</ul></li>
+</ol>
+</section>
+<section id="if-the-foodie-fi-team-were-to-create-an-exit-survey-shown-to-customers-who-wish-to-cancel-their-subscription-what-questions-would-you-include-in-the-survey" class="level3">
+<h3 class="anchored" data-anchor-id="if-the-foodie-fi-team-were-to-create-an-exit-survey-shown-to-customers-who-wish-to-cancel-their-subscription-what-questions-would-you-include-in-the-survey">4. If the Foodie-Fi team were to create an exit survey shown to customers who wish to cancel their subscription, what questions would you include in the survey?</h3>
+<p><strong>Answer:</strong></p>
+<p>Some valuable questions to include in the exit survey shown to customers who wish to cancel their subscription could be the following:</p>
+<ol type="1">
+<li><p>What did you like most about Foodie-Fi, and is there anything specific you would like to see changed or improved on the program?</p></li>
+<li><p>Are you satisfied with the current pricing of our plans?</p></li>
+<li><p>How would you rate your satisfaction with our customer support? If not entirely satisfied, please provide details on areas for improvement.</p></li>
+<li><p>Did you find the specific program you were looking for for in our Video Library? If not, could you share some details about the content you were seeking?</p></li>
+<li><p>What is the primary reason for canceling your subscription? (Include options related to content, pricing, customer service, etc.)</p></li>
+<li><p>Is there anything else you would like to share or any feedback that hasn’t been covered in the previous questions?</p></li>
+</ol>
+</section>
+<section id="what-business-levers-could-the-foodie-fi-team-use-to-reduce-the-customer-churn-rate-how-would-you-validate-the-effectiveness-of-your-ideas" class="level3">
+<h3 class="anchored" data-anchor-id="what-business-levers-could-the-foodie-fi-team-use-to-reduce-the-customer-churn-rate-how-would-you-validate-the-effectiveness-of-your-ideas">5. What business levers could the Foodie-Fi team use to reduce the customer churn rate? How would you validate the effectiveness of your ideas?</h3>
+<p><strong>Answer:</strong></p>
+<ol type="1">
+<li><p><strong>Enhanced Content Library</strong>:</p>
+<ul>
+<li><strong>Idea</strong>: Regularly update and expand the content library with exclusive shows and programs.</li>
+<li><strong>Validation</strong>: Monitor the time spent by the customers on the platform, and the frequency of login hours, and take direct feedback in the form of a question like, Is this the show you were looking for?</li>
+</ul></li>
+<li><p><strong>Personalized Recommendations</strong>:</p>
+<ul>
+<li><strong>Idea</strong>: Implement advanced algorithms to provide personalized content recommendations based on Individual preferences and viewing history.</li>
+<li><strong>Validation</strong>: Track the percentage of users following the personalized recommendations and ask for feedback to check the satisfaction of the customers.</li>
+</ul></li>
+<li><p><strong>Promotional Offers and Discounts</strong>:</p>
+<ul>
+<li><strong>Idea</strong>: Introduce limited-time promotions, discounts, or bundled subscription options to incentivize customer retention.</li>
+<li><strong>Validation</strong>: Analyze the impact on customer retention by doing the before and after analysis.</li>
+</ul></li>
+<li><p><strong>Improved Customer Support</strong>:</p>
+<ul>
+<li><strong>Idea</strong>: Enhance customer support services by reducing response times, resolving queries effectively in a short period, and gathering feedback for continuous improvement.</li>
+<li><strong>Validation</strong>: Guage the customer churn percentage, and customer satisfaction scores, and collect feedback on customer support interactions.</li>
+</ul></li>
+<li><p><strong>Exit Surveys and Feedback Analysis</strong>:</p>
+<ul>
+<li><strong>Idea</strong>: Implement an exit survey for customers canceling their subscriptions to gather insights into reasons for leaving.</li>
+<li><strong>Validation</strong>: Analyze any common reason to leave the platform and work on it.</li>
+</ul></li>
+</ol>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

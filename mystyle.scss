@@ -1,28 +1,167 @@
 /*-- scss:defaults --*/
 
-// Fonts
-@import url('https://fonts.googleapis.com/css2?family=Aldrich&display=swap');
+// Import fonts (define mainfont in _quarto.yml)
+@import 
+url('https://fonts.googleapis.com/css2?family=Montserrat&family=Nunito:wght@300&family=Roboto+Mono:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Aboreto&family=Roboto:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300&display=swap');
 
 // Colors
+$pink: #fef9f8;
+$dark-red: #0d0d0d;
+$white: white;
+$gray: #0d0d0d;
+$purple: #AE8BD1;
+$black: #000000;
+$burnt-orange: #ad7237;
 $light-sage-green: #D1D9CE;
 $dark-sage-green: #98A08D;
 $cream: #FDFBF7;
-$gray: #64605f;
 $light-gray: #949799;
-$purple: #AE8BD1;
 
 // Base document colors
-$navbar-bg: $cream; // navbar
-$navbar-fg: $dark-sage-green; // navbar foreground elements
-$navbar-hl: $purple; // highlight color when hovering over navbar links
-$body-bg: $light-sage-green; // page background 
-$body-color: $gray; // page text 
-$footer-bg: $cream; // footer 
-$link-color: $purple; // hyperlinks 
+$navbar-bg: $white;
+$navbar-fg: $dark-red; 
+$navbar-hl: $purple; 
+$body-bg: $pink;
+$body-color: $gray;
+$footer-bg: $white; 
+$link-color: $purple;
 
 // Inline code
-$code-bg: $cream; // inline code background color
-$code-color: $purple; // inline code text color
+$code-bg: $white;
+$code-color: $burnt-orange; //$purple; 
 
 // Code blocks
-$code-block-bg: $cream; // code block background color
+$code-block-bg: $white;
+
+/*-- scss:rules --*/
+
+/* ELEMENT SELECTORS */
+
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: 3px;
+  font-weight: 700;
+  color: $gray;
+}
+
+h3 {
+  font-size: 35px;
+}
+
+body {
+  line-height: 1.5; // min 1.5 suggested for assistive tech
+  font-size: 19.5px;
+}
+
+/* CLASS SELECTORS (self-defined) */
+
+.custom-subtitle {
+  font-size: 22px;
+  margin-bottom: 0.15em;
+}
+
+.custom-subtitle2 {
+  font-size: 20px;
+  font-style: italic;
+}
+
+.large-text {
+  font-size: 20px;
+}
+
+.small-text {
+  font-size: 17px;
+}
+
+.extra-small-text{
+  font-size: 14px;  
+}
+
+.topbr {
+    display: block;
+    margin-top: 1em;
+}
+
+.center-text {
+  text-align: center;
+  left: 50%;
+}
+
+/*.dark-gray-text{
+  color: $dark-gray;
+}*/
+
+.container { // for centering buttons
+  height: 20px;
+  position: relative;
+}
+
+.center { // for centering buttons
+  //width: 100%;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.button-styling {
+  background: $pink;
+  border-color: $gray;
+  color: $gray;
+  border-radius: 0.6rem;
+  border-width: thin;
+  font-size: 18px;
+  letter-spacing: 3px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  padding-right: 6px;
+  padding-left: 6px;
+  transition-duration: 0.4s;
+}
+
+.button-styling:hover {
+  background-color: $white; 
+}
+
+.gray-italic {
+  color: $gray;
+  font-style: italic;
+  font-size: 17px;
+}
+
+.quote-text-bg {
+  background-color: rgba(166, 164, 161, 0.4);
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 5px;
+  padding-left: 8px;
+  border-radius: 15px;
+}
+
+/* CLASS SELECTORS (copied from inspecting site -- Quarto defined?) */
+
+/*.IMG_3429 img {
+  border: 5px solid #0d0d0d;
+  border-radius: 50%;
+} */
+
+.about-link-text { // button text size (landing page)
+  font-size: 18px;
+}
+
+.bi { // button icon size (landing page)
+  font-size: 18px;
+}
+
+
+.card {
+  background-color: $white;
+  //border-radius: 5.25em;
+}
+
+.description {
+  font-size: 25px;
+}

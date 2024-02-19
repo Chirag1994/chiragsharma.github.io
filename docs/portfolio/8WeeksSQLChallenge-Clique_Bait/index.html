@@ -1,0 +1,2222 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.340">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Chirag Sharma">
+<meta name="dcterms.date" content="2024-01-07">
+<meta name="description" content="In this post, we’ll tackle the second case study using MySQL from 8weeksqlchallenge.com. We’ll Explore the Pizza Runner case study with us, delving into the data to optimize operations and unveil customer insights using SQL analytics. Join the journey where ’80s Retro Styling and Pizza is the future drive the success of this innovative pizza delivery venture!">
+
+<title>Case Study #6 - CliqueBait.</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon/icons8-darth-vader-512.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html" rel="" target="">
+ <span class="menu-text">Chirag Sharma’s Blog</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html" rel="" target="">
+ <span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../portfolio.html" rel="" target="">
+ <span class="menu-text">Portfolio</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../resume/chirag_sharma_resume.pdf" rel="" target="">
+ <span class="menu-text">Resume</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/Chirag1994" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/chiragsharma1994/" rel="" target=""><i class="bi bi-linkedin" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="mailto:chirag.sharma0378@gmail.com" rel="" target=""><i class="bi bi-envelope" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-page">
+      <h1 class="title">Case Study #6 - CliqueBait.</h1>
+                  <div>
+        <div class="description">
+          In this post, we’ll tackle the second case study using MySQL from 8weeksqlchallenge.com. We’ll Explore the Pizza Runner case study with us, delving into the data to optimize operations and unveil customer insights using SQL analytics. Join the journey where ’80s Retro Styling and Pizza is the future drive the success of this innovative pizza delivery venture!
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">MySQL</div>
+                <div class="quarto-category">SQL</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p><a href="https://chirag1994.github.io/">Chirag Sharma</a> </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">January 7, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block column-page" id="quarto-document-content">
+
+
+
+
+<section id="case-study-6---cliquebait" class="level1">
+<h1>Case Study #6 - CliqueBait</h1>
+<p><img src="./Images/Case_Study_6-CliqueBait.png" alt="Image1" width="800" height="800"></p>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Clique Bait is not like your regular online seafood store - the founder and CEO Danny, was also a part of a digital data analytics team and wanted to expand his knowledge into the seafood industry!</p>
+<p>In this case study - you are required to support Danny’s vision and analyse his dataset and come up with creative solutions to calculate funnel fallout rates for the Clique Bait online store.</p>
+</section>
+<section id="available-data" class="level2">
+<h2 class="anchored" data-anchor-id="available-data">Available Data</h2>
+<p>For this case study there is a total of 5 datasets which you will need to combine to solve all of the questions.</p>
+<section id="users" class="level3">
+<h3 class="anchored" data-anchor-id="users">Users</h3>
+<p>Customers who visit the Clique Bait website are tagged via their <code>cookie_id</code>.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>user_id</th>
+<th>cookie_id</th>
+<th>start_date</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>397</td>
+<td>3759ff</td>
+<td>2020-03-30 00:00:00</td>
+</tr>
+<tr class="even">
+<td>215</td>
+<td>863329</td>
+<td>2020-01-26 00:00:00</td>
+</tr>
+<tr class="odd">
+<td>191</td>
+<td>eefca9</td>
+<td>2020-03-15 00:00:00</td>
+</tr>
+<tr class="even">
+<td>89</td>
+<td>764796</td>
+<td>2020-01-07 00:00:00</td>
+</tr>
+<tr class="odd">
+<td>127</td>
+<td>17ccc5</td>
+<td>2020-01-22 00:00:00</td>
+</tr>
+<tr class="even">
+<td>81</td>
+<td>b0b666</td>
+<td>2020-03-01 00:00:00</td>
+</tr>
+<tr class="odd">
+<td>260</td>
+<td>a4f236</td>
+<td>2020-01-08 00:00:00</td>
+</tr>
+<tr class="even">
+<td>203</td>
+<td>d1182f</td>
+<td>2020-04-18 00:00:00</td>
+</tr>
+<tr class="odd">
+<td>23</td>
+<td>12dbc8</td>
+<td>2020-01-18 00:00:00</td>
+</tr>
+<tr class="even">
+<td>375</td>
+<td>f61d69</td>
+<td>2020-01-03 00:00:00</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="events" class="level3">
+<h3 class="anchored" data-anchor-id="events">Events</h3>
+<p>Customer visits are logged in this <code>events</code> table at a <code>cookie_id</code> level and the <code>event_type</code> and <code>page_id</code> values can be used to join onto relevant satellite tables to obtain further information about each event.</p>
+<p>The sequence_number is used to order the events within each visit.</p>
+<table class="table">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 12%">
+<col style="width: 10%">
+<col style="width: 13%">
+<col style="width: 20%">
+<col style="width: 31%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>visit_id</th>
+<th>cookie_id</th>
+<th>page_id</th>
+<th>event_type</th>
+<th>sequence_number</th>
+<th>event_time</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>719fd3</td>
+<td>3d83d3</td>
+<td>5</td>
+<td>1</td>
+<td>4</td>
+<td>2020-03-02 00:29:09.975502</td>
+</tr>
+<tr class="even">
+<td>fb1eb1</td>
+<td>c5ff25</td>
+<td>5</td>
+<td>2</td>
+<td>8</td>
+<td>2020-01-22 07:59:16.761931</td>
+</tr>
+<tr class="odd">
+<td>23fe81</td>
+<td>1e8c2d</td>
+<td>10</td>
+<td>1</td>
+<td>9</td>
+<td>2020-03-21 13:14:11.745667</td>
+</tr>
+<tr class="even">
+<td>ad91aa</td>
+<td>648115</td>
+<td>6</td>
+<td>1</td>
+<td>3</td>
+<td>2020-04-27 16:28:09.824606</td>
+</tr>
+<tr class="odd">
+<td>5576d7</td>
+<td>ac418c</td>
+<td>6</td>
+<td>1</td>
+<td>4</td>
+<td>2020-01-18 04:55:10.149236</td>
+</tr>
+<tr class="even">
+<td>48308b</td>
+<td>c686c1</td>
+<td>8</td>
+<td>1</td>
+<td>5</td>
+<td>2020-01-29 06:10:38.702163</td>
+</tr>
+<tr class="odd">
+<td>46b17d</td>
+<td>78f9b3</td>
+<td>7</td>
+<td>1</td>
+<td>12</td>
+<td>2020-02-16 09:45:31.926407</td>
+</tr>
+<tr class="even">
+<td>9fd196</td>
+<td>ccf057</td>
+<td>4</td>
+<td>1</td>
+<td>5</td>
+<td>2020-02-14 08:29:12.922164</td>
+</tr>
+<tr class="odd">
+<td>edf853</td>
+<td>f85454</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>2020-02-22 12:59:07.652207</td>
+</tr>
+<tr class="even">
+<td>3c6716</td>
+<td>02e74f</td>
+<td>3</td>
+<td>2</td>
+<td>5</td>
+<td>2020-01-31 17:56:20.777383</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="event-identifier" class="level3">
+<h3 class="anchored" data-anchor-id="event-identifier">Event Identifier</h3>
+<p>The <code>event_identifier</code> table shows the types of events which are captured by Clique Bait’s digital data systems.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>event_type</th>
+<th>event_name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Page View</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Add to Cart</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Purchase</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Ad Impression</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Ad Click</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="campaign-identifier" class="level3">
+<h3 class="anchored" data-anchor-id="campaign-identifier">Campaign Identifier</h3>
+<p>This table shows information for the 3 campaigns that Clique Bait has ran on their website so far in 2020.</p>
+<table class="table">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 9%">
+<col style="width: 35%">
+<col style="width: 21%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>campaign_id</th>
+<th>products</th>
+<th>campaign_name</th>
+<th>start_date</th>
+<th>end_date</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>1-3</td>
+<td>BOGOF - Fishing For Compliments</td>
+<td>2020-01-01 00:00:00</td>
+<td>2020-01-14 00:00:00</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>4-5</td>
+<td>25% Off - Living The Lux Life</td>
+<td>2020-01-15 00:00:00</td>
+<td>2020-01-28 00:00:00</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>6-8</td>
+<td>Half Off - Treat Your Shellf(ish)</td>
+<td>2020-02-01 00:00:00</td>
+<td>2020-03-31 00:00:00</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="page-hierarchy" class="level3">
+<h3 class="anchored" data-anchor-id="page-hierarchy">Page Hierarchy</h3>
+<p>This table lists all of the pages on the Clique Bait website which are tagged and have data passing through from user interaction events.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>page_id</th>
+<th>page_name</th>
+<th>product_category</th>
+<th>product_id</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Home Page</td>
+<td>null</td>
+<td>null</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>All Products</td>
+<td>null</td>
+<td>null</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Salmon</td>
+<td>Fish</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Kingfish</td>
+<td>Fish</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Tuna</td>
+<td>Fish</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Russian Caviar</td>
+<td>Luxury</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>Black Truffle</td>
+<td>Luxury</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>Abalone</td>
+<td>Shellfish</td>
+<td>6</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>Lobster</td>
+<td>Shellfish</td>
+<td>7</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>Crab</td>
+<td>Shellfish</td>
+<td>8</td>
+</tr>
+<tr class="odd">
+<td>11</td>
+<td>Oyster</td>
+<td>Shellfish</td>
+<td>9</td>
+</tr>
+<tr class="even">
+<td>12</td>
+<td>Checkout</td>
+<td>null</td>
+<td>null</td>
+</tr>
+<tr class="odd">
+<td>13</td>
+<td>Confirmation</td>
+<td>null</td>
+<td>null</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="interactive-sql-instance" class="level2">
+<h2 class="anchored" data-anchor-id="interactive-sql-instance">Interactive SQL Instance</h2>
+<p>The Dataset for this case study can be accessed from <a href="https://www.db-fiddle.com/f/jmnwogTsUE8hGqkZv9H7E8/17">here</a>. I will be using MySQL to solve this case study. In order to solve yourself this case study, simply go to the above link and choose MySQL Dialect (version &gt; 8, if using MySQL version higher than 8 locally), copy &amp; paste the Database schema into MySQL.</p>
+<p>Here is the snapshot of it.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">SCHEMA</span> clique_bait;</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> clique_bait.event_identifier (</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  `event_type` <span class="dt">INTEGER</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  `event_name` <span class="dt">VARCHAR</span>(<span class="dv">13</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> clique_bait.event_identifier</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  (`event_type`, `event_name`)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'1'</span>, <span class="st">'Page View'</span>),</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'2'</span>, <span class="st">'Add to Cart'</span>),</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'3'</span>, <span class="st">'Purchase'</span>),</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'4'</span>, <span class="st">'Ad Impression'</span>),</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'5'</span>, <span class="st">'Ad Click'</span>);</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> clique_bait.campaign_identifier (</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  `campaign_id` <span class="dt">INTEGER</span>,</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  `products` <span class="dt">VARCHAR</span>(<span class="dv">3</span>),</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  `campaign_name` <span class="dt">VARCHAR</span>(<span class="dv">33</span>),</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  `start_date` <span class="dt">TIMESTAMP</span>,</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  `end_date` <span class="dt">TIMESTAMP</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> clique_bait.campaign_identifier</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  (`campaign_id`, `products`, `campaign_name`, `start_date`, `end_date`)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'1'</span>, <span class="st">'1-3'</span>, <span class="st">'BOGOF - Fishing For Compliments'</span>, <span class="st">'2020-01-01'</span>, <span class="st">'2020-01-14'</span>),</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'2'</span>, <span class="st">'4-5'</span>, <span class="st">'25% Off - Living The Lux Life'</span>, <span class="st">'2020-01-15'</span>, <span class="st">'2020-01-28'</span>),</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'3'</span>, <span class="st">'6-8'</span>, <span class="st">'Half Off - Treat Your Shellf(ish)'</span>, <span class="st">'2020-02-01'</span>, <span class="st">'2020-03-31'</span>);</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> clique_bait.page_hierarchy (</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>  `page_id` <span class="dt">INTEGER</span>,</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>  `page_name` <span class="dt">VARCHAR</span>(<span class="dv">14</span>),</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>  `product_category` <span class="dt">VARCHAR</span>(<span class="dv">9</span>),</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>  `product_id` <span class="dt">INTEGER</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> clique_bait.page_hierarchy</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>  (`page_id`, `page_name`, `product_category`, `product_id`)</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'1'</span>, <span class="st">'Home Page'</span>, <span class="kw">null</span>, <span class="kw">null</span>),</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'2'</span>, <span class="st">'All Products'</span>, <span class="kw">null</span>, <span class="kw">null</span>),</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'3'</span>, <span class="st">'Salmon'</span>, <span class="st">'Fish'</span>, <span class="st">'1'</span>),</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'4'</span>, <span class="st">'Kingfish'</span>, <span class="st">'Fish'</span>, <span class="st">'2'</span>),</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'5'</span>, <span class="st">'Tuna'</span>, <span class="st">'Fish'</span>, <span class="st">'3'</span>),</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'6'</span>, <span class="st">'Russian Caviar'</span>, <span class="st">'Luxury'</span>, <span class="st">'4'</span>),</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'7'</span>, <span class="st">'Black Truffle'</span>, <span class="st">'Luxury'</span>, <span class="st">'5'</span>),</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'8'</span>, <span class="st">'Abalone'</span>, <span class="st">'Shellfish'</span>, <span class="st">'6'</span>),</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'9'</span>, <span class="st">'Lobster'</span>, <span class="st">'Shellfish'</span>, <span class="st">'7'</span>),</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'10'</span>, <span class="st">'Crab'</span>, <span class="st">'Shellfish'</span>, <span class="st">'8'</span>),</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'11'</span>, <span class="st">'Oyster'</span>, <span class="st">'Shellfish'</span>, <span class="st">'9'</span>),</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'12'</span>, <span class="st">'Checkout'</span>, <span class="kw">null</span>, <span class="kw">null</span>),</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'13'</span>, <span class="st">'Confirmation'</span>, <span class="kw">null</span>, <span class="kw">null</span>);</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> clique_bait.users (</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>  `user_id` <span class="dt">INTEGER</span>,</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>  `cookie_id` <span class="dt">VARCHAR</span>(<span class="dv">6</span>),</span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>  `start_date` <span class="dt">TIMESTAMP</span></span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> clique_bait.users</span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>  (`user_id`, `cookie_id`, `start_date`)</span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'1'</span>, <span class="st">'c4ca42'</span>, <span class="st">'2020-02-04'</span>),</span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'2'</span>, <span class="st">'c81e72'</span>, <span class="st">'2020-01-18'</span>),</span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'3'</span>, <span class="st">'eccbc8'</span>, <span class="st">'2020-02-21'</span>),</span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'4'</span>, <span class="st">'a87ff6'</span>, <span class="st">'2020-02-22'</span>),</span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'5'</span>, <span class="st">'e4da3b'</span>, <span class="st">'2020-02-01'</span>),</span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'6'</span>, <span class="st">'167909'</span>, <span class="st">'2020-01-25'</span>),</span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'7'</span>, <span class="st">'8f14e4'</span>, <span class="st">'2020-02-09'</span>),</span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'8'</span>, <span class="st">'c9f0f8'</span>, <span class="st">'2020-02-12'</span>),</span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'9'</span>, <span class="st">'45c48c'</span>, <span class="st">'2020-02-07'</span>),</span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'10'</span>, <span class="st">'d3d944'</span>, <span class="st">'2020-01-23'</span>),</span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'11'</span>, <span class="st">'6512bd'</span>, <span class="st">'2020-01-17'</span>),</span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'12'</span>, <span class="st">'c20ad4'</span>, <span class="st">'2020-02-06'</span>),</span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'13'</span>, <span class="st">'c51ce4'</span>, <span class="st">'2020-02-12'</span>),</span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'14'</span>, <span class="st">'aab323'</span>, <span class="st">'2020-01-12'</span>),</span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'15'</span>, <span class="st">'9bf31c'</span>, <span class="st">'2020-01-28'</span>),</span>
+<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'16'</span>, <span class="st">'c74d97'</span>, <span class="st">'2020-01-06'</span>),</span>
+<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'17'</span>, <span class="st">'70efdf'</span>, <span class="st">'2020-02-17'</span>),</span>
+<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'18'</span>, <span class="st">'6f4922'</span>, <span class="st">'2020-02-29'</span>),</span>
+<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'19'</span>, <span class="st">'1f0e3d'</span>, <span class="st">'2020-02-11'</span>),</span>
+<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'20'</span>, <span class="st">'98f137'</span>, <span class="st">'2020-02-12'</span>),</span>
+<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'21'</span>, <span class="st">'3c59dc'</span>, <span class="st">'2020-02-14'</span>),</span>
+<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'22'</span>, <span class="st">'b6d767'</span>, <span class="st">'2020-02-08'</span>),</span>
+<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'23'</span>, <span class="st">'37693c'</span>, <span class="st">'2020-01-16'</span>)</span>
+<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> clique_bait.<span class="kw">events</span> (</span>
+<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a>  `visit_id` <span class="dt">VARCHAR</span>(<span class="dv">6</span>),</span>
+<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a>  `cookie_id` <span class="dt">VARCHAR</span>(<span class="dv">6</span>),</span>
+<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a>  `page_id` <span class="dt">INTEGER</span>,</span>
+<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a>  `event_type` <span class="dt">INTEGER</span>,</span>
+<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a>  `sequence_number` <span class="dt">INTEGER</span>,</span>
+<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a>  `event_time` <span class="dt">TIMESTAMP</span></span>
+<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> clique_bait.<span class="kw">events</span></span>
+<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a>  (`visit_id`, `cookie_id`, `page_id`, `event_type`, `sequence_number`, `event_time`)</span>
+<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span></span>
+<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'ccf365'</span>, <span class="st">'c4ca42'</span>, <span class="st">'1'</span>, <span class="st">'1'</span>, <span class="st">'1'</span>, <span class="st">'2020-02-04 19:16:09.182546'</span>),</span>
+<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'ccf365'</span>, <span class="st">'c4ca42'</span>, <span class="st">'2'</span>, <span class="st">'1'</span>, <span class="st">'2'</span>, <span class="st">'2020-02-04 19:16:17.358191'</span>),</span>
+<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'ccf365'</span>, <span class="st">'c4ca42'</span>, <span class="st">'6'</span>, <span class="st">'1'</span>, <span class="st">'3'</span>, <span class="st">'2020-02-04 19:16:58.454669'</span>),</span>
+<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'ccf365'</span>, <span class="st">'c4ca42'</span>, <span class="st">'9'</span>, <span class="st">'1'</span>, <span class="st">'4'</span>, <span class="st">'2020-02-04 19:16:58.609142'</span>),</span>
+<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'ccf365'</span>, <span class="st">'c4ca42'</span>, <span class="st">'9'</span>, <span class="st">'2'</span>, <span class="st">'5'</span>, <span class="st">'2020-02-04 19:17:51.72942'</span>),</span>
+<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'ccf365'</span>, <span class="st">'c4ca42'</span>, <span class="st">'10'</span>, <span class="st">'1'</span>, <span class="st">'6'</span>, <span class="st">'2020-02-04 19:18:11.605815'</span>),</span>
+<span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'ccf365'</span>, <span class="st">'c4ca42'</span>, <span class="st">'10'</span>, <span class="st">'2'</span>, <span class="st">'7'</span>, <span class="st">'2020-02-04 19:19:10.570786'</span>),</span>
+<span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'ccf365'</span>, <span class="st">'c4ca42'</span>, <span class="st">'11'</span>, <span class="st">'1'</span>, <span class="st">'8'</span>, <span class="st">'2020-02-04 19:19:46.911728'</span>),</span>
+<span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'ccf365'</span>, <span class="st">'c4ca42'</span>, <span class="st">'11'</span>, <span class="st">'2'</span>, <span class="st">'9'</span>, <span class="st">'2020-02-04 19:20:45.27469'</span>),</span>
+<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'ccf365'</span>, <span class="st">'c4ca42'</span>, <span class="st">'12'</span>, <span class="st">'1'</span>, <span class="st">'10'</span>, <span class="st">'2020-02-04 19:20:52.307244'</span>),</span>
+<span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'ccf365'</span>, <span class="st">'c4ca42'</span>, <span class="st">'13'</span>, <span class="st">'3'</span>, <span class="st">'11'</span>, <span class="st">'2020-02-04 19:21:26.242563'</span>),</span>
+<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'d58cbd'</span>, <span class="st">'c81e72'</span>, <span class="st">'1'</span>, <span class="st">'1'</span>, <span class="st">'1'</span>, <span class="st">'2020-01-18 23:40:54.761906'</span>),</span>
+<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'d58cbd'</span>, <span class="st">'c81e72'</span>, <span class="st">'2'</span>, <span class="st">'1'</span>, <span class="st">'2'</span>, <span class="st">'2020-01-18 23:41:06.391027'</span>),</span>
+<span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'d58cbd'</span>, <span class="st">'c81e72'</span>, <span class="st">'4'</span>, <span class="st">'1'</span>, <span class="st">'3'</span>, <span class="st">'2020-01-18 23:42:02.213001'</span>),</span>
+<span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'d58cbd'</span>, <span class="st">'c81e72'</span>, <span class="st">'4'</span>, <span class="st">'2'</span>, <span class="st">'4'</span>, <span class="st">'2020-01-18 23:42:02.370046'</span>),</span>
+<span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'d58cbd'</span>, <span class="st">'c81e72'</span>, <span class="st">'5'</span>, <span class="st">'1'</span>, <span class="st">'5'</span>, <span class="st">'2020-01-18 23:42:44.717024'</span>),</span>
+<span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'d58cbd'</span>, <span class="st">'c81e72'</span>, <span class="st">'5'</span>, <span class="st">'2'</span>, <span class="st">'6'</span>, <span class="st">'2020-01-18 23:43:11.121855'</span>),</span>
+<span id="cb1-118"><a href="#cb1-118" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'d58cbd'</span>, <span class="st">'c81e72'</span>, <span class="st">'7'</span>, <span class="st">'1'</span>, <span class="st">'7'</span>, <span class="st">'2020-01-18 23:43:25.806239'</span>),</span>
+<span id="cb1-119"><a href="#cb1-119" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'d58cbd'</span>, <span class="st">'c81e72'</span>, <span class="st">'8'</span>, <span class="st">'1'</span>, <span class="st">'8'</span>, <span class="st">'2020-01-18 23:43:40.537995'</span>),</span>
+<span id="cb1-120"><a href="#cb1-120" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'d58cbd'</span>, <span class="st">'c81e72'</span>, <span class="st">'8'</span>, <span class="st">'2'</span>, <span class="st">'9'</span>, <span class="st">'2020-01-18 23:44:14.026393'</span>),</span>
+<span id="cb1-121"><a href="#cb1-121" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'d58cbd'</span>, <span class="st">'c81e72'</span>, <span class="st">'10'</span>, <span class="st">'1'</span>, <span class="st">'10'</span>, <span class="st">'2020-01-18 23:44:22.103768'</span>),</span>
+<span id="cb1-122"><a href="#cb1-122" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'d58cbd'</span>, <span class="st">'c81e72'</span>, <span class="st">'10'</span>, <span class="st">'2'</span>, <span class="st">'11'</span>, <span class="st">'2020-01-18 23:45:00.004781'</span>),</span>
+<span id="cb1-123"><a href="#cb1-123" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'d58cbd'</span>, <span class="st">'c81e72'</span>, <span class="st">'12'</span>, <span class="st">'1'</span>, <span class="st">'12'</span>, <span class="st">'2020-01-18 23:45:38.186554'</span>),</span>
+<span id="cb1-124"><a href="#cb1-124" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'9a2f24'</span>, <span class="st">'eccbc8'</span>, <span class="st">'1'</span>, <span class="st">'1'</span>, <span class="st">'1'</span>, <span class="st">'2020-02-21 03:19:10.032455'</span>),</span>
+<span id="cb1-125"><a href="#cb1-125" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'9a2f24'</span>, <span class="st">'eccbc8'</span>, <span class="st">'4'</span>, <span class="st">'1'</span>, <span class="st">'2'</span>, <span class="st">'2020-02-21 03:19:24.677901'</span>),</span>
+<span id="cb1-126"><a href="#cb1-126" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'9a2f24'</span>, <span class="st">'eccbc8'</span>, <span class="st">'4'</span>, <span class="st">'2'</span>, <span class="st">'3'</span>, <span class="st">'2020-02-21 03:19:48.146489'</span>),</span>
+<span id="cb1-127"><a href="#cb1-127" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'9a2f24'</span>, <span class="st">'eccbc8'</span>, <span class="st">'7'</span>, <span class="st">'1'</span>, <span class="st">'4'</span>, <span class="st">'2020-02-21 03:20:13.39183'</span>),</span>
+<span id="cb1-128"><a href="#cb1-128" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'9a2f24'</span>, <span class="st">'eccbc8'</span>, <span class="st">'7'</span>, <span class="st">'2'</span>, <span class="st">'5'</span>, <span class="st">'2020-02-21 03:20:13.869733'</span>),</span>
+<span id="cb1-129"><a href="#cb1-129" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'9a2f24'</span>, <span class="st">'eccbc8'</span>, <span class="st">'10'</span>, <span class="st">'1'</span>, <span class="st">'6'</span>, <span class="st">'2020-02-21 03:20:45.854556'</span>),</span>
+<span id="cb1-130"><a href="#cb1-130" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'9a2f24'</span>, <span class="st">'eccbc8'</span>, <span class="st">'11'</span>, <span class="st">'1'</span>, <span class="st">'7'</span>, <span class="st">'2020-02-21 03:21:20.335104'</span>),</span>
+<span id="cb1-131"><a href="#cb1-131" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'9a2f24'</span>, <span class="st">'eccbc8'</span>, <span class="st">'12'</span>, <span class="st">'1'</span>, <span class="st">'8'</span>, <span class="st">'2020-02-21 03:21:43.262109'</span>),</span>
+<span id="cb1-132"><a href="#cb1-132" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'9a2f24'</span>, <span class="st">'eccbc8'</span>, <span class="st">'13'</span>, <span class="st">'3'</span>, <span class="st">'9'</span>, <span class="st">'2020-02-21 03:22:22.501245'</span>),</span>
+<span id="cb1-133"><a href="#cb1-133" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'7caba5'</span>, <span class="st">'a87ff6'</span>, <span class="st">'1'</span>, <span class="st">'1'</span>, <span class="st">'1'</span>, <span class="st">'2020-02-22 17:49:37.646174'</span>),</span>
+<span id="cb1-134"><a href="#cb1-134" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'7caba5'</span>, <span class="st">'a87ff6'</span>, <span class="st">'4'</span>, <span class="st">'1'</span>, <span class="st">'2'</span>, <span class="st">'2020-02-22 17:50:23.736729'</span>),</span>
+<span id="cb1-135"><a href="#cb1-135" aria-hidden="true" tabindex="-1"></a>  (<span class="st">'7caba5'</span>, <span class="st">'a87ff6'</span>, <span class="st">'5'</span>, <span class="st">'1'</span>, <span class="st">'3'</span>, <span class="st">'2020-02-22 17:50:26.878153'</span>)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="case-study-questions" class="level2">
+<h2 class="anchored" data-anchor-id="case-study-questions">Case Study Questions</h2>
+<section id="enterprise-relationship-diagram" class="level3">
+<h3 class="anchored" data-anchor-id="enterprise-relationship-diagram">1. Enterprise Relationship Diagram</h3>
+<p>Using the following DDL schema details to create an ERD for all the Clique Bait datasets. <a href="https://dbdiagram.io/">Click_Here</a> to access the DB Diagram tool to create the ERD.</p>
+<p><img src="./Images/Case_Study_6-ER_Diagram1.png" alt="Image1" width="800" height="800"></p>
+</section>
+<section id="digital-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="digital-analysis">2. Digital Analysis</h3>
+<p>Using the available datasets - answer the following questions using a single query for each one:</p>
+<ol type="1">
+<li>How many users are there?</li>
+<li>How many cookies does each user have on average?</li>
+<li>What is the unique number of visits by all users per month?</li>
+<li>What is the number of events for each event type?</li>
+<li>What is the percentage of visits which have a purchase event?</li>
+<li>What is the percentage of visits which view the checkout page but do not have a purchase event?</li>
+<li>What are the top 3 pages by number of views?</li>
+<li>What is the number of views and cart adds for each product category?</li>
+<li>What are the top 3 products by purchases?</li>
+</ol>
+</section>
+<section id="product-funnel-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="product-funnel-analysis">3. Product Funnel Analysis</h3>
+<p>Using a single SQL query - create a new output table which has the following details:</p>
+<ul>
+<li>How many times was each product viewed?</li>
+<li>How many times was each product added to cart?</li>
+<li>How many times was each product added to a cart but not purchased (abandoned)?</li>
+<li>How many times was each product purchased?</li>
+</ul>
+<p>Additionally, create another table which further aggregates the data for the above points but this time for each product category instead of individual products.</p>
+<p>Use your 2 new output tables - answer the following questions:</p>
+<ol type="1">
+<li>Which product had the most views, cart adds and purchases?</li>
+<li>Which product was most likely to be abandoned?</li>
+<li>Which product had the highest view to purchase percentage?</li>
+<li>What is the average conversion rate from view to cart add?</li>
+<li>What is the average conversion rate from cart add to purchase?</li>
+</ol>
+</section>
+<section id="campaigns-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="campaigns-analysis">4. Campaigns Analysis</h3>
+<p>Generate a table that has 1 single row for every unique <code>visit_id</code> record and has the following columns:</p>
+<ul>
+<li><code>user_id</code></li>
+<li><code>visit_id</code></li>
+<li><code>visit_start_time</code>: the earliest <code>event_time</code> for each visit</li>
+<li><code>page_views</code>: count of page views for each visit</li>
+<li><code>cart_adds</code>: count of product cart add events for each visit</li>
+<li><code>purchase</code>: 1/0 flag if a purchase event exists for each visit</li>
+<li><code>campaign_name</code>: map the visit to a campaign if the <code>visit_start_time</code> falls between the <code>start_date</code> and <code>end_date</code></li>
+<li><code>impression</code>: count of ad impressions for each visit</li>
+<li><code>click</code>: count of ad clicks for each visit</li>
+<li><strong>(Optional column)</strong> <code>cart_products</code>: a comma separated text value with products added to the cart sorted by the order they were added to the cart (hint: use the <code>sequence_number</code>)</li>
+</ul>
+<p>Use the subsequent dataset to generate at least 5 insights for the Clique Bait team - bonus: prepare a single A4 infographic that the team can use for their management reporting sessions, be sure to emphasise the most important points from your findings.</p>
+<p>Some ideas you might want to investigate further include:</p>
+<ul>
+<li>Identifying users who have received impressions during each campaign period and comparing each metric with other users who did not have an impression event</li>
+<li>Does clicking on an impression lead to higher purchase rates?</li>
+<li>What is the uplift in purchase rate when comparing users who click on a campaign impression versus users who do not receive an impression? What if we compare them with users who just an impression but do not click?</li>
+<li>What metrics can you use to quantify the success or failure of each campaign compared to each other?</li>
+</ul>
+</section>
+</section>
+<section id="digital-analysis-1" class="level2">
+<h2 class="anchored" data-anchor-id="digital-analysis-1">2. Digital Analysis</h2>
+<section id="how-many-users-are-there" class="level3">
+<h3 class="anchored" data-anchor-id="how-many-users-are-there">1. How many users are there?</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> user_id) <span class="kw">AS</span> number_of_unique_users</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> users;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>number_of_unique_users</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>500</td>
+</tr>
+</tbody>
+</table>
+<section id="analysis-of-number-of-unique-users" class="level4">
+<h4 class="anchored" data-anchor-id="analysis-of-number-of-unique-users">Analysis of Number of Unique Users</h4>
+<ol type="1">
+<li><p><strong>Insight</strong>:</p>
+<ul>
+<li>The dataset contains information about 500 unique users who have visited the Clique Bait website.</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="how-many-cookies-does-each-user-have-on-average" class="level3">
+<h3 class="anchored" data-anchor-id="how-many-cookies-does-each-user-have-on-average">2. How many cookies does each user have on average?</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> cookie <span class="kw">AS</span> (</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> user_id,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        <span class="fu">COUNT</span>(cookie_id) <span class="kw">AS</span> cookie_count</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> users <span class="kw">GROUP</span> <span class="kw">BY</span> user_id</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">ROUND</span>(<span class="fu">AVG</span>(cookie_count),<span class="dv">0</span>) <span class="kw">AS</span> average_cookie_per_user</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> cookie;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>average_cookie_per_user</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>4</td>
+</tr>
+</tbody>
+</table>
+<section id="analysis-of-average-number-of-cookies-per-user" class="level4">
+<h4 class="anchored" data-anchor-id="analysis-of-average-number-of-cookies-per-user">Analysis of Average Number of Cookies per User</h4>
+<ol type="1">
+<li><p><strong>Insight</strong>:</p>
+<ul>
+<li>On average, each user has approximately 4 cookies associated with their user account.</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="what-is-the-unique-number-of-visits-by-all-users-per-month" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-the-unique-number-of-visits-by-all-users-per-month">3. What is the unique number of visits by all users per month?</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">MONTH</span>(event_time) <span class="kw">AS</span> <span class="st">'month'</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> visit_id) <span class="kw">AS</span> customer_count</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> <span class="kw">events</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> <span class="dt">MONTH</span>(event_time);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>month</th>
+<th>customer_count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>876</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>1488</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>916</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>248</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>36</td>
+</tr>
+</tbody>
+</table>
+<section id="analysis-of-unique-number-of-visits-per-month" class="level4">
+<h4 class="anchored" data-anchor-id="analysis-of-unique-number-of-visits-per-month">Analysis of Unique Number of Visits per Month</h4>
+<ol type="1">
+<li><p><strong>Insights</strong>:</p>
+<ul>
+<li>Seasonal Trends: The data shows fluctuations in customer visits across different months, indicating potential seasonal patterns or shifts in user behavior.</li>
+<li>Peak Months: February witnessed the highest number of unique visits, suggesting increased activity or interest during that period.</li>
+<li>Monthly Variability: There is variability in customer engagement across months, with some months experiencing higher or lower visit counts compared to others.</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="what-is-the-number-of-events-for-each-event-type" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-the-number-of-events-for-each-event-type">4. What is the number of events for each event type?</h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> EI.event_name,</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">COUNT</span>(E.event_time) <span class="kw">AS</span> number_of_events</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> <span class="kw">events</span> <span class="kw">AS</span> E</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> event_identifier <span class="kw">AS</span> EI <span class="kw">ON</span> E.event_type <span class="op">=</span> EI.event_type</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> EI.event_name</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> number_of_events <span class="kw">DESC</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>event_name</th>
+<th>number_of_events</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Page View</td>
+<td>20928</td>
+</tr>
+<tr class="even">
+<td>Add to Cart</td>
+<td>8451</td>
+</tr>
+<tr class="odd">
+<td>Purchase</td>
+<td>1777</td>
+</tr>
+<tr class="even">
+<td>Ad Impression</td>
+<td>876</td>
+</tr>
+<tr class="odd">
+<td>Ad Click</td>
+<td>702</td>
+</tr>
+</tbody>
+</table>
+<section id="analysis-of-number-of-events-by-event-type" class="level4">
+<h4 class="anchored" data-anchor-id="analysis-of-number-of-events-by-event-type">Analysis of Number of Events by Event Type</h4>
+<ol type="1">
+<li><p><strong>Insights</strong>:</p>
+<ul>
+<li>Event Distribution: Page views constitute the majority of events, indicating high user engagement with various pages on the website.</li>
+<li>Conversion Actions: While page views are common, fewer users proceed to add items to their cart or make purchases, as evidenced by the lower counts for “Add to Cart” and “Purchase” events.</li>
+<li>Marketing Engagement: The number of ad impressions and ad clicks suggests user interaction with advertising content, which can provide insights into the effectiveness of marketing campaigns.</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="what-is-the-percentage-of-visits-which-have-a-purchase-event" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-the-percentage-of-visits-which-have-a-purchase-event">5. What is the percentage of visits which have a purchase event?</h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ROUND</span>(<span class="fl">100.0</span> <span class="op">*</span> <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> E.visit_id) <span class="op">/</span> (<span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> visit_id) <span class="kw">FROM</span> <span class="kw">events</span>),<span class="dv">2</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">AS</span> vists_percentage</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> <span class="kw">events</span> <span class="kw">AS</span> E</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> event_identifier <span class="kw">AS</span> EI <span class="kw">ON</span> E.event_type <span class="op">=</span> EI.event_type</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> EI.event_name <span class="op">=</span> <span class="st">'Purchase'</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>visits_percentage</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>49.86</td>
+</tr>
+</tbody>
+</table>
+<section id="analysis-of-percentage-of-visits-with-purchase-events" class="level4">
+<h4 class="anchored" data-anchor-id="analysis-of-percentage-of-visits-with-purchase-events">Analysis of Percentage of Visits with Purchase Events</h4>
+<ol type="1">
+<li><p><strong>Insights</strong>:</p>
+<ul>
+<li>Purchase Rate: Approximately 49.86% of visits result in a purchase event, indicating a moderate conversion rate.</li>
+<li>Conversion Performance: Understanding the proportion of visits that lead to purchases provides insights into the effectiveness of the website in driving sales.</li>
+<li>Potential Growth Opportunities: Identifying areas for improvement in the conversion funnel to increase the purchase rate and enhance overall revenue generation.</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="what-is-the-percentage-of-visits-which-view-the-checkout-page-but-do-not-have-a-purchase-event" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-the-percentage-of-visits-which-view-the-checkout-page-but-do-not-have-a-purchase-event">6. What is the percentage of visits which view the checkout page but do not have a purchase event?</h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> view_purchase <span class="kw">AS</span> (</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">COUNT</span>(E.visit_id) <span class="kw">AS</span> visit_count</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> <span class="kw">events</span> <span class="kw">AS</span> E <span class="kw">JOIN</span> event_identifier <span class="kw">AS</span> EI <span class="kw">ON</span> E.event_type <span class="op">=</span> EI.event_type</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> page_hierarchy <span class="kw">AS</span> PH <span class="kw">ON</span> E.page_id <span class="op">=</span> PH.page_id</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> PH.page_name <span class="op">=</span> <span class="st">'Checkout'</span> <span class="kw">and</span> EI.event_name <span class="op">=</span> <span class="st">'Page View'</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ROUND</span>(<span class="dv">100</span> <span class="op">-</span> (<span class="fl">100.0</span> <span class="op">*</span> <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> E.visit_id) <span class="op">/</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        (<span class="kw">SELECT</span> visit_count <span class="kw">FROM</span> view_purchase)),<span class="dv">2</span>) <span class="kw">AS</span> pct_of_checkout_visits_not_purchased</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> <span class="kw">events</span> <span class="kw">AS</span> E <span class="kw">JOIN</span> event_identifier <span class="kw">AS</span> EI <span class="kw">ON</span> E.event_type <span class="op">=</span> EI.event_type</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> EI.event_name <span class="op">=</span> <span class="st">'Purchase'</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>pct_of_checkout_visits_not_purchased</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>15.50</td>
+</tr>
+</tbody>
+</table>
+<section id="analysis-of-percentage-of-visits-viewing-checkout-page-but-not-making-a-purchase" class="level4">
+<h4 class="anchored" data-anchor-id="analysis-of-percentage-of-visits-viewing-checkout-page-but-not-making-a-purchase">Analysis of Percentage of Visits Viewing Checkout Page but Not Making a Purchase</h4>
+<ol type="1">
+<li><p><strong>Insights</strong>:</p>
+<ul>
+<li>Checkout Abandonment: Approximately 15.50% of visits proceed to the checkout page but do not culminate in a purchase, indicating a significant dropout rate.</li>
+<li>Potential Revenue Loss: Identifying and addressing factors contributing to checkout abandonment is crucial to mitigate potential revenue loss and maximize conversion rates.</li>
+<li>User Experience Evaluation: Analyzing the user experience at the checkout stage, including ease of navigation, payment options, and shipping information, can provide insights into areas for improvement.</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="what-are-the-top-3-pages-by-number-of-views" class="level3">
+<h3 class="anchored" data-anchor-id="what-are-the-top-3-pages-by-number-of-views">7. What are the top 3 pages by number of views?</h3>
+<div class="sourceCode" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> top_3_pages <span class="kw">AS</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>(<span class="kw">SELECT</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    page_id, <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> visit_id) <span class="kw">AS</span> number_of_views</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> <span class="kw">events</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> event_type <span class="op">=</span> <span class="st">'1'</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> page_id</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> number_of_views <span class="kw">DESC</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">3</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    page_name, number_of_views</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> top_3_pages</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> page_hierarchy <span class="kw">ON</span> top_3_pages.page_id <span class="op">=</span> page_hierarchy.page_id;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>page_name</th>
+<th>number_of_views</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Home Page</td>
+<td>1782</td>
+</tr>
+<tr class="even">
+<td>All Products</td>
+<td>3174</td>
+</tr>
+<tr class="odd">
+<td>Checkout</td>
+<td>2103</td>
+</tr>
+</tbody>
+</table>
+<section id="analysis-of-top-3-pages-by-number-of-views" class="level4">
+<h4 class="anchored" data-anchor-id="analysis-of-top-3-pages-by-number-of-views">Analysis of Top 3 Pages by Number of Views</h4>
+<ol type="1">
+<li><p><strong>Insights</strong>:</p>
+<ul>
+<li>User Engagement: The Home Page, All Products, and Checkout pages are pivotal in user navigation, as evidenced by their high view counts.</li>
+<li>Browsing Behavior: Users frequently visit the All Products page, indicating a strong interest in exploring available products or services.</li>
+<li>Checkout Process: The significant number of views on the Checkout page underscores its importance in the conversion journey, suggesting a substantial portion of users progress towards completing transactions.</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="what-is-the-number-of-views-and-cart-adds-for-each-product-category" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-the-number-of-views-and-cart-adds-for-each-product-category">8. What is the number of views and cart adds for each product category?</h3>
+<div class="sourceCode" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> PH.product_category,</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">SUM</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> E.event_type <span class="op">=</span> <span class="st">'1'</span> <span class="cf">THEN</span> <span class="dv">1</span> <span class="cf">ELSE</span> <span class="dv">0</span> <span class="cf">END</span>) <span class="kw">AS</span> number_of_views,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">SUM</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> E.event_type <span class="op">=</span> <span class="st">'2'</span> <span class="cf">THEN</span> <span class="dv">1</span> <span class="cf">ELSE</span> <span class="dv">0</span> <span class="cf">END</span>) <span class="kw">AS</span> number_of_cart_adds</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> <span class="kw">events</span> <span class="kw">as</span> E</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> page_hierarchy <span class="kw">AS</span> PH <span class="kw">ON</span> E.page_id <span class="op">=</span> PH.page_id</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> PH.product_category <span class="kw">IS</span> <span class="kw">NOT</span> <span class="kw">NULL</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> PH.product_category</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> PH.product_category;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>product_category</th>
+<th>number_of_views</th>
+<th>number_of_cart_adds</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Fish</td>
+<td>4633</td>
+<td>2789</td>
+</tr>
+<tr class="even">
+<td>Luxury</td>
+<td>3032</td>
+<td>1870</td>
+</tr>
+<tr class="odd">
+<td>Shellfish</td>
+<td>6204</td>
+<td>3792</td>
+</tr>
+</tbody>
+</table>
+<section id="analysis-of-product-category-views-and-cart-adds" class="level4">
+<h4 class="anchored" data-anchor-id="analysis-of-product-category-views-and-cart-adds">Analysis of Product Category Views and Cart Adds</h4>
+<ol type="1">
+<li><p><strong>Insights</strong>:</p>
+<ul>
+<li>Popular Categories: Shellfish has the highest number of views and cart additions, followed by Fish and Luxury categories.</li>
+<li>Engagement Discrepancy: Despite Fish having fewer views compared to Shellfish, it has a relatively higher cart addition rate, indicating stronger user intent or interest in purchasing Fish products.</li>
+<li>Conversion Opportunities: Analyzing user behavior within each category can help identify opportunities to optimize product pages, pricing strategies, or promotional efforts to drive conversions.</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="what-are-the-top-3-products-by-purchases" class="level3">
+<h3 class="anchored" data-anchor-id="what-are-the-top-3-products-by-purchases">9. What are the top 3 products by purchases?</h3>
+<div class="sourceCode" id="cb10"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    PH.product_id,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    PH.page_name,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    PH.product_category,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">COUNT</span>(PH.product_id) <span class="kw">AS</span> product_count</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> <span class="kw">events</span> <span class="kw">AS</span> E</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> event_identifier <span class="kw">AS</span> EI <span class="kw">ON</span> E.event_type <span class="op">=</span> EI.event_type</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> page_hierarchy <span class="kw">AS</span> PH <span class="kw">ON</span> PH.page_id <span class="op">=</span> E.page_id</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> EI.event_name <span class="op">=</span> <span class="st">'Add to Cart'</span> <span class="kw">AND</span> E.visit_id <span class="kw">IN</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    (<span class="kw">SELECT</span> E.visit_id <span class="kw">FROM</span> <span class="kw">events</span> <span class="kw">as</span> E</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>     <span class="kw">JOIN</span> event_identifier <span class="kw">AS</span> EI <span class="kw">ON</span> E.event_type <span class="op">=</span> EI.event_type <span class="kw">WHERE</span> EI.event_name <span class="op">=</span> <span class="st">'Purchase'</span>)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> PH.product_id, PH.page_name, PH.product_category</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> product_count <span class="kw">DESC</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">3</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>product_id</th>
+<th>product_name</th>
+<th>product_category</th>
+<th>product_count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>7</td>
+<td>Lobster</td>
+<td>Shellfish</td>
+<td>754</td>
+</tr>
+<tr class="even">
+<td>9</td>
+<td>Oyster</td>
+<td>Shellfish</td>
+<td>726</td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td>Crab</td>
+<td>Shellfish</td>
+<td>719</td>
+</tr>
+</tbody>
+</table>
+<section id="analysis-of-top-3-products-by-purchases" class="level4">
+<h4 class="anchored" data-anchor-id="analysis-of-top-3-products-by-purchases">Analysis of Top 3 Products by Purchases</h4>
+<ol type="1">
+<li><p><strong>Insights</strong>:</p>
+<ul>
+<li>Shellfish Dominance: All top 3 products belong to the Shellfish category, indicating its popularity among customers.</li>
+<li>High Demand Items: Lobster, Oyster, and Crab are evidently high-demand items within the Shellfish category, likely due to factors such as taste, availability, and pricing.</li>
+<li>Cross-Promotion Opportunities: Identifying complementary products or bundle offers with these top-selling items can help increase average order value and enhance customer satisfaction.</li>
+</ul></li>
+</ol>
+</section>
+</section>
+</section>
+<section id="product-funnel-analysis-1" class="level2">
+<h2 class="anchored" data-anchor-id="product-funnel-analysis-1">3. Product Funnel Analysis</h2>
+<p>Using a single SQL query - create a new output table which has the following details:</p>
+<ul>
+<li>How many times was each product viewed?</li>
+<li>How many times was each product added to cart?</li>
+<li>How many times was each product added to a cart but not purchased (abandoned)?</li>
+<li>How many times was each product purchased?</li>
+</ul>
+<p>Additionally, create another table which further aggregates the data for the above points but this time for each product category instead of individual products.</p>
+<section id="part-1" class="level3">
+<h3 class="anchored" data-anchor-id="part-1">PART 1</h3>
+<p>Creating a Temporary table view_add_to_cart</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TEMPORARY</span> <span class="kw">TABLE</span> view_add_to_cart <span class="kw">AS</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    PH.product_id,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    PH.page_name <span class="kw">AS</span> product_name,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    PH.product_category,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">SUM</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> EI.event_name <span class="op">=</span> <span class="st">'Page View'</span> <span class="cf">THEN</span> <span class="dv">1</span> <span class="cf">ELSE</span> <span class="dv">0</span> <span class="cf">END</span>) <span class="kw">AS</span> view_counts,</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">SUM</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> EI.event_name <span class="op">=</span> <span class="st">'Add to Cart'</span> <span class="cf">THEN</span> <span class="dv">1</span> <span class="cf">ELSE</span> <span class="dv">0</span> <span class="cf">END</span>) <span class="kw">AS</span> add_to_cart_counts</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">events</span> <span class="kw">AS</span> E</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">JOIN</span> event_identifier <span class="kw">AS</span> EI <span class="kw">ON</span> E.event_type <span class="op">=</span> EI.event_type</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">JOIN</span> page_hierarchy <span class="kw">AS</span> PH <span class="kw">ON</span> E.page_id <span class="op">=</span> PH.page_id</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    PH.product_category <span class="kw">IS</span> <span class="kw">NOT</span> <span class="kw">NULL</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    PH.product_id, PH.page_name, PH.product_category;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Creating a Temporary table products_abandoned</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TEMPORARY</span> <span class="kw">TABLE</span> products_abandoned <span class="kw">AS</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    PH.product_id,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    PH.page_name <span class="kw">AS</span> product_name,</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    PH.product_category,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> abandoned</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">events</span> <span class="kw">AS</span> E</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">JOIN</span> event_identifier <span class="kw">AS</span> EI <span class="kw">ON</span> E.event_type <span class="op">=</span> EI.event_type</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">JOIN</span> page_hierarchy <span class="kw">AS</span> PH <span class="kw">ON</span> E.page_id <span class="op">=</span> PH.page_id</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    EI.event_name <span class="op">=</span> <span class="st">'Add to Cart'</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">AND</span> E.visit_id <span class="kw">NOT</span> <span class="kw">IN</span> (</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>        <span class="kw">SELECT</span> E.visit_id</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>        <span class="kw">FROM</span> <span class="kw">events</span> <span class="kw">AS</span> E</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>        <span class="kw">JOIN</span> event_identifier <span class="kw">AS</span> EI <span class="kw">ON</span> E.event_type <span class="op">=</span> EI.event_type</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>        <span class="kw">WHERE</span> EI.event_name <span class="op">=</span> <span class="st">'Purchase'</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>    PH.product_id, PH.page_name, PH.product_category;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Creating a Temporary table products_purchased</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TEMPORARY</span> <span class="kw">TABLE</span> products_purchased <span class="kw">AS</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    PH.product_id,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    PH.page_name <span class="kw">AS</span> product_name,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    PH.product_category,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> purchased</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> <span class="kw">events</span> <span class="kw">AS</span> E</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> event_identifier <span class="kw">AS</span> EI <span class="kw">ON</span> E.event_type <span class="op">=</span> EI.event_type</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> page_hierarchy <span class="kw">AS</span> PH <span class="kw">ON</span> E.page_id <span class="op">=</span> PH.page_id</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> EI.event_name <span class="op">=</span> <span class="st">'Add to Cart'</span> <span class="kw">AND</span> E.visit_id <span class="kw">IN</span> (</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>        <span class="kw">SELECT</span> E.visit_id</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>        <span class="kw">FROM</span> <span class="kw">events</span> <span class="kw">AS</span> E</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>        <span class="kw">JOIN</span> event_identifier <span class="kw">AS</span> EI <span class="kw">ON</span> E.event_type <span class="op">=</span> EI.event_type</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>        <span class="kw">WHERE</span> EI.event_name <span class="op">=</span> <span class="st">'Purchase'</span>)</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>PH.product_id, PH.page_name, PH.product_category;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Creating a Temporary table product_information that combines all the above tables created above.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TEMPORARY</span> <span class="kw">TABLE</span> product_information <span class="kw">AS</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    VATC.<span class="op">*</span>,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    AB.abandoned,</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    PP.purchased</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>view_add_to_cart <span class="kw">AS</span> VATC</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> products_abandoned <span class="kw">AS</span> AB <span class="kw">ON</span> VATC.product_id <span class="op">=</span> AB.product_id</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> products_purchased <span class="kw">AS</span> PP <span class="kw">ON</span> VATC.product_id <span class="op">=</span> PP.product_id;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Dropping the created temporary tables, since they are not required anymore.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TEMPORARY</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">EXISTS</span> view_add_to_cart, products_abandoned, products_purchased;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Displaying the Final resulting table product_information records..</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> product_information</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> product_id;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<table class="table">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 15%">
+<col style="width: 17%">
+<col style="width: 12%">
+<col style="width: 19%">
+<col style="width: 10%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>product_id</th>
+<th>product_name</th>
+<th>product_category</th>
+<th>view_counts</th>
+<th>add_to_cart_counts</th>
+<th>abandoned</th>
+<th>purchased</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Salmon</td>
+<td>Fish</td>
+<td>1559</td>
+<td>938</td>
+<td>227</td>
+<td>711</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Kingfish</td>
+<td>Fish</td>
+<td>1559</td>
+<td>920</td>
+<td>213</td>
+<td>707</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Tuna</td>
+<td>Fish</td>
+<td>1515</td>
+<td>931</td>
+<td>234</td>
+<td>697</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Russian Caviar</td>
+<td>Luxury</td>
+<td>1563</td>
+<td>946</td>
+<td>249</td>
+<td>697</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Black Truffle</td>
+<td>Luxury</td>
+<td>1469</td>
+<td>924</td>
+<td>217</td>
+<td>707</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Abalone</td>
+<td>Shellfish</td>
+<td>1525</td>
+<td>932</td>
+<td>233</td>
+<td>699</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>Lobster</td>
+<td>Shellfish</td>
+<td>1547</td>
+<td>968</td>
+<td>214</td>
+<td>754</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>Crab</td>
+<td>Shellfish</td>
+<td>1564</td>
+<td>949</td>
+<td>230</td>
+<td>719</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>Oyster</td>
+<td>Shellfish</td>
+<td>1568</td>
+<td>943</td>
+<td>217</td>
+<td>726</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="part-2" class="level3">
+<h3 class="anchored" data-anchor-id="part-2">PART 2</h3>
+<p>Creating a Temporary table category_view_add_to_cart</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TEMPORARY</span> <span class="kw">TABLE</span> category_view_add_to_cart <span class="kw">AS</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    PH.product_category,</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">SUM</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> EI.event_name <span class="op">=</span> <span class="st">'Page View'</span> <span class="cf">THEN</span> <span class="dv">1</span> <span class="cf">ELSE</span> <span class="dv">0</span> <span class="cf">END</span>) <span class="kw">AS</span> view_counts,</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">SUM</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> EI.event_name <span class="op">=</span> <span class="st">'Add to Cart'</span> <span class="cf">THEN</span> <span class="dv">1</span> <span class="cf">ELSE</span> <span class="dv">0</span> <span class="cf">END</span>) <span class="kw">AS</span> add_to_cart_counts</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> <span class="kw">events</span> <span class="kw">AS</span> E</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">JOIN</span> event_identifier <span class="kw">AS</span> EI <span class="kw">ON</span> E.event_type <span class="op">=</span> EI.event_type</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">JOIN</span> page_hierarchy <span class="kw">AS</span> PH <span class="kw">ON</span> E.page_id <span class="op">=</span> PH.page_id</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> PH.product_category <span class="kw">IS</span> <span class="kw">NOT</span> <span class="kw">NULL</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> PH.product_category;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Creating a Temporary table category_products_abandoned</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TEMPORARY</span> <span class="kw">TABLE</span> category_products_abandoned <span class="kw">AS</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    PH.product_category,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> abandoned</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> <span class="kw">events</span> <span class="kw">AS</span> E</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> event_identifier <span class="kw">AS</span> EI <span class="kw">ON</span> E.event_type <span class="op">=</span> EI.event_type</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> page_hierarchy <span class="kw">AS</span> PH <span class="kw">ON</span> E.page_id <span class="op">=</span> PH.page_id</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> EI.event_name <span class="op">=</span> <span class="st">'Add to Cart'</span> <span class="kw">AND</span> E.visit_id <span class="kw">NOT</span> <span class="kw">IN</span> (</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>        <span class="kw">SELECT</span> E.visit_id</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>        <span class="kw">FROM</span> <span class="kw">events</span> <span class="kw">AS</span> E</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>        <span class="kw">JOIN</span> event_identifier <span class="kw">AS</span> EI <span class="kw">ON</span> E.event_type <span class="op">=</span> EI.event_type</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>        <span class="kw">WHERE</span> EI.event_name <span class="op">=</span> <span class="st">'Purchase'</span>)</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> PH.product_category;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Creating a Temporary table category_products_purchased</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TEMPORARY</span> <span class="kw">TABLE</span> category_products_purchased <span class="kw">AS</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    PH.product_category,</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> purchased</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> <span class="kw">events</span> <span class="kw">AS</span> E</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> event_identifier <span class="kw">AS</span> EI <span class="kw">ON</span> E.event_type <span class="op">=</span> EI.event_type</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> page_hierarchy <span class="kw">AS</span> PH <span class="kw">ON</span> E.page_id <span class="op">=</span> PH.page_id</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> EI.event_name <span class="op">=</span> <span class="st">'Add to Cart'</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="kw">AND</span> E.visit_id <span class="kw">IN</span> (<span class="kw">SELECT</span> E.visit_id</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> <span class="kw">events</span> <span class="kw">AS</span> E</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">JOIN</span> event_identifier <span class="kw">AS</span> EI <span class="kw">ON</span> E.event_type <span class="op">=</span> EI.event_type</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span> EI.event_name <span class="op">=</span> <span class="st">'Purchase'</span>)</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> PH.product_category;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Creating a Temporary table category_product_information that combines all the above tables created above.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TEMPORARY</span> <span class="kw">TABLE</span> category_product_information <span class="kw">AS</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    VATC.<span class="op">*</span>, AB.abandoned, PP.purchased</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> category_view_add_to_cart <span class="kw">AS</span> VATC</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> category_products_abandoned <span class="kw">AS</span> AB <span class="kw">ON</span> VATC.product_category <span class="op">=</span> AB.product_category</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> category_products_purchased <span class="kw">AS</span> PP <span class="kw">ON</span> VATC.product_category <span class="op">=</span> PP.product_category;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Drop the temporary tables, since they are not needed anymore</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TEMPORARY</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">EXISTS</span> category_view_add_to_cart, category_products_abandoned, category_products_purchased;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Displaying the final resulting category_product_information table records</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> category_product_information</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> product_category;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<table class="table">
+<colgroup>
+<col style="width: 24%">
+<col style="width: 17%">
+<col style="width: 27%">
+<col style="width: 15%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>product_category</th>
+<th>view_counts</th>
+<th>add_to_cart_counts</th>
+<th>abandoned</th>
+<th>purchased</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Luxury</td>
+<td>3032</td>
+<td>1870</td>
+<td>466</td>
+<td>1404</td>
+</tr>
+<tr class="even">
+<td>Fish</td>
+<td>4633</td>
+<td>2789</td>
+<td>674</td>
+<td>2115</td>
+</tr>
+<tr class="odd">
+<td>Shellfish</td>
+<td>6204</td>
+<td>3792</td>
+<td>894</td>
+<td>2898</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="which-product-had-the-most-views-cart-adds-and-purchases" class="level3">
+<h3 class="anchored" data-anchor-id="which-product-had-the-most-views-cart-adds-and-purchases">1. Which product had the most views, cart adds and purchases?</h3>
+<div class="sourceCode" id="cb23"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> product_information</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> view_counts <span class="kw">DESC</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">1</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<table class="table">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 14%">
+<col style="width: 18%">
+<col style="width: 13%">
+<col style="width: 20%">
+<col style="width: 11%">
+<col style="width: 11%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>product_id</th>
+<th>product_name</th>
+<th>product_category</th>
+<th>view_counts</th>
+<th>add_to_cart_counts</th>
+<th>abandoned</th>
+<th>purchased</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>9</td>
+<td>Oyster</td>
+<td>Shellfish</td>
+<td>1568</td>
+<td>943</td>
+<td>217</td>
+<td>726</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb24"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> product_information</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> add_to_cart_counts <span class="kw">DESC</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">1</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<table class="table">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 14%">
+<col style="width: 18%">
+<col style="width: 13%">
+<col style="width: 20%">
+<col style="width: 11%">
+<col style="width: 11%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>product_id</th>
+<th>product_name</th>
+<th>product_category</th>
+<th>view_counts</th>
+<th>add_to_cart_counts</th>
+<th>abandoned</th>
+<th>purchased</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>7</td>
+<td>Lobster</td>
+<td>Shellfish</td>
+<td>1547</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb25"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> product_information</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> purchased <span class="kw">DESC</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">1</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<table class="table">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 14%">
+<col style="width: 18%">
+<col style="width: 13%">
+<col style="width: 20%">
+<col style="width: 11%">
+<col style="width: 11%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>product_id</th>
+<th>product_name</th>
+<th>product_category</th>
+<th>view_counts</th>
+<th>add_to_cart_counts</th>
+<th>abandoned</th>
+<th>purchased</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>7</td>
+<td>Lobster</td>
+<td>Shellfish</td>
+<td>1547</td>
+<td>968</td>
+<td>214</td>
+<td>754</td>
+</tr>
+</tbody>
+</table>
+<section id="analysis-of-product-performance-summary" class="level4">
+<h4 class="anchored" data-anchor-id="analysis-of-product-performance-summary">Analysis of Product Performance Summary</h4>
+<ol type="1">
+<li><p><strong>Insights</strong>:</p>
+<ul>
+<li>Shellfish Dominance: Both the product with the most views and the product with the most cart adds and purchases belong to the Shellfish category, indicating its popularity among customers.</li>
+<li>Lobster Dominance: The product with the most cart adds and purchases is Lobster, suggesting that it is not only popular but also highly sought-after for purchase among customers.</li>
+<li>Oyster Engagement: Although Oyster has the most views, it has a relatively lower number of cart adds and purchases compared to Lobster, indicating potential areas for improvement in conversion rate or marketing strategies.</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="which-product-was-most-likely-to-be-abandoned" class="level3">
+<h3 class="anchored" data-anchor-id="which-product-was-most-likely-to-be-abandoned">2. Which product was most likely to be abandoned?</h3>
+<div class="sourceCode" id="cb26"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> product_information</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> abandoned <span class="kw">DESC</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">1</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<table class="table">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 15%">
+<col style="width: 17%">
+<col style="width: 12%">
+<col style="width: 19%">
+<col style="width: 10%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>product_id</th>
+<th>product_name</th>
+<th>product_category</th>
+<th>view_counts</th>
+<th>add_to_cart_counts</th>
+<th>abandoned</th>
+<th>purchased</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>4</td>
+<td>Russian Caviar</td>
+<td>Luxury</td>
+<td>1563</td>
+<td>946</td>
+<td>249</td>
+<td>697</td>
+</tr>
+</tbody>
+</table>
+<section id="analysis-of-product-most-likely-to-be-abandoned" class="level4">
+<h4 class="anchored" data-anchor-id="analysis-of-product-most-likely-to-be-abandoned">Analysis of Product Most Likely to Be Abandoned</h4>
+<ol type="1">
+<li><p><strong>Insights</strong>:</p>
+<ul>
+<li>Luxury Product: Russian Caviar falls under the Luxury category, which may imply a higher price point or more exclusive nature compared to other products.</li>
+<li>High Abandonment Rate: The relatively high number of abandonments suggests that customers might have shown interest in the product but ultimately decided not to proceed with the purchase.</li>
+<li>Potential Improvements: Analyzing the reasons behind abandonment, such as pricing concerns, shipping costs, or checkout process issues, could provide insights into areas for improvement to reduce abandonment rates and increase conversions. Additionally, targeted marketing or promotional strategies could be employed to encourage customers to complete their purchase of Russian Caviar.</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="which-product-had-the-highest-view-to-purchase-percentage" class="level3">
+<h3 class="anchored" data-anchor-id="which-product-had-the-highest-view-to-purchase-percentage">3. Which product had the highest view to purchase percentage?</h3>
+<div class="sourceCode" id="cb27"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> product_name,</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ROUND</span>(<span class="fl">100.0</span> <span class="op">*</span> (purchased<span class="op">/</span>view_counts),<span class="dv">2</span>) <span class="kw">AS</span> purchase_to_view_pct</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> product_information</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> purchase_to_view_pct <span class="kw">DESC</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">1</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>product_name</th>
+<th>purchase_to_view_pct</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Lobster</td>
+<td>48.74</td>
+</tr>
+</tbody>
+</table>
+<section id="analysis-of-product-with-highest-view-to-purchase-percentage" class="level4">
+<h4 class="anchored" data-anchor-id="analysis-of-product-with-highest-view-to-purchase-percentage">Analysis of Product with Highest View-to-Purchase Percentage</h4>
+<ol type="1">
+<li><p><strong>Insights</strong>:</p>
+<ul>
+<li>High Conversion Rate: The high purchase-to-view percentage indicates that a significant portion of customers who viewed the Lobster product ultimately made a purchase.</li>
+<li>Appealing Product: Lobster seems to be particularly appealing to customers, leading to a relatively high conversion rate compared to other products.</li>
+<li>Market Demand: The high conversion rate may suggest strong market demand for Lobster, potentially due to factors such as its taste, quality, or perceived value.</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="what-is-the-average-conversion-rate-from-view-to-cart-add" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-the-average-conversion-rate-from-view-to-cart-add">4. What is the average conversion rate from view to cart add?</h3>
+<div class="sourceCode" id="cb28"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ROUND</span>(<span class="fu">AVG</span>(<span class="fl">100.0</span> <span class="op">*</span> (add_to_cart_counts<span class="op">/</span>view_counts)),<span class="dv">2</span>) <span class="kw">AS</span> avg_conversion_rate</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> product_information;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>avg_conversion_rate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>60.95</td>
+</tr>
+</tbody>
+</table>
+<section id="analysis-of-average-conversion-rate-from-view-to-cart-add" class="level4">
+<h4 class="anchored" data-anchor-id="analysis-of-average-conversion-rate-from-view-to-cart-add">Analysis of Average Conversion Rate from View to Cart Add</h4>
+<ol type="1">
+<li><p><strong>Insights</strong>:</p>
+<ul>
+<li>Conversion Funnel Efficiency: The high average conversion rate indicates that a significant proportion of customers who view products proceed to add them to their cart.</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="what-is-the-average-conversion-rate-from-cart-add-to-purchase" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-the-average-conversion-rate-from-cart-add-to-purchase">5. What is the average conversion rate from cart add to purchase?</h3>
+<div class="sourceCode" id="cb29"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ROUND</span>(<span class="fu">AVG</span>(<span class="fl">100.0</span> <span class="op">*</span> (purchased<span class="op">/</span>add_to_cart_counts)),<span class="dv">2</span>) <span class="kw">AS</span> avg_conversion_rate</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> product_information;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>avg_conversion_rate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>75.93</td>
+</tr>
+</tbody>
+</table>
+<section id="analysis-of-average-conversion-rate-from-cart-add-to-purchase" class="level4">
+<h4 class="anchored" data-anchor-id="analysis-of-average-conversion-rate-from-cart-add-to-purchase">Analysis of Average Conversion Rate from Cart Add to Purchase</h4>
+<ol type="1">
+<li><p><strong>Insights</strong>:</p>
+<ul>
+<li>Conversion Funnel Efficiency: This high average conversion rate indicates that a significant proportion of customers who add products to their cart ultimately proceed to make a purchase.</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="generate-a-table-that-has-1-single-row-for-every-unique-visit_id-record-and-has-the-following-columns" class="level3">
+<h3 class="anchored" data-anchor-id="generate-a-table-that-has-1-single-row-for-every-unique-visit_id-record-and-has-the-following-columns">Generate a table that has 1 single row for every unique visit_id record and has the following columns:</h3>
+<ul>
+<li>user_id</li>
+<li>visit_id</li>
+<li>visit_start_time: the earliest event_time for each visit</li>
+<li>page_views: count of page views for each visit</li>
+<li>cart_adds: count of product cart add events for each visit</li>
+<li>purchase: 1/0 flag if a purchase event exists for each visit</li>
+<li>campaign_name: map the visit to a campaign if the visit_start_time falls between the start_date and end_date</li>
+<li>impression: count of ad impressions for each visit</li>
+<li>click: count of ad clicks for each visit</li>
+</ul>
+<p>(Optional column) cart_products: a comma separated text value with products added to the cart sorted by the order they were added to the cart (hint: use the sequence_number).</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>    U.user_id, E.visit_id, <span class="fu">MIN</span>(E.event_time) <span class="kw">AS</span> visit_start_date, C.campaign_name,</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">SUM</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> EI.event_name <span class="op">=</span> <span class="st">'Page View'</span> <span class="cf">THEN</span> <span class="dv">1</span> <span class="cf">ELSE</span> <span class="dv">0</span> <span class="cf">END</span>) <span class="kw">AS</span> page_view_counts,</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">SUM</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> EI.event_name <span class="op">=</span> <span class="st">'Add to Cart'</span> <span class="cf">THEN</span> <span class="dv">1</span> <span class="cf">ELSE</span> <span class="dv">0</span> <span class="cf">END</span>) <span class="kw">AS</span> add_to_cart_counts,</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">SUM</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> EI.event_name <span class="op">=</span> <span class="st">'Purchase'</span> <span class="cf">THEN</span> <span class="dv">1</span> <span class="cf">ELSE</span> <span class="dv">0</span> <span class="cf">END</span>) <span class="kw">AS</span> purchased_counts,</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">SUM</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> EI.event_name <span class="op">=</span> <span class="st">'Ad Impression'</span> <span class="cf">THEN</span> <span class="dv">1</span> <span class="cf">ELSE</span> <span class="dv">0</span> <span class="cf">END</span>) <span class="kw">AS</span> impression_counts,</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">SUM</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> EI.event_name <span class="op">=</span> <span class="st">'Ad Click'</span> <span class="cf">THEN</span> <span class="dv">1</span> <span class="cf">ELSE</span> <span class="dv">0</span> <span class="cf">END</span>) <span class="kw">AS</span> click_counts</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> users <span class="kw">AS</span> U</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> <span class="kw">events</span> <span class="kw">AS</span> E <span class="kw">ON</span> U.cookie_id <span class="op">=</span> E.cookie_id</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> event_identifier <span class="kw">AS</span> EI <span class="kw">ON</span> E.event_type <span class="op">=</span> EI.event_type</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> campaign_identifier <span class="kw">AS</span> C <span class="kw">ON</span> E.event_time <span class="kw">BETWEEN</span> C.start_date <span class="kw">AND</span> C.end_date</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> U.user_id, E.visit_id, C.campaign_name;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<p>First 20 records</p>
+<table class="table">
+<colgroup>
+<col style="width: 5%">
+<col style="width: 6%">
+<col style="width: 14%">
+<col style="width: 23%">
+<col style="width: 11%">
+<col style="width: 12%">
+<col style="width: 6%">
+<col style="width: 11%">
+<col style="width: 8%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>user_id</th>
+<th>visit_id</th>
+<th>visit_start_date</th>
+<th>campaign_name</th>
+<th>page_view_counts</th>
+<th>add_to_cart_counts</th>
+<th>purchased</th>
+<th>impression_counts</th>
+<th>click_counts</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>ccf365</td>
+<td>2020-02-04 19:16:09</td>
+<td>Half Off - Treat Your Shellf(ish)</td>
+<td>7</td>
+<td>3</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>d58cbd</td>
+<td>2020-01-18 23:40:55</td>
+<td>25% Off - Living The Lux Life</td>
+<td>8</td>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>9a2f24</td>
+<td>2020-02-21 03:19:10</td>
+<td>Half Off - Treat Your Shellf(ish)</td>
+<td>6</td>
+<td>2</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>7caba5</td>
+<td>2020-02-22 17:49:38</td>
+<td>Half Off - Treat Your Shellf(ish)</td>
+<td>5</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>f61ed7</td>
+<td>2020-02-01 06:30:40</td>
+<td>Half Off - Treat Your Shellf(ish)</td>
+<td>8</td>
+<td>2</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>e0ce49</td>
+<td>2020-01-25 22:43:21</td>
+<td>25% Off - Living The Lux Life</td>
+<td>9</td>
+<td>3</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>8479c1</td>
+<td>2020-02-09 17:27:59</td>
+<td>Half Off - Treat Your Shellf(ish)</td>
+<td>5</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>a6c424</td>
+<td>2020-02-12 11:23:55</td>
+<td>Half Off - Treat Your Shellf(ish)</td>
+<td>7</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>5ef346</td>
+<td>2020-02-07 17:32:45</td>
+<td>Half Off - Treat Your Shellf(ish)</td>
+<td>7</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>d39d35</td>
+<td>2020-01-23 21:47:04</td>
+<td>25% Off - Living The Lux Life</td>
+<td>7</td>
+<td>3</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>11</td>
+<td>9c2633</td>
+<td>2020-01-17 04:59:43</td>
+<td>25% Off - Living The Lux Life</td>
+<td>8</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>12</td>
+<td>d69e73</td>
+<td>2020-02-06 09:09:06</td>
+<td>Half Off - Treat Your Shellf(ish)</td>
+<td>5</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>13</td>
+<td>c70085</td>
+<td>2020-02-12 08:26:14</td>
+<td>Half Off - Treat Your Shellf(ish)</td>
+<td>6</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>14</td>
+<td>6a20a3</td>
+<td>2020-01-12 02:49:32</td>
+<td>BOGOF - Fishing For Compliments</td>
+<td>8</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>16</td>
+<td>69440b</td>
+<td>2020-01-06 21:45:51</td>
+<td>BOGOF - Fishing For Compliments</td>
+<td>4</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>17</td>
+<td>e70fd5</td>
+<td>2020-02-17 10:05:51</td>
+<td>Half Off - Treat Your Shellf(ish)</td>
+<td>7</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>18</td>
+<td>48810d</td>
+<td>2020-02-29 15:26:41</td>
+<td>Half Off - Treat Your Shellf(ish)</td>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>19</td>
+<td>fdf383</td>
+<td>2020-02-11 13:52:24</td>
+<td>Half Off - Treat Your Shellf(ish)</td>
+<td>7</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>20</td>
+<td>378a75</td>
+<td>2020-02-12 23:33:51</td>
+<td>Half Off - Treat Your Shellf(ish)</td>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
