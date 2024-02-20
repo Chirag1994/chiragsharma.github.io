@@ -155,7 +155,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page">
+    <div class="quarto-title column-page-left">
       <h1 class="title">Case Study #6 - CliqueBait.</h1>
                   <div>
         <div class="description">
@@ -193,9 +193,59 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#case-study-6---cliquebait" id="toc-case-study-6---cliquebait" class="nav-link active" data-scroll-target="#case-study-6---cliquebait">Case Study #6 - CliqueBait</a>
+  <ul class="collapse">
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#available-data" id="toc-available-data" class="nav-link" data-scroll-target="#available-data">Available Data</a>
+  <ul class="collapse">
+  <li><a href="#users" id="toc-users" class="nav-link" data-scroll-target="#users">Users</a></li>
+  <li><a href="#events" id="toc-events" class="nav-link" data-scroll-target="#events">Events</a></li>
+  <li><a href="#event-identifier" id="toc-event-identifier" class="nav-link" data-scroll-target="#event-identifier">Event Identifier</a></li>
+  <li><a href="#campaign-identifier" id="toc-campaign-identifier" class="nav-link" data-scroll-target="#campaign-identifier">Campaign Identifier</a></li>
+  <li><a href="#page-hierarchy" id="toc-page-hierarchy" class="nav-link" data-scroll-target="#page-hierarchy">Page Hierarchy</a></li>
+  </ul></li>
+  <li><a href="#interactive-sql-instance" id="toc-interactive-sql-instance" class="nav-link" data-scroll-target="#interactive-sql-instance">Interactive SQL Instance</a></li>
+  <li><a href="#case-study-questions" id="toc-case-study-questions" class="nav-link" data-scroll-target="#case-study-questions">Case Study Questions</a>
+  <ul class="collapse">
+  <li><a href="#enterprise-relationship-diagram" id="toc-enterprise-relationship-diagram" class="nav-link" data-scroll-target="#enterprise-relationship-diagram">1. Enterprise Relationship Diagram</a></li>
+  <li><a href="#digital-analysis" id="toc-digital-analysis" class="nav-link" data-scroll-target="#digital-analysis">2. Digital Analysis</a></li>
+  <li><a href="#product-funnel-analysis" id="toc-product-funnel-analysis" class="nav-link" data-scroll-target="#product-funnel-analysis">3. Product Funnel Analysis</a></li>
+  <li><a href="#campaigns-analysis" id="toc-campaigns-analysis" class="nav-link" data-scroll-target="#campaigns-analysis">4. Campaigns Analysis</a></li>
+  </ul></li>
+  <li><a href="#digital-analysis-1" id="toc-digital-analysis-1" class="nav-link" data-scroll-target="#digital-analysis-1">2. Digital Analysis</a>
+  <ul class="collapse">
+  <li><a href="#how-many-users-are-there" id="toc-how-many-users-are-there" class="nav-link" data-scroll-target="#how-many-users-are-there">1. How many users are there?</a></li>
+  <li><a href="#how-many-cookies-does-each-user-have-on-average" id="toc-how-many-cookies-does-each-user-have-on-average" class="nav-link" data-scroll-target="#how-many-cookies-does-each-user-have-on-average">2. How many cookies does each user have on average?</a></li>
+  <li><a href="#what-is-the-unique-number-of-visits-by-all-users-per-month" id="toc-what-is-the-unique-number-of-visits-by-all-users-per-month" class="nav-link" data-scroll-target="#what-is-the-unique-number-of-visits-by-all-users-per-month">3. What is the unique number of visits by all users per month?</a></li>
+  <li><a href="#what-is-the-number-of-events-for-each-event-type" id="toc-what-is-the-number-of-events-for-each-event-type" class="nav-link" data-scroll-target="#what-is-the-number-of-events-for-each-event-type">4. What is the number of events for each event type?</a></li>
+  <li><a href="#what-is-the-percentage-of-visits-which-have-a-purchase-event" id="toc-what-is-the-percentage-of-visits-which-have-a-purchase-event" class="nav-link" data-scroll-target="#what-is-the-percentage-of-visits-which-have-a-purchase-event">5. What is the percentage of visits which have a purchase event?</a></li>
+  <li><a href="#what-is-the-percentage-of-visits-which-view-the-checkout-page-but-do-not-have-a-purchase-event" id="toc-what-is-the-percentage-of-visits-which-view-the-checkout-page-but-do-not-have-a-purchase-event" class="nav-link" data-scroll-target="#what-is-the-percentage-of-visits-which-view-the-checkout-page-but-do-not-have-a-purchase-event">6. What is the percentage of visits which view the checkout page but do not have a purchase event?</a></li>
+  <li><a href="#what-are-the-top-3-pages-by-number-of-views" id="toc-what-are-the-top-3-pages-by-number-of-views" class="nav-link" data-scroll-target="#what-are-the-top-3-pages-by-number-of-views">7. What are the top 3 pages by number of views?</a></li>
+  <li><a href="#what-is-the-number-of-views-and-cart-adds-for-each-product-category" id="toc-what-is-the-number-of-views-and-cart-adds-for-each-product-category" class="nav-link" data-scroll-target="#what-is-the-number-of-views-and-cart-adds-for-each-product-category">8. What is the number of views and cart adds for each product category?</a></li>
+  <li><a href="#what-are-the-top-3-products-by-purchases" id="toc-what-are-the-top-3-products-by-purchases" class="nav-link" data-scroll-target="#what-are-the-top-3-products-by-purchases">9. What are the top 3 products by purchases?</a></li>
+  </ul></li>
+  <li><a href="#product-funnel-analysis-1" id="toc-product-funnel-analysis-1" class="nav-link" data-scroll-target="#product-funnel-analysis-1">3. Product Funnel Analysis</a>
+  <ul class="collapse">
+  <li><a href="#part-1" id="toc-part-1" class="nav-link" data-scroll-target="#part-1">PART 1</a></li>
+  <li><a href="#part-2" id="toc-part-2" class="nav-link" data-scroll-target="#part-2">PART 2</a></li>
+  <li><a href="#which-product-had-the-most-views-cart-adds-and-purchases" id="toc-which-product-had-the-most-views-cart-adds-and-purchases" class="nav-link" data-scroll-target="#which-product-had-the-most-views-cart-adds-and-purchases">1. Which product had the most views, cart adds and purchases?</a></li>
+  <li><a href="#which-product-was-most-likely-to-be-abandoned" id="toc-which-product-was-most-likely-to-be-abandoned" class="nav-link" data-scroll-target="#which-product-was-most-likely-to-be-abandoned">2. Which product was most likely to be abandoned?</a></li>
+  <li><a href="#which-product-had-the-highest-view-to-purchase-percentage" id="toc-which-product-had-the-highest-view-to-purchase-percentage" class="nav-link" data-scroll-target="#which-product-had-the-highest-view-to-purchase-percentage">3. Which product had the highest view to purchase percentage?</a></li>
+  <li><a href="#what-is-the-average-conversion-rate-from-view-to-cart-add" id="toc-what-is-the-average-conversion-rate-from-view-to-cart-add" class="nav-link" data-scroll-target="#what-is-the-average-conversion-rate-from-view-to-cart-add">4. What is the average conversion rate from view to cart add?</a></li>
+  <li><a href="#what-is-the-average-conversion-rate-from-cart-add-to-purchase" id="toc-what-is-the-average-conversion-rate-from-cart-add-to-purchase" class="nav-link" data-scroll-target="#what-is-the-average-conversion-rate-from-cart-add-to-purchase">5. What is the average conversion rate from cart add to purchase?</a></li>
+  <li><a href="#generate-a-table-that-has-1-single-row-for-every-unique-visit_id-record-and-has-the-following-columns" id="toc-generate-a-table-that-has-1-single-row-for-every-unique-visit_id-record-and-has-the-following-columns" class="nav-link" data-scroll-target="#generate-a-table-that-has-1-single-row-for-every-unique-visit_id-record-and-has-the-following-columns">Generate a table that has 1 single row for every unique visit_id record and has the following columns:</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content quarto-banner-title-block column-page" id="quarto-document-content">
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
 
 

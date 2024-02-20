@@ -159,7 +159,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page">
+    <div class="quarto-title column-page-left">
       <h1 class="title">Melanoma Skin Cancer Detection using Transfer Learning with PyTorch.</h1>
                   <div>
         <div class="description">
@@ -200,9 +200,56 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#creating-directories-to-store-python-scripts-and-model" id="toc-creating-directories-to-store-python-scripts-and-model" class="nav-link active" data-scroll-target="#creating-directories-to-store-python-scripts-and-model">Creating Directories to store python scripts and model</a></li>
+  <li><a href="#creating-python-modules-in-scripts-for-training-and-prediction" id="toc-creating-python-modules-in-scripts-for-training-and-prediction" class="nav-link" data-scroll-target="#creating-python-modules-in-scripts-for-training-and-prediction">Creating Python modules in Scripts for training and prediction</a></li>
+  <li><a href="#creating-requirements.txt-file-to-install-all-the-packages-for-our-model-training" id="toc-creating-requirements.txt-file-to-install-all-the-packages-for-our-model-training" class="nav-link" data-scroll-target="#creating-requirements.txt-file-to-install-all-the-packages-for-our-model-training">Creating requirements.txt file to install all the packages for our model training</a></li>
+  <li><a href="#installing-all-the-packages" id="toc-installing-all-the-packages" class="nav-link" data-scroll-target="#installing-all-the-packages">Installing all the packages</a></li>
+  <li><a href="#exploratory-data-analysis" id="toc-exploratory-data-analysis" class="nav-link" data-scroll-target="#exploratory-data-analysis">Exploratory Data Analysis</a></li>
+  <li><a href="#patient-id" id="toc-patient-id" class="nav-link" data-scroll-target="#patient-id">Patient ID</a></li>
+  <li><a href="#gender" id="toc-gender" class="nav-link" data-scroll-target="#gender">Gender</a></li>
+  <li><a href="#age" id="toc-age" class="nav-link" data-scroll-target="#age">Age</a></li>
+  <li><a href="#anatom_site_general_challenge" id="toc-anatom_site_general_challenge" class="nav-link" data-scroll-target="#anatom_site_general_challenge">anatom_site_general_challenge</a></li>
+  <li><a href="#target" id="toc-target" class="nav-link" data-scroll-target="#target">Target</a></li>
+  <li><a href="#sex-vs.-target-anatom_site_general_challenge-vs.-target" id="toc-sex-vs.-target-anatom_site_general_challenge-vs.-target" class="nav-link" data-scroll-target="#sex-vs.-target-anatom_site_general_challenge-vs.-target">Sex Vs. Target &amp; anatom_site_general_challenge Vs. Target</a></li>
+  <li><a href="#age-vs.-target" id="toc-age-vs.-target" class="nav-link" data-scroll-target="#age-vs.-target">Age Vs. Target</a></li>
+  <li><a href="#training-our-model-with-no-tabular-features" id="toc-training-our-model-with-no-tabular-features" class="nav-link" data-scroll-target="#training-our-model-with-no-tabular-features">Training our model with No Tabular features</a></li>
+  <li><a href="#generating-submission-file-on-the-test-dataset" id="toc-generating-submission-file-on-the-test-dataset" class="nav-link" data-scroll-target="#generating-submission-file-on-the-test-dataset">Generating submission file on the test dataset</a></li>
+  <li><a href="#building-gradio-demo" id="toc-building-gradio-demo" class="nav-link" data-scroll-target="#building-gradio-demo">Building Gradio demo</a>
+  <ul class="collapse">
+  <li><a href="#gradio-overview" id="toc-gradio-overview" class="nav-link" data-scroll-target="#gradio-overview">Gradio Overview</a></li>
+  </ul></li>
+  <li><a href="#creating-a-model-instance-and-putting-it-on-the-cpu" id="toc-creating-a-model-instance-and-putting-it-on-the-cpu" class="nav-link" data-scroll-target="#creating-a-model-instance-and-putting-it-on-the-cpu">Creating a model instance and putting it on the CPU</a></li>
+  <li><a href="#creating-a-function-to-predict-on-a-single-images" id="toc-creating-a-function-to-predict-on-a-single-images" class="nav-link" data-scroll-target="#creating-a-function-to-predict-on-a-single-images">Creating a function to predict on a single images</a>
+  <ul class="collapse">
+  <li><a href="#creating-a-list-of-example-images" id="toc-creating-a-list-of-example-images" class="nav-link" data-scroll-target="#creating-a-list-of-example-images">Creating a list of example images</a></li>
+  <li><a href="#building-a-gradio-interface" id="toc-building-a-gradio-interface" class="nav-link" data-scroll-target="#building-a-gradio-interface">Building a Gradio interface</a></li>
+  </ul></li>
+  <li><a href="#turning-our-melanoma-skin-cancer-detection-gradio-demo-into-a-deployable-app" id="toc-turning-our-melanoma-skin-cancer-detection-gradio-demo-into-a-deployable-app" class="nav-link" data-scroll-target="#turning-our-melanoma-skin-cancer-detection-gradio-demo-into-a-deployable-app">Turning our Melanoma skin cancer detection Gradio Demo into a deployable app</a>
+  <ul class="collapse">
+  <li><a href="#deployed-gradio-app-structure" id="toc-deployed-gradio-app-structure" class="nav-link" data-scroll-target="#deployed-gradio-app-structure">Deployed Gradio App Structure</a></li>
+  <li><a href="#creating-a-demo-folder-to-store-our-melanoma-skin-cancer-app-files" id="toc-creating-a-demo-folder-to-store-our-melanoma-skin-cancer-app-files" class="nav-link" data-scroll-target="#creating-a-demo-folder-to-store-our-melanoma-skin-cancer-app-files">Creating a demo folder to store our Melanoma skin cancer App files</a></li>
+  <li><a href="#creating-a-folder-of-example-images-to-use-with-our-melanoma-skin-cancer-demo" id="toc-creating-a-folder-of-example-images-to-use-with-our-melanoma-skin-cancer-demo" class="nav-link" data-scroll-target="#creating-a-folder-of-example-images-to-use-with-our-melanoma-skin-cancer-demo">Creating a folder of example images to use with our Melanoma skin cancer demo</a></li>
+  <li><a href="#moving-our-trained-efficientnet-b5-model-into-our-melanoma-demo-directory." id="toc-moving-our-trained-efficientnet-b5-model-into-our-melanoma-demo-directory." class="nav-link" data-scroll-target="#moving-our-trained-efficientnet-b5-model-into-our-melanoma-demo-directory.">Moving our trained EfficientNet-B5 model into our Melanoma demo directory.</a></li>
+  <li><a href="#turning-our-efficientnet-b5-model-into-a-python-script-model.py" id="toc-turning-our-efficientnet-b5-model-into-a-python-script-model.py" class="nav-link" data-scroll-target="#turning-our-efficientnet-b5-model-into-a-python-script-model.py">Turning our EfficientNet-B5 model into a Python script (<code>model.py</code>)</a></li>
+  <li><a href="#turning-our-melanoma-skin-cancer-gradio-app-into-a-python-script-app.py" id="toc-turning-our-melanoma-skin-cancer-gradio-app-into-a-python-script-app.py" class="nav-link" data-scroll-target="#turning-our-melanoma-skin-cancer-gradio-app-into-a-python-script-app.py">Turning our Melanoma Skin Cancer Gradio App into a Python Script (<code>app.py</code>)</a></li>
+  <li><a href="#creating-a-requirements.txt-file-for-our-gradio-apprequirements.txt" id="toc-creating-a-requirements.txt-file-for-our-gradio-apprequirements.txt" class="nav-link" data-scroll-target="#creating-a-requirements.txt-file-for-our-gradio-apprequirements.txt">Creating a requirements.txt file for our Gradio App(<code>requirements.txt</code>)</a></li>
+  </ul></li>
+  <li><a href="#deploying-our-application-to-huggingface-spaces" id="toc-deploying-our-application-to-huggingface-spaces" class="nav-link" data-scroll-target="#deploying-our-application-to-huggingface-spaces">Deploying our Application to HuggingFace Spaces</a>
+  <ul class="collapse">
+  <li><a href="#running-our-application-locally" id="toc-running-our-application-locally" class="nav-link" data-scroll-target="#running-our-application-locally">Running our Application locally</a></li>
+  <li><a href="#uploading-to-hugging-face" id="toc-uploading-to-hugging-face" class="nav-link" data-scroll-target="#uploading-to-hugging-face">Uploading to Hugging Face</a></li>
+  </ul></li>
+  <li><a href="#our-final-application-deployed-on-huggingface-spaces" id="toc-our-final-application-deployed-on-huggingface-spaces" class="nav-link" data-scroll-target="#our-final-application-deployed-on-huggingface-spaces">Our Final Application deployed on HuggingFace Spaces</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content quarto-banner-title-block column-page" id="quarto-document-content">
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
 
 

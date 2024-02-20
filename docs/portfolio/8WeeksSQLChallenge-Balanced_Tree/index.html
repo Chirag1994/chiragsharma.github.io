@@ -155,7 +155,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page">
+    <div class="quarto-title column-page-left">
       <h1 class="title">Case Study #7 - Balanced Tree.</h1>
                   <div>
         <div class="description">
@@ -193,9 +193,57 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#case-study-7---balanced-tree" id="toc-case-study-7---balanced-tree" class="nav-link active" data-scroll-target="#case-study-7---balanced-tree">Case Study #7 - Balanced Tree</a>
+  <ul class="collapse">
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#available-data" id="toc-available-data" class="nav-link" data-scroll-target="#available-data">Available Data</a>
+  <ul class="collapse">
+  <li><a href="#product-details" id="toc-product-details" class="nav-link" data-scroll-target="#product-details">Product Details</a></li>
+  <li><a href="#product-sales" id="toc-product-sales" class="nav-link" data-scroll-target="#product-sales">Product Sales</a></li>
+  <li><a href="#product-hierarcy-product-price" id="toc-product-hierarcy-product-price" class="nav-link" data-scroll-target="#product-hierarcy-product-price">Product Hierarcy &amp; Product Price</a></li>
+  </ul></li>
+  <li><a href="#interactive-sql-session" id="toc-interactive-sql-session" class="nav-link" data-scroll-target="#interactive-sql-session">Interactive SQL Session</a></li>
+  <li><a href="#case-study-questions" id="toc-case-study-questions" class="nav-link" data-scroll-target="#case-study-questions">Case Study Questions</a>
+  <ul class="collapse">
+  <li><a href="#a.-high-level-sales-analysis" id="toc-a.-high-level-sales-analysis" class="nav-link" data-scroll-target="#a.-high-level-sales-analysis">A. High Level Sales Analysis</a></li>
+  <li><a href="#b.-transaction-analysis" id="toc-b.-transaction-analysis" class="nav-link" data-scroll-target="#b.-transaction-analysis">B. Transaction Analysis</a></li>
+  <li><a href="#c.-product-analysis" id="toc-c.-product-analysis" class="nav-link" data-scroll-target="#c.-product-analysis">C. Product Analysis</a></li>
+  <li><a href="#d.-reporting-challenge" id="toc-d.-reporting-challenge" class="nav-link" data-scroll-target="#d.-reporting-challenge">D. Reporting Challenge</a></li>
+  <li><a href="#e.-bonus-challenge" id="toc-e.-bonus-challenge" class="nav-link" data-scroll-target="#e.-bonus-challenge">E. Bonus Challenge</a></li>
+  </ul></li>
+  <li><a href="#a.-high-level-sales-analysis-1" id="toc-a.-high-level-sales-analysis-1" class="nav-link" data-scroll-target="#a.-high-level-sales-analysis-1">A. High Level Sales Analysis</a>
+  <ul class="collapse">
+  <li><a href="#what-was-the-total-quantity-sold-for-all-products" id="toc-what-was-the-total-quantity-sold-for-all-products" class="nav-link" data-scroll-target="#what-was-the-total-quantity-sold-for-all-products">1. What was the total quantity sold for all products?</a></li>
+  <li><a href="#what-is-the-total-generated-revenue-for-all-products-before-discounts" id="toc-what-is-the-total-generated-revenue-for-all-products-before-discounts" class="nav-link" data-scroll-target="#what-is-the-total-generated-revenue-for-all-products-before-discounts">2. What is the total generated revenue for all products before discounts?</a></li>
+  <li><a href="#what-was-the-total-discount-amount-for-all-products" id="toc-what-was-the-total-discount-amount-for-all-products" class="nav-link" data-scroll-target="#what-was-the-total-discount-amount-for-all-products">3. What was the total discount amount for all products?</a></li>
+  <li><a href="#how-many-unique-transactions-were-there" id="toc-how-many-unique-transactions-were-there" class="nav-link" data-scroll-target="#how-many-unique-transactions-were-there">1. How many unique transactions were there?</a></li>
+  <li><a href="#what-is-the-average-unique-products-purchased-in-each-transaction" id="toc-what-is-the-average-unique-products-purchased-in-each-transaction" class="nav-link" data-scroll-target="#what-is-the-average-unique-products-purchased-in-each-transaction">2. What is the average unique products purchased in each transaction?</a></li>
+  <li><a href="#what-are-the-25th-50th-and-75th-percentile-values-for-the-revenue-per-transaction" id="toc-what-are-the-25th-50th-and-75th-percentile-values-for-the-revenue-per-transaction" class="nav-link" data-scroll-target="#what-are-the-25th-50th-and-75th-percentile-values-for-the-revenue-per-transaction">3. What are the 25th, 50th and 75th percentile values for the revenue per transaction?</a></li>
+  <li><a href="#what-is-the-average-discount-value-per-transaction" id="toc-what-is-the-average-discount-value-per-transaction" class="nav-link" data-scroll-target="#what-is-the-average-discount-value-per-transaction">4. What is the average discount value per transaction?</a></li>
+  <li><a href="#what-is-the-percentage-split-of-all-transactions-for-members-vs-non-members" id="toc-what-is-the-percentage-split-of-all-transactions-for-members-vs-non-members" class="nav-link" data-scroll-target="#what-is-the-percentage-split-of-all-transactions-for-members-vs-non-members">5. What is the percentage split of all transactions for members vs non-members?</a></li>
+  <li><a href="#what-is-the-average-revenue-for-member-transactions-and-non-member-transactions" id="toc-what-is-the-average-revenue-for-member-transactions-and-non-member-transactions" class="nav-link" data-scroll-target="#what-is-the-average-revenue-for-member-transactions-and-non-member-transactions">6. What is the average revenue for member transactions and non-member transactions?</a></li>
+  <li><a href="#what-are-the-top-3-products-by-total-revenue-before-discount" id="toc-what-are-the-top-3-products-by-total-revenue-before-discount" class="nav-link" data-scroll-target="#what-are-the-top-3-products-by-total-revenue-before-discount">1. What are the top 3 products by total revenue before discount?</a></li>
+  <li><a href="#what-is-the-total-quantity-revenue-and-discount-for-each-segment" id="toc-what-is-the-total-quantity-revenue-and-discount-for-each-segment" class="nav-link" data-scroll-target="#what-is-the-total-quantity-revenue-and-discount-for-each-segment">2. What is the total quantity, revenue and discount for each segment?</a></li>
+  <li><a href="#what-is-the-top-selling-product-for-each-segment" id="toc-what-is-the-top-selling-product-for-each-segment" class="nav-link" data-scroll-target="#what-is-the-top-selling-product-for-each-segment">3. What is the top selling product for each segment?</a></li>
+  <li><a href="#what-is-the-total-quantity-revenue-and-discount-for-each-category" id="toc-what-is-the-total-quantity-revenue-and-discount-for-each-category" class="nav-link" data-scroll-target="#what-is-the-total-quantity-revenue-and-discount-for-each-category">4. What is the total quantity, revenue and discount for each category?</a></li>
+  <li><a href="#what-is-the-top-selling-product-for-each-category" id="toc-what-is-the-top-selling-product-for-each-category" class="nav-link" data-scroll-target="#what-is-the-top-selling-product-for-each-category">5. What is the top selling product for each category?</a></li>
+  <li><a href="#what-is-the-percentage-split-of-revenue-by-product-for-each-segment" id="toc-what-is-the-percentage-split-of-revenue-by-product-for-each-segment" class="nav-link" data-scroll-target="#what-is-the-percentage-split-of-revenue-by-product-for-each-segment">6. What is the percentage split of revenue by product for each segment?</a></li>
+  <li><a href="#what-is-the-percentage-split-of-revenue-by-segment-for-each-category" id="toc-what-is-the-percentage-split-of-revenue-by-segment-for-each-category" class="nav-link" data-scroll-target="#what-is-the-percentage-split-of-revenue-by-segment-for-each-category">7. What is the percentage split of revenue by segment for each category?</a></li>
+  <li><a href="#what-is-the-percentage-split-of-total-revenue-by-category" id="toc-what-is-the-percentage-split-of-total-revenue-by-category" class="nav-link" data-scroll-target="#what-is-the-percentage-split-of-total-revenue-by-category">8. What is the percentage split of total revenue by category?</a></li>
+  <li><a href="#what-is-the-total-transaction-penetration-for-each-product-hint-penetration-number-of-transactions-where-at-least-1-quantity-of-a-product-was-purchased-divided-by-total-number-of-transactions" id="toc-what-is-the-total-transaction-penetration-for-each-product-hint-penetration-number-of-transactions-where-at-least-1-quantity-of-a-product-was-purchased-divided-by-total-number-of-transactions" class="nav-link" data-scroll-target="#what-is-the-total-transaction-penetration-for-each-product-hint-penetration-number-of-transactions-where-at-least-1-quantity-of-a-product-was-purchased-divided-by-total-number-of-transactions">9. What is the total transaction “penetration” for each product? (hint: penetration = number of transactions where at least 1 quantity of a product was purchased divided by total number of transactions)</a></li>
+  <li><a href="#what-is-the-most-common-combination-of-at-least-1-quantity-of-any-3-products-in-a-1-single-transaction" id="toc-what-is-the-most-common-combination-of-at-least-1-quantity-of-any-3-products-in-a-1-single-transaction" class="nav-link" data-scroll-target="#what-is-the-most-common-combination-of-at-least-1-quantity-of-any-3-products-in-a-1-single-transaction">10. What is the most common combination of at least 1 quantity of any 3 products in a 1 single transaction?</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content quarto-banner-title-block column-page" id="quarto-document-content">
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
 
 

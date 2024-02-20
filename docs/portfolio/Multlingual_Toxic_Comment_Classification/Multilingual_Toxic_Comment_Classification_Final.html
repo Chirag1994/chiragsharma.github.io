@@ -158,7 +158,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page">
+    <div class="quarto-title column-page-left">
       <h1 class="title">Multilingual Toxic Comment Classification using Tensorflow and TPUs.</h1>
                   <div>
         <div class="description">
@@ -200,9 +200,61 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#problem-statement" id="toc-problem-statement" class="nav-link active" data-scroll-target="#problem-statement">Problem Statement</a></li>
+  <li><a href="#dataset-description" id="toc-dataset-description" class="nav-link" data-scroll-target="#dataset-description">Dataset Description</a></li>
+  <li><a href="#evaluation-metric" id="toc-evaluation-metric" class="nav-link" data-scroll-target="#evaluation-metric">Evaluation Metric</a></li>
+  <li><a href="#strategies-to-tackle" id="toc-strategies-to-tackle" class="nav-link" data-scroll-target="#strategies-to-tackle">Strategies to Tackle</a>
+  <ul class="collapse">
+  <li><a href="#monolingual-approach" id="toc-monolingual-approach" class="nav-link" data-scroll-target="#monolingual-approach"><code>Monolingual Approach</code></a></li>
+  <li><a href="#multilingual-approach" id="toc-multilingual-approach" class="nav-link" data-scroll-target="#multilingual-approach"><code>Multilingual Approach</code></a></li>
+  <li><a href="#which-models-to-use-for-our-problem" id="toc-which-models-to-use-for-our-problem" class="nav-link" data-scroll-target="#which-models-to-use-for-our-problem"><code>Which models to use for our problem?</code></a></li>
+  <li><a href="#cross-lingual-transfer" id="toc-cross-lingual-transfer" class="nav-link" data-scroll-target="#cross-lingual-transfer"><code>Cross Lingual Transfer</code></a></li>
+  <li><a href="#what-experiments-did-i-perform" id="toc-what-experiments-did-i-perform" class="nav-link" data-scroll-target="#what-experiments-did-i-perform"><code>What experiments did I perform ?</code></a></li>
+  </ul></li>
+  <li><a href="#installing-libraries" id="toc-installing-libraries" class="nav-link" data-scroll-target="#installing-libraries">Installing Libraries</a></li>
+  <li><a href="#setting-data-paths" id="toc-setting-data-paths" class="nav-link" data-scroll-target="#setting-data-paths">Setting data paths</a></li>
+  <li><a href="#tpu-configurations" id="toc-tpu-configurations" class="nav-link" data-scroll-target="#tpu-configurations">TPU Configurations</a></li>
+  <li><a href="#reading-balancing-the-data-by-target-column" id="toc-reading-balancing-the-data-by-target-column" class="nav-link" data-scroll-target="#reading-balancing-the-data-by-target-column">Reading &amp; Balancing the data by Target column</a></li>
+  <li><a href="#encoding-comment_text" id="toc-encoding-comment_text" class="nav-link" data-scroll-target="#encoding-comment_text">Encoding comment_text</a></li>
+  <li><a href="#preparing-data-using-tf.data.data-api" id="toc-preparing-data-using-tf.data.data-api" class="nav-link" data-scroll-target="#preparing-data-using-tf.data.data-api">Preparing data using tf.data.Data API</a></li>
+  <li><a href="#building-the-model" id="toc-building-the-model" class="nav-link" data-scroll-target="#building-the-model">Building the model</a></li>
+  <li><a href="#loading-model-on-tpus" id="toc-loading-model-on-tpus" class="nav-link" data-scroll-target="#loading-model-on-tpus">Loading model on TPUs</a></li>
+  <li><a href="#training-the-model-on-only-english-data-for-2-epochs" id="toc-training-the-model-on-only-english-data-for-2-epochs" class="nav-link" data-scroll-target="#training-the-model-on-only-english-data-for-2-epochs">Training the model on Only English data for 2 epochs</a></li>
+  <li><a href="#training-the-model-on-validation-data-for-2-epochs-further-to-fine-tune-on-it" id="toc-training-the-model-on-validation-data-for-2-epochs-further-to-fine-tune-on-it" class="nav-link" data-scroll-target="#training-the-model-on-validation-data-for-2-epochs-further-to-fine-tune-on-it">Training the model on Validation data for 2 epochs further to fine-tune on it</a></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a></li>
+  <li><a href="#predicting-on-test-dataset" id="toc-predicting-on-test-dataset" class="nav-link" data-scroll-target="#predicting-on-test-dataset">Predicting on Test dataset</a></li>
+  <li><a href="#saving-the-model" id="toc-saving-the-model" class="nav-link" data-scroll-target="#saving-the-model">Saving the model</a></li>
+  <li><a href="#loading-the-model" id="toc-loading-the-model" class="nav-link" data-scroll-target="#loading-the-model">Loading the model</a>
+  <ul class="collapse">
+  <li><a href="#testing-the-model-with-the-gradio-app-before-final-pushing-the-model-to-huggingface-spaces" id="toc-testing-the-model-with-the-gradio-app-before-final-pushing-the-model-to-huggingface-spaces" class="nav-link" data-scroll-target="#testing-the-model-with-the-gradio-app-before-final-pushing-the-model-to-huggingface-spaces">Testing the model with the Gradio App before final pushing the model to HuggingFace Spaces</a></li>
+  </ul></li>
+  <li><a href="#turning-our-multi-lingual-toxic-comment-classification-gradio-demo-into-a-deployable-app" id="toc-turning-our-multi-lingual-toxic-comment-classification-gradio-demo-into-a-deployable-app" class="nav-link" data-scroll-target="#turning-our-multi-lingual-toxic-comment-classification-gradio-demo-into-a-deployable-app">Turning our Multi-Lingual Toxic Comment Classification Gradio Demo into a deployable app</a>
+  <ul class="collapse">
+  <li><a href="#deployed-gradio-app-structure" id="toc-deployed-gradio-app-structure" class="nav-link" data-scroll-target="#deployed-gradio-app-structure">Deployed Gradio App Structure</a></li>
+  <li><a href="#creating-a-demo-folder-to-store-our-multilingual-toxic-comment-classifier-app-files" id="toc-creating-a-demo-folder-to-store-our-multilingual-toxic-comment-classifier-app-files" class="nav-link" data-scroll-target="#creating-a-demo-folder-to-store-our-multilingual-toxic-comment-classifier-app-files">Creating a demo folder to store our Multilingual Toxic Comment Classifier App files</a></li>
+  <li><a href="#creating-a-folder-of-example-images-to-use-with-our-melanoma-skin-cancer-demo" id="toc-creating-a-folder-of-example-images-to-use-with-our-melanoma-skin-cancer-demo" class="nav-link" data-scroll-target="#creating-a-folder-of-example-images-to-use-with-our-melanoma-skin-cancer-demo">Creating a folder of example images to use with our Melanoma skin cancer demo</a></li>
+  <li><a href="#moving-our-trained-xlm-roberta-model-binary-files-into-our-multilingual_toxic_comment_files-demo-directory." id="toc-moving-our-trained-xlm-roberta-model-binary-files-into-our-multilingual_toxic_comment_files-demo-directory." class="nav-link" data-scroll-target="#moving-our-trained-xlm-roberta-model-binary-files-into-our-multilingual_toxic_comment_files-demo-directory.">Moving our trained XLM-Roberta model binary files into our multilingual_toxic_comment_files demo directory.</a></li>
+  </ul></li>
+  <li><a href="#turning-our-gradio-app-into-a-python-script-app.py" id="toc-turning-our-gradio-app-into-a-python-script-app.py" class="nav-link" data-scroll-target="#turning-our-gradio-app-into-a-python-script-app.py">Turning our Gradio App into a Python Script (<code>app.py</code>)</a>
+  <ul class="collapse">
+  <li><a href="#creating-a-requirements.txt-file-for-our-gradio-apprequirements.txt" id="toc-creating-a-requirements.txt-file-for-our-gradio-apprequirements.txt" class="nav-link" data-scroll-target="#creating-a-requirements.txt-file-for-our-gradio-apprequirements.txt">Creating a requirements.txt file for our Gradio App(<code>requirements.txt</code>)</a></li>
+  </ul></li>
+  <li><a href="#deploying-our-application-to-huggingface-spaces" id="toc-deploying-our-application-to-huggingface-spaces" class="nav-link" data-scroll-target="#deploying-our-application-to-huggingface-spaces">Deploying our Application to HuggingFace Spaces</a>
+  <ul class="collapse">
+  <li><a href="#running-our-application-locally" id="toc-running-our-application-locally" class="nav-link" data-scroll-target="#running-our-application-locally">Running our Application locally</a></li>
+  <li><a href="#uploading-to-hugging-face" id="toc-uploading-to-hugging-face" class="nav-link" data-scroll-target="#uploading-to-hugging-face">Uploading to Hugging Face</a></li>
+  </ul></li>
+  <li><a href="#our-final-application-deployed-on-huggingface-spaces" id="toc-our-final-application-deployed-on-huggingface-spaces" class="nav-link" data-scroll-target="#our-final-application-deployed-on-huggingface-spaces">Our Final Application deployed on HuggingFace Spaces</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content quarto-banner-title-block column-page" id="quarto-document-content">
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
 
 

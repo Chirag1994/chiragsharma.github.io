@@ -155,7 +155,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page">
+    <div class="quarto-title column-page-left">
       <h1 class="title">Case Study #3 - Foodie Fi.</h1>
                   <div>
         <div class="description">
@@ -193,9 +193,61 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#case-study-3---foodie-fi" id="toc-case-study-3---foodie-fi" class="nav-link active" data-scroll-target="#case-study-3---foodie-fi">Case Study #3 - Foodie-Fi</a>
+  <ul class="collapse">
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#available-data" id="toc-available-data" class="nav-link" data-scroll-target="#available-data">Available Data</a></li>
+  <li><a href="#entity-relationship-diagram" id="toc-entity-relationship-diagram" class="nav-link" data-scroll-target="#entity-relationship-diagram">Entity Relationship Diagram</a>
+  <ul class="collapse">
+  <li><a href="#table-1-plans" id="toc-table-1-plans" class="nav-link" data-scroll-target="#table-1-plans">Table 1: plans</a></li>
+  <li><a href="#table-2-subscriptions" id="toc-table-2-subscriptions" class="nav-link" data-scroll-target="#table-2-subscriptions">Table 2: subscriptions</a></li>
+  </ul></li>
+  <li><a href="#interactive-sql-session" id="toc-interactive-sql-session" class="nav-link" data-scroll-target="#interactive-sql-session">Interactive SQL Session</a></li>
+  <li><a href="#case-study-questions" id="toc-case-study-questions" class="nav-link" data-scroll-target="#case-study-questions">Case Study Questions</a>
+  <ul class="collapse">
+  <li><a href="#a.-customer-journey" id="toc-a.-customer-journey" class="nav-link" data-scroll-target="#a.-customer-journey">A. Customer Journey</a></li>
+  <li><a href="#b.-data-analysis-questions" id="toc-b.-data-analysis-questions" class="nav-link" data-scroll-target="#b.-data-analysis-questions">B. Data Analysis Questions</a></li>
+  <li><a href="#c.-challenge-payment-question" id="toc-c.-challenge-payment-question" class="nav-link" data-scroll-target="#c.-challenge-payment-question">C. Challenge Payment Question</a></li>
+  <li><a href="#d.-outside-the-box-questions" id="toc-d.-outside-the-box-questions" class="nav-link" data-scroll-target="#d.-outside-the-box-questions">D. Outside The Box Questions</a></li>
+  </ul></li>
+  <li><a href="#lets-start-solving-them." id="toc-lets-start-solving-them." class="nav-link" data-scroll-target="#lets-start-solving-them.">Let’s start solving them.</a>
+  <ul class="collapse">
+  <li><a href="#a.-customer-journey-1" id="toc-a.-customer-journey-1" class="nav-link" data-scroll-target="#a.-customer-journey-1">A. Customer Journey</a></li>
+  </ul></li>
+  <li><a href="#b.-data-analysis-questions-1" id="toc-b.-data-analysis-questions-1" class="nav-link" data-scroll-target="#b.-data-analysis-questions-1">B. Data Analysis Questions</a>
+  <ul class="collapse">
+  <li><a href="#how-many-customers-has-foodie-fi-ever-had" id="toc-how-many-customers-has-foodie-fi-ever-had" class="nav-link" data-scroll-target="#how-many-customers-has-foodie-fi-ever-had">1. How many customers has Foodie-Fi ever had?</a></li>
+  <li><a href="#what-is-the-monthly-distribution-of-trial-plan-start_date-values-for-our-dataset---use-the-start-of-the-month-as-the-group-by-value." id="toc-what-is-the-monthly-distribution-of-trial-plan-start_date-values-for-our-dataset---use-the-start-of-the-month-as-the-group-by-value." class="nav-link" data-scroll-target="#what-is-the-monthly-distribution-of-trial-plan-start_date-values-for-our-dataset---use-the-start-of-the-month-as-the-group-by-value.">2. What is the monthly distribution of trial plan start_date values for our dataset - use the start of the month as the group by value.</a></li>
+  <li><a href="#what-plan-start_date-values-occur-after-the-year-2020-for-our-dataset-show-the-breakdown-by-count-of-events-for-each-plan_name." id="toc-what-plan-start_date-values-occur-after-the-year-2020-for-our-dataset-show-the-breakdown-by-count-of-events-for-each-plan_name." class="nav-link" data-scroll-target="#what-plan-start_date-values-occur-after-the-year-2020-for-our-dataset-show-the-breakdown-by-count-of-events-for-each-plan_name.">3. What plan start_date values occur after the year 2020 for our dataset? Show the breakdown by count of events for each plan_name.</a></li>
+  <li><a href="#what-is-the-customer-count-and-percentage-of-customers-who-have-churned-rounded-to-1-decimal-place" id="toc-what-is-the-customer-count-and-percentage-of-customers-who-have-churned-rounded-to-1-decimal-place" class="nav-link" data-scroll-target="#what-is-the-customer-count-and-percentage-of-customers-who-have-churned-rounded-to-1-decimal-place">4. What is the customer count and percentage of customers who have churned rounded to 1 decimal place?</a></li>
+  <li><a href="#how-many-customers-have-churned-straight-after-their-initial-free-trial---what-percentage-is-this-rounded-to-the-nearest-whole-number" id="toc-how-many-customers-have-churned-straight-after-their-initial-free-trial---what-percentage-is-this-rounded-to-the-nearest-whole-number" class="nav-link" data-scroll-target="#how-many-customers-have-churned-straight-after-their-initial-free-trial---what-percentage-is-this-rounded-to-the-nearest-whole-number">5. How many customers have churned straight after their initial free trial - what percentage is this rounded to the nearest whole number?</a></li>
+  <li><a href="#what-is-the-number-and-percentage-of-customer-plans-after-their-initial-free-trial" id="toc-what-is-the-number-and-percentage-of-customer-plans-after-their-initial-free-trial" class="nav-link" data-scroll-target="#what-is-the-number-and-percentage-of-customer-plans-after-their-initial-free-trial">6. What is the number and percentage of customer plans after their initial free trial?</a></li>
+  <li><a href="#what-is-the-customer-count-and-percentage-breakdown-of-all-5-plan_name-values-at-2020-12-31" id="toc-what-is-the-customer-count-and-percentage-breakdown-of-all-5-plan_name-values-at-2020-12-31" class="nav-link" data-scroll-target="#what-is-the-customer-count-and-percentage-breakdown-of-all-5-plan_name-values-at-2020-12-31">7. What is the customer count and percentage breakdown of all 5 plan_name values at 2020-12-31?</a></li>
+  <li><a href="#how-many-customers-have-upgraded-to-an-annual-plan-in-2020" id="toc-how-many-customers-have-upgraded-to-an-annual-plan-in-2020" class="nav-link" data-scroll-target="#how-many-customers-have-upgraded-to-an-annual-plan-in-2020">8. How many customers have upgraded to an annual plan in 2020?</a></li>
+  <li><a href="#how-many-days-on-average-does-it-take-for-a-customer-to-an-annual-plan-from-the-day-they-join-foodie-fi" id="toc-how-many-days-on-average-does-it-take-for-a-customer-to-an-annual-plan-from-the-day-they-join-foodie-fi" class="nav-link" data-scroll-target="#how-many-days-on-average-does-it-take-for-a-customer-to-an-annual-plan-from-the-day-they-join-foodie-fi">9. How many days on average does it take for a customer to an annual plan from the day they join Foodie-Fi?</a></li>
+  <li><a href="#can-you-further-breakdown-this-average-value-into-30-day-periods-i.e.-0-30-days-31-60-days-etc" id="toc-can-you-further-breakdown-this-average-value-into-30-day-periods-i.e.-0-30-days-31-60-days-etc" class="nav-link" data-scroll-target="#can-you-further-breakdown-this-average-value-into-30-day-periods-i.e.-0-30-days-31-60-days-etc">10. Can you further breakdown this average value into 30 day periods (i.e.&nbsp;0-30 days, 31-60 days etc)</a></li>
+  <li><a href="#how-many-customers-downgraded-from-a-pro-monthly-to-a-basic-monthly-plan-in-2020" id="toc-how-many-customers-downgraded-from-a-pro-monthly-to-a-basic-monthly-plan-in-2020" class="nav-link" data-scroll-target="#how-many-customers-downgraded-from-a-pro-monthly-to-a-basic-monthly-plan-in-2020">11. How many customers downgraded from a pro monthly to a basic monthly plan in 2020?</a></li>
+  </ul></li>
+  <li><a href="#c.-challenge-payment-question-1" id="toc-c.-challenge-payment-question-1" class="nav-link" data-scroll-target="#c.-challenge-payment-question-1">C. Challenge Payment Question</a></li>
+  <li><a href="#d.-outside-the-box-questions-1" id="toc-d.-outside-the-box-questions-1" class="nav-link" data-scroll-target="#d.-outside-the-box-questions-1">D. Outside The Box Questions</a>
+  <ul class="collapse">
+  <li><a href="#how-would-you-calculate-the-rate-of-growth-for-foodie-fi" id="toc-how-would-you-calculate-the-rate-of-growth-for-foodie-fi" class="nav-link" data-scroll-target="#how-would-you-calculate-the-rate-of-growth-for-foodie-fi">1. How would you calculate the rate of growth for Foodie-Fi?</a></li>
+  <li><a href="#what-key-metrics-would-you-recommend-foodie-fi-management-to-track-over-time-to-assess-performance-of-their-overall-business" id="toc-what-key-metrics-would-you-recommend-foodie-fi-management-to-track-over-time-to-assess-performance-of-their-overall-business" class="nav-link" data-scroll-target="#what-key-metrics-would-you-recommend-foodie-fi-management-to-track-over-time-to-assess-performance-of-their-overall-business">2. What key metrics would you recommend Foodie-Fi management to track over time to assess performance of their overall business?</a></li>
+  <li><a href="#what-are-some-key-customer-journeys-or-experiences-that-you-would-analyse-further-to-improve-customer-retention" id="toc-what-are-some-key-customer-journeys-or-experiences-that-you-would-analyse-further-to-improve-customer-retention" class="nav-link" data-scroll-target="#what-are-some-key-customer-journeys-or-experiences-that-you-would-analyse-further-to-improve-customer-retention">3. What are some key customer journeys or experiences that you would analyse further to improve customer retention?</a></li>
+  <li><a href="#if-the-foodie-fi-team-were-to-create-an-exit-survey-shown-to-customers-who-wish-to-cancel-their-subscription-what-questions-would-you-include-in-the-survey" id="toc-if-the-foodie-fi-team-were-to-create-an-exit-survey-shown-to-customers-who-wish-to-cancel-their-subscription-what-questions-would-you-include-in-the-survey" class="nav-link" data-scroll-target="#if-the-foodie-fi-team-were-to-create-an-exit-survey-shown-to-customers-who-wish-to-cancel-their-subscription-what-questions-would-you-include-in-the-survey">4. If the Foodie-Fi team were to create an exit survey shown to customers who wish to cancel their subscription, what questions would you include in the survey?</a></li>
+  <li><a href="#what-business-levers-could-the-foodie-fi-team-use-to-reduce-the-customer-churn-rate-how-would-you-validate-the-effectiveness-of-your-ideas" id="toc-what-business-levers-could-the-foodie-fi-team-use-to-reduce-the-customer-churn-rate-how-would-you-validate-the-effectiveness-of-your-ideas" class="nav-link" data-scroll-target="#what-business-levers-could-the-foodie-fi-team-use-to-reduce-the-customer-churn-rate-how-would-you-validate-the-effectiveness-of-your-ideas">5. What business levers could the Foodie-Fi team use to reduce the customer churn rate? How would you validate the effectiveness of your ideas?</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content quarto-banner-title-block column-page" id="quarto-document-content">
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
 
 

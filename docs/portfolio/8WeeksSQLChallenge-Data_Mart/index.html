@@ -155,7 +155,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page">
+    <div class="quarto-title column-page-left">
       <h1 class="title">Case Study #5 - Data Mart.</h1>
                   <div>
         <div class="description">
@@ -193,9 +193,61 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#case-study-2---data-mart" id="toc-case-study-2---data-mart" class="nav-link active" data-scroll-target="#case-study-2---data-mart">Case Study #2 - Data Mart</a>
+  <ul class="collapse">
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#available-data" id="toc-available-data" class="nav-link" data-scroll-target="#available-data">Available Data</a>
+  <ul class="collapse">
+  <li><a href="#column-dictionary" id="toc-column-dictionary" class="nav-link" data-scroll-target="#column-dictionary">Column Dictionary</a></li>
+  <li><a href="#example-rows" id="toc-example-rows" class="nav-link" data-scroll-target="#example-rows">Example Rows</a></li>
+  </ul></li>
+  <li><a href="#interactive-sql-session" id="toc-interactive-sql-session" class="nav-link" data-scroll-target="#interactive-sql-session">Interactive SQL Session</a></li>
+  <li><a href="#case-study-questions" id="toc-case-study-questions" class="nav-link" data-scroll-target="#case-study-questions">Case Study Questions</a>
+  <ul class="collapse">
+  <li><a href="#data-cleansing-steps" id="toc-data-cleansing-steps" class="nav-link" data-scroll-target="#data-cleansing-steps">1. Data Cleansing Steps</a></li>
+  <li><a href="#data-exploration" id="toc-data-exploration" class="nav-link" data-scroll-target="#data-exploration">2. Data Exploration</a></li>
+  <li><a href="#before-after-analysis" id="toc-before-after-analysis" class="nav-link" data-scroll-target="#before-after-analysis">3. Before &amp; After Analysis</a></li>
+  <li><a href="#bonus-question" id="toc-bonus-question" class="nav-link" data-scroll-target="#bonus-question">4. Bonus Question</a></li>
+  </ul></li>
+  <li><a href="#lets-start-solving-them." id="toc-lets-start-solving-them." class="nav-link" data-scroll-target="#lets-start-solving-them.">Let’s start solving them.</a>
+  <ul class="collapse">
+  <li><a href="#data-cleansing-steps-1" id="toc-data-cleansing-steps-1" class="nav-link" data-scroll-target="#data-cleansing-steps-1">1. Data Cleansing Steps</a></li>
+  </ul></li>
+  <li><a href="#data-cleaning" id="toc-data-cleaning" class="nav-link" data-scroll-target="#data-cleaning">Data Cleaning</a>
+  <ul class="collapse">
+  <li><a href="#cleaning-clean_weekly_sales-table" id="toc-cleaning-clean_weekly_sales-table" class="nav-link" data-scroll-target="#cleaning-clean_weekly_sales-table">Cleaning clean_weekly_sales Table</a></li>
+  </ul></li>
+  <li><a href="#data-exploration-1" id="toc-data-exploration-1" class="nav-link" data-scroll-target="#data-exploration-1">2. Data Exploration</a>
+  <ul class="collapse">
+  <li><a href="#what-day-of-the-week-is-used-for-each-week_date-value" id="toc-what-day-of-the-week-is-used-for-each-week_date-value" class="nav-link" data-scroll-target="#what-day-of-the-week-is-used-for-each-week_date-value">1. What day of the week is used for each week_date value?</a></li>
+  <li><a href="#what-range-of-week-numbers-are-missing-from-the-dataset" id="toc-what-range-of-week-numbers-are-missing-from-the-dataset" class="nav-link" data-scroll-target="#what-range-of-week-numbers-are-missing-from-the-dataset">2. What range of week numbers are missing from the dataset?</a></li>
+  <li><a href="#how-many-total-transactions-were-there-for-each-year-in-the-dataset" id="toc-how-many-total-transactions-were-there-for-each-year-in-the-dataset" class="nav-link" data-scroll-target="#how-many-total-transactions-were-there-for-each-year-in-the-dataset">3. How many total transactions were there for each year in the dataset?</a></li>
+  <li><a href="#what-is-the-total-sales-for-each-region-for-each-month" id="toc-what-is-the-total-sales-for-each-region-for-each-month" class="nav-link" data-scroll-target="#what-is-the-total-sales-for-each-region-for-each-month">4. What is the total sales for each region for each month?</a></li>
+  <li><a href="#what-is-the-total-count-of-transactions-for-each-platform" id="toc-what-is-the-total-count-of-transactions-for-each-platform" class="nav-link" data-scroll-target="#what-is-the-total-count-of-transactions-for-each-platform">5. What is the total count of transactions for each platform?</a></li>
+  <li><a href="#what-is-the-percentage-of-sales-for-retail-vs-shopify-for-each-month" id="toc-what-is-the-percentage-of-sales-for-retail-vs-shopify-for-each-month" class="nav-link" data-scroll-target="#what-is-the-percentage-of-sales-for-retail-vs-shopify-for-each-month">6. What is the percentage of sales for Retail vs Shopify for each month?</a></li>
+  <li><a href="#what-is-the-percentage-of-sales-by-demographic-for-each-year-in-the-dataset" id="toc-what-is-the-percentage-of-sales-by-demographic-for-each-year-in-the-dataset" class="nav-link" data-scroll-target="#what-is-the-percentage-of-sales-by-demographic-for-each-year-in-the-dataset">7. What is the percentage of sales by demographic for each year in the dataset?</a></li>
+  <li><a href="#which-age_band-and-demographic-values-contribute-the-most-to-retail-sales" id="toc-which-age_band-and-demographic-values-contribute-the-most-to-retail-sales" class="nav-link" data-scroll-target="#which-age_band-and-demographic-values-contribute-the-most-to-retail-sales">8. Which age_band and demographic values contribute the most to Retail sales?</a></li>
+  <li><a href="#can-we-use-the-avg_transaction-column-to-find-the-average-transaction-size-for-each-year-for-retail-vs-shopify-if-not---how-would-you-calculate-it-instead" id="toc-can-we-use-the-avg_transaction-column-to-find-the-average-transaction-size-for-each-year-for-retail-vs-shopify-if-not---how-would-you-calculate-it-instead" class="nav-link" data-scroll-target="#can-we-use-the-avg_transaction-column-to-find-the-average-transaction-size-for-each-year-for-retail-vs-shopify-if-not---how-would-you-calculate-it-instead">9. Can we use the avg_transaction column to find the average transaction size for each year for Retail vs Shopify? If not - how would you calculate it instead?</a></li>
+  <li><a href="#before-after-analysis-1" id="toc-before-after-analysis-1" class="nav-link" data-scroll-target="#before-after-analysis-1">3. Before &amp; After Analysis</a></li>
+  <li><a href="#what-is-the-total-sales-for-the-4-weeks-before-and-after-2020-06-15-what-is-the-growth-or-reduction-rate-in-actual-values-and-percentage-of-sales" id="toc-what-is-the-total-sales-for-the-4-weeks-before-and-after-2020-06-15-what-is-the-growth-or-reduction-rate-in-actual-values-and-percentage-of-sales" class="nav-link" data-scroll-target="#what-is-the-total-sales-for-the-4-weeks-before-and-after-2020-06-15-what-is-the-growth-or-reduction-rate-in-actual-values-and-percentage-of-sales">1. What is the total sales for the 4 weeks before and after 2020-06-15? What is the growth or reduction rate in actual values and percentage of sales? */</a></li>
+  <li><a href="#what-about-the-entire-12-weeks-before-and-after" id="toc-what-about-the-entire-12-weeks-before-and-after" class="nav-link" data-scroll-target="#what-about-the-entire-12-weeks-before-and-after">2. What about the entire 12 weeks before and after?</a></li>
+  <li><a href="#how-do-the-sale-metrics-for-these-2-periods-before-and-after-compare-with-the-previous-years-in-2018-and-2019-for-4-weeks-period" id="toc-how-do-the-sale-metrics-for-these-2-periods-before-and-after-compare-with-the-previous-years-in-2018-and-2019-for-4-weeks-period" class="nav-link" data-scroll-target="#how-do-the-sale-metrics-for-these-2-periods-before-and-after-compare-with-the-previous-years-in-2018-and-2019-for-4-weeks-period">3. How do the sale metrics for these 2 periods before and after compare with the previous years in 2018 and 2019 for 4 weeks period?</a></li>
+  <li><a href="#how-do-the-sale-metrics-for-these-2-periods-before-and-after-compare-with-the-previous-years-in-2018-and-2019-for-4-weeks-period-1" id="toc-how-do-the-sale-metrics-for-these-2-periods-before-and-after-compare-with-the-previous-years-in-2018-and-2019-for-4-weeks-period-1" class="nav-link" data-scroll-target="#how-do-the-sale-metrics-for-these-2-periods-before-and-after-compare-with-the-previous-years-in-2018-and-2019-for-4-weeks-period-1">3. How do the sale metrics for these 2 periods before and after compare with the previous years in 2018 and 2019 for 4 weeks period?</a></li>
+  <li><a href="#part-3.2-how-do-the-sale-metrics-for-these-2-periods-before-and-after-compare-with-the-previous-years-in-2018-and-2019-for-12-weeks-period" id="toc-part-3.2-how-do-the-sale-metrics-for-these-2-periods-before-and-after-compare-with-the-previous-years-in-2018-and-2019-for-12-weeks-period" class="nav-link" data-scroll-target="#part-3.2-how-do-the-sale-metrics-for-these-2-periods-before-and-after-compare-with-the-previous-years-in-2018-and-2019-for-12-weeks-period">Part 3.2: How do the sale metrics for these 2 periods before and after compare with the previous years in 2018 and 2019 for 12 weeks period?</a></li>
+  <li><a href="#bonus-question-1" id="toc-bonus-question-1" class="nav-link" data-scroll-target="#bonus-question-1">4. Bonus Question</a></li>
+  <li><a href="#which-areas-of-the-business-have-the-highest-negative-impact-in-sales-metrics-performance-in-2020-for-the-12-week-before-and-after-period" id="toc-which-areas-of-the-business-have-the-highest-negative-impact-in-sales-metrics-performance-in-2020-for-the-12-week-before-and-after-period" class="nav-link" data-scroll-target="#which-areas-of-the-business-have-the-highest-negative-impact-in-sales-metrics-performance-in-2020-for-the-12-week-before-and-after-period">Which areas of the business have the highest negative impact in sales metrics performance in 2020 for the 12 week before and after period?</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content quarto-banner-title-block column-page" id="quarto-document-content">
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
 
 
